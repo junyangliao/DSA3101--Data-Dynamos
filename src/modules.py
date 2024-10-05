@@ -45,7 +45,7 @@ def create_module_node_and_relationships(tx, module_code, title, description, mo
             MERGE (c)-[:OFFERED_IN]->(s)
         """, semester=semester, module_code=module_code)
 
-def load_modules(data):
+def create_modules(data):
     driver = GraphDatabase.driver("neo4j+s://67203e25.databases.neo4j.io", auth=("neo4j", "KUKTrqvpgw9FLuAam0cCauBnsdQsTC3CW1lCboUWhaA"))
     session = driver.session()
 
