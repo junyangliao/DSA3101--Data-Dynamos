@@ -45,6 +45,24 @@ def create_module_node_and_relationships(tx, module_code, title, description, mo
             MERGE (c)-[:OFFERED_IN]->(s)
         """, semester=semester, module_code=module_code)
 
+# May throw an error        
+def create_module(data):
+    driver = GraphDatabase.driver("neo4j+s://67203e25.databases.neo4j.io", auth=("neo4j", "KUKTrqvpgw9FLuAam0cCauBnsdQsTC3CW1lCboUWhaA"))
+    session = driver.session()
+
+    with driver.session() as session:
+        module_code = data.get('module code')
+        title = data.get('title')
+        description = data.get('description')
+        module_credit = data.get('module credit')
+        department = data.get('department')
+        faculty = data.get('faculty')
+        prerequisites = list(data.get('prerequisites'))
+        preclusions = list(data.get('preclusions'))
+        semesters = list(data.get('semesters'))
+
+        session.execute_write(create_module_node_and_relationships, module_code, title, description, module_credit, department, faculty, prerequisites, preclusions, semesters)
+
 def create_modules(data):
     driver = GraphDatabase.driver("neo4j+s://67203e25.databases.neo4j.io", auth=("neo4j", "KUKTrqvpgw9FLuAam0cCauBnsdQsTC3CW1lCboUWhaA"))
     session = driver.session()
