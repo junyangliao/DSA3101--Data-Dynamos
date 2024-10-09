@@ -1,3 +1,13 @@
+import os
+from neo4j import GraphDatabase
+
+neo4j_uri = os.getenv("NEO4J_URI")
+neo4j_user = os.getenv("NEO4J_USER")
+neo4j_password = os.getenv("NEO4J_PASSWORD")
+
+driver = GraphDatabase.driver(neo4j_uri, auth=(neo4j_user, neo4j_password))
+session = driver.session()
+
 def create_staff_node_and_relationships(tx, employee_name, employee_id, nric, birth_date, join_date, department, modules_taught):
     tx.run("""
         MERGE (st:Staff {employeeId: $employee_id})
@@ -20,11 +30,8 @@ def create_staff_node_and_relationships(tx, employee_name, employee_id, nric, bi
     """, employee_id=employee_id, module_code=modules_taught)
 
 def create_staffs(data):
-    driver = GraphDatabase.driver("neo4j+s://67203e25.databases.neo4j.io", auth=("neo4j", "KUKTrqvpgw9FLuAam0cCauBnsdQsTC3CW1lCboUWhaA"))
-    session = driver.session()
-
     with driver.session() as session:
-        for _, row in staff.iterrows():
+        for _, row in data.iterrows():
             employee_name = row['Employee Name']
             employee_id = row['Employee ID']
             nric = row['NRIC']
@@ -34,3 +41,14 @@ def create_staffs(data):
             modules_taught = row['Modules Taught']
 
             session.execute_write(create_staff_node_and_relationships, employee_name, employee_id, nric, birth_date, join_date, department, modules_taught)
+
+def delete_staff_node_and_relationships(tx, employee_id):
+    tx.run("""
+        MATCH (st:Staff {employeeId: $employee_id})
+        DETACH DELETE st;
+    """, employee_id = employee_id)
+
+def delete_staff(data):
+    with driver.session() as session:
+        employee_id = data.get('employee id')
+        session.execute_write(delete_staff_node_and_relationships, employee_id)
