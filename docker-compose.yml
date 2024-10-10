@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      NEO4J_URI: neo4j+s://67203e25.databases.neo4j.io
+      NEO4J_USER: neo4j
+      NEO4J_PASSWORD: KUKTrqvpgw9FLuAam0cCauBnsdQsTC3CW1lCboUWhaA
+    volumes:
+      - .:/app
