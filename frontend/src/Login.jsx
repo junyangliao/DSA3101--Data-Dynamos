@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+/* #F6F4E8 , #E59560*/
+
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -33,7 +35,7 @@ const Login = () => {
   };
 
   return (
-    <div className={'mainContainer'}>
+    <div className={'mainContainer'} style={{ backgroundColor: '#BACEC1', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div className={'titleContainer'}>
         <div>Login</div>
       </div>
