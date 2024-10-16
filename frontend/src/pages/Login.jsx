@@ -33,7 +33,7 @@ const Login = () => {
       setPasswordError('Invalid credentials');
     }
 
-    navigate("/students")
+    navigate("/dashboard")
   };
 
   return (

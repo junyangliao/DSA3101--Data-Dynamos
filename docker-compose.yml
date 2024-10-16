@@ -5,7 +5,7 @@ services:
   flask-backend:
     build:
       context: ./backend/src  # Path to the Flask app directory
-      dockerfile: "C:/Users/harry/OneDrive/Desktop/DSA3101/DSA3101--DD/backend/src/DockerFile"
+      dockerfile: DockerFile
     container_name: flask-backend
     ports:
       - "5000:5000"  # Map the Flask backend port
@@ -21,7 +21,7 @@ services:
   react-frontend:
     build:
       context: ./frontend  # Path to the React app directory
-      dockerfile: "C:/Users/harry/OneDrive/Desktop/DSA3101/DSA3101--DD/frontend/DockerFile"
+      dockerfile: DockerFile
     container_name: react-frontend
     ports:
       - "3000:3000"  # Map the React frontend port
