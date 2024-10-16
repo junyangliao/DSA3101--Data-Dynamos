@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [emailError, setUsernameError] = useState('');
+  const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
   const navigate = useNavigate();
@@ -32,6 +32,8 @@ const Login = () => {
       setUsernameError('Invalid username');
       setPasswordError('Invalid credentials');
     }
+
+    navigate("/students")
   };
 
   return (
@@ -48,7 +50,7 @@ const Login = () => {
           onChange={(ev) => setUsername(ev.target.value)}
           className={'inputBox'}
         />
-        <label className="errorLabel">{emailError}</label>
+        <label className="errorLabel">{usernameError}</label>
       </div>
       <br />
       <div className={'inputContainer'}>

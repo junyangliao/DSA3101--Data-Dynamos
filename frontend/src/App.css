@@ -61,6 +61,29 @@
   padding-left: 8px;
 }
 
+.dashboard {
+  padding: 20px;
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Creates 2 equal columns */
+  grid-template-rows: repeat(2, 1fr); /* Creates 2 equal rows */
+  gap: 20px; /* Space between the charts */
+  height: calc(100vh - 40px); /* Fill almost the entire screen height, accounting for padding */
+}
+
+.chart-container {
+  background: #fff; /* Optional: background color for each chart */
+  border: 1px solid #ddd; /* Optional: border for styling */
+  border-radius: 8px; /* Optional: rounded corners */
+  display: flex; /* Center content */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  padding: 20px; /* Padding around the chart */
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

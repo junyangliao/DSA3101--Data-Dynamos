@@ -6,15 +6,20 @@ const Home = (props) => {
   const navigate = useNavigate()
 
   const onButtonClick = () => {
-    // You'll update this function later
+    if (loggedIn) {
+      localStorage.removeItem("user")
+      props.setLoggedIn(false)
+    } else {
+      navigate("/login")
+    }
   }
 
   return (
-    <div className="mainContainer">
+    <div className="mainContainer" style={{ backgroundColor: '#BACEC1', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <div className={'titleContainer'}>
         <div>Welcome!</div>
       </div>
-      <div>This is the home page.</div>
+      <div>This is the landing page.</div>
       <div className={'buttonContainer'}>
         <input
           className={'inputButton'}
