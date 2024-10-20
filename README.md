@@ -6,14 +6,14 @@ Project for DSA3101
 
 To run, run docker-compose up --build in bash (make sure you have docker desktop running)
 
-/project-root
-   ├── /backend
-   |    └── /src
-   │         ├── app.py
-   │         ├── requirements.txt
-   │         └── Dockerfile
-   ├── /frontend
-   │    ├── src
-   │    ├── public
-   │    └── Dockerfile
-   └── docker-compose.yml
+.
+├── /backend
+|    └── /src
+│         ├── app.py
+│         ├── requirements.txt
+│         └── Dockerfile
+├── /frontend
+│    ├── src
+│    ├── public
+│    └── Dockerfile
+└── docker-compose.yml
