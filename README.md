@@ -3,7 +3,7 @@
 
 ### Make sure to check that you are working on the dev branch
 
-### Prerequisites
+## Prerequisites
 The entire application stack runs on docker, so make sure you have Docker installed.
 
 ## Getting Started
