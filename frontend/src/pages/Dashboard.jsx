@@ -1,7 +1,7 @@
 import React from 'react';
-import StaffDistribution from '../StaffDistribution'; // Import the component
-import StudentDistributionFaculty from '../StudentDistributionFaculty';
-import StudentDistributionMajor from '../StudentDistributionMajor';
+import StaffDistribution from '../dashboard-components/StaffDistribution'; // Import the component
+import StudentDistributionFaculty from '../dashboard-components/StudentDistributionFaculty';
+import StudentDistributionMajor from '../dashboard-components/StudentDistributionMajor';
 
 
 const Dashboard = () => {

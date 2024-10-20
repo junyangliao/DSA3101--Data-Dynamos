@@ -109,12 +109,22 @@ def create_modules(data):
             
             session.execute_write(create_module_node_and_relationships, module_code, title, description, module_credit, department, faculty, prerequisites, preclusions, semesters)
 
-# def setting_constraints_for_modules(tx, module_code, title, description, module_credit, department, faculty, prerequisites, preclusions, semesters):
-#     # Enforce constraint on moduleCode
-#     tx.run("""
-#         CREATE CONSTRAINT IF NOT EXISTS
-#         FOR (m:Module) REQUIRE m.moduleCode IS UNIQUE;
-#     """)
+def setting_constraints_for_modules(tx, module_code, title, description, module_credit, department, faculty, prerequisites, preclusions, semesters):
+    # Enforce constraint on moduleCode
+    tx.run("""
+        CREATE CONSTRAINT IF NOT EXISTS
+        FOR (m:Module) REQUIRE m.moduleCode IS UNIQUE;
+    """)
+    
+    tx.run("""
+        CREATE CONSTRAINT IF NOT EXISTS
+        FOR (f:Faculty) REQUIRE f.name IS UNIQUE;
+    """)
+
+    tx.run("""
+        CREATE CONSTRAINT IF NOT EXISTS
+        FOR (d:Department) REQUIRE d.name IS UNIQUE;
+    """)
 
 def delete_module_node_and_relationships(tx, module_code):
     tx.run("""
