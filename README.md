@@ -1,12 +1,12 @@
 # DSA3101- Data Dynamos
 👋 Hello! This is the repo for our group's application stack. 
 
-## Make sure to check that you are working on the dev branch
+### Make sure to check that you are working on the dev branch
 
 ### Prerequisites
 The entire application stack runs on docker, so make sure you have Docker installed.
 
-### Getting Started
+## Getting Started
 1. git clone the repository
 2. Open Docker Desktop
 3. Navigate to project directory
@@ -14,11 +14,11 @@ The entire application stack runs on docker, so make sure you have Docker instal
 
 Once all containers are running the frontend app should now be accessible on ```http://localhost:3000/ ```. 
 
-### Log-in Credentials
+## Log-in Credentials
 Username: data dynamos
 Password: DSA3101isdabest
 
-### Project Folder Structure
+## Project Folder Structure
 ```plaintext
 .
 ├── README.md
