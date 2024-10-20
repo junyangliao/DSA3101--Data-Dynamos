@@ -21,6 +21,13 @@ def create_jobs_and_skills_nodes_and_relationships(tx, job_title, skills):
         MERGE (j)-[:REQUIRES]->(s)
     """, job_title=job_title, skills=skills)
 
+def create_job_and_skills(data):
+    with driver.session() as session:
+        job_title = data.get('Job Title')
+        skills = data.get('Skills')
+
+        session.execute_write(create_jobs_and_skills_nodes_and_relationships, job_title, skills)
+
 def create_jobs_and_skills(data):
     data['Skills'] = data['Skills'].str.split(',')
 
@@ -29,7 +36,7 @@ def create_jobs_and_skills(data):
             job_title = row['Job Title']
             skills = row['Skills']
 
-            session.execute_write(create_jobs_and_skills, job_title, skills)
+            session.execute_write(create_jobs_and_skills_nodes_and_relationships, job_title, skills)
 
 def get_jobs_all_connections():
     output = []

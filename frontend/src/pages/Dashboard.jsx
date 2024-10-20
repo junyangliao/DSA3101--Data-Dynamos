@@ -6,7 +6,7 @@ import StudentDistributionMajor from '../StudentDistributionMajor';
 
 const Dashboard = () => {
     return (
-        <div className="dashboard">
+        <div style={{ paddingLeft: '20px' }}>
             <h1>Dashboard</h1>
             <div className="charts">
                 <div className="chart-container">

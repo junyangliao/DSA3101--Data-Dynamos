@@ -1,8 +1,7 @@
 import os
 import pandas as pd
-from flask import Flask, request, render_template
+import ast
 from neo4j import GraphDatabase
-from py2neo import Graph
 from pyvis.network import Network   
 from utils import format_node,format_relationship
 
@@ -25,27 +24,48 @@ def create_module_node_and_relationships(tx, module_code, title, description, mo
         MERGE (f:Faculty {name: $faculty})
         MERGE (d)-[:PART_OF]->(f)
         WITH d
-        MATCH (m:Module {moduleCode: $module_code}) 
+        MATCH (m:Module {moduleCode: $module_code})
         MERGE (m)-[:BELONGS_TO]->(d)
     """, department=department, faculty=faculty, module_code=module_code)
 
-    if isinstance(prerequisites, list) and len(prerequisites) > 0:
-      for prerequisite in prerequisites:
-          tx.run("""
-              MERGE (p:Module {moduleCode: $prerequisite})
-              WITH p
-              MATCH (m:Module {moduleCode: $module_code})
-              MERGE (m)-[:HAS_PREREQUISITE]->(p) 
-          """, module_code=module_code, prerequisite=prerequisite)
+    if prerequisites:
+        for prereq_list in prerequisites:
+            if len(prereq_list)>=1:  # Check if it's a valid list
+                # Create a group node for the alternatives
+                group_name = f"{prereq_list}"
+                tx.run("""
+                    MERGE (g:PrerequisiteGroup {name: $group_name})
+                """, group_name=group_name)
+                
+                # Connect group to each prerequisite module
+                for prereq in prereq_list:
+                    tx.run("""
+                        MATCH (p:Module {moduleCode: $prereq}), (g:PrerequisiteGroup {name: $group_name})
+                        MERGE (g)-[:INCLUDED_AS_PREREQUISITE]->(p)
+                    """, prereq=prereq, group_name=group_name)
+                
+                # Connect main module to the group
+                tx.run("""
+                    MATCH (m:Module {moduleCode: $module_code}), (g:PrerequisiteGroup {name: $group_name})
+                    MERGE (m)-[:MUST_HAVE_TAKEN_ONE_OF]->(g)
+                """, module_code=module_code, group_name=group_name)
 
-    if isinstance(preclusions, list) and len(preclusions) > 0:
-      for preclusion in preclusions:
-          tx.run("""
-              MERGE (p:Module {moduleCode: $preclusion})
-              WITH p
-              MATCH (m:Module {moduleCode: $module_code})
-              MERGE (m)-[:HAS_PRECLUSION]->(p)
-          """, module_code=module_code, preclusion = preclusion)
+    if preclusions:
+        group_name = f"{preclusions}"
+        tx.run("""
+                MERGE (g:PreclusionGroup {name: $group_name})
+            """, group_name=group_name)
+        
+        for preclusion in preclusions:
+            tx.run("""
+                MATCH (p:Module {moduleCode: $preclusion}), (g:PreclusionGroup {name: $group_name})
+                MERGE (g)-[:INCLUDED_AS_PRECLUSION]->(p)
+            """, preclusion=preclusion, group_name=group_name)
+
+        tx.run("""
+            MATCH (m:Module {moduleCode: $module_code}), (g:PreclusionGroup {name: $group_name})
+            MERGE (m)-[:MUST_NOT_HAVE_TAKEN_ONE_OF]->(g)
+        """, module_code=module_code, group_name = group_name)
 
     for semester in semesters:
         tx.run("""
@@ -55,7 +75,7 @@ def create_module_node_and_relationships(tx, module_code, title, description, mo
             MERGE (m)-[:OFFERED_IN]->(s)
         """, semester=semester, module_code=module_code)
 
-# May throw an error        
+# May throw an error
 def create_module(data):
     with driver.session() as session:
         module_code = data.get('module code')
@@ -79,8 +99,8 @@ def create_modules(data):
             module_credit = row['moduleCredit']
             department = row['department']
             faculty = row['faculty']
-            prerequisites = row['prerequisite']
-            preclusions = row['preclusion']
+            prerequisites = ast.literal_eval(row['prerequisite'])
+            preclusions = ast.literal_eval(row['preclusion'])
             semesters = []
             if row['semester_01'] > 0: semesters.append(1)
             if row['semester_02'] > 0: semesters.append(2)
@@ -88,6 +108,13 @@ def create_modules(data):
             if row['semester_04'] > 0: semesters.append(4)
             
             session.execute_write(create_module_node_and_relationships, module_code, title, description, module_credit, department, faculty, prerequisites, preclusions, semesters)
+
+# def setting_constraints_for_modules(tx, module_code, title, description, module_credit, department, faculty, prerequisites, preclusions, semesters):
+#     # Enforce constraint on moduleCode
+#     tx.run("""
+#         CREATE CONSTRAINT IF NOT EXISTS
+#         FOR (m:Module) REQUIRE m.moduleCode IS UNIQUE;
+#     """)
 
 def delete_module_node_and_relationships(tx, module_code):
     tx.run("""

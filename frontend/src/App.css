@@ -61,10 +61,6 @@
   padding-left: 8px;
 }
 
-.dashboard {
-  padding: 20px;
-}
-
 .charts {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* Creates 2 equal columns */
@@ -81,6 +77,56 @@
   align-items: center; /* Center vertically */
   justify-content: center; /* Center horizontally */
   padding: 20px; /* Padding around the chart */
+}
+
+.main-content {
+transition: margin-left 0.3s; 
+margin-left: 60px; 
+}
+
+.login-content {
+  transition: margin-left 0.3s; 
+  margin-left: 0px; 
+}
+
+.main-content.shifted {
+margin-left: 180px; 
+}
+
+.drawer-content {
+  background: #404040;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.drawer-content .MuiListItemIcon-root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white !important;
+}
+
+.drawer-toggle-btn {
+  color: white;
+  justify-content: center;
+}
+
+.MuiListItemIcon-root {
+  color: white !important;
+  min-width: 0; /* Ensures the icons are centered properly without extra space */
+}
+
+.drawer-list-item {
+  padding: 0px;
+}
+
+.drawer-list-item-text {
+  color: white;
+  margin: 0;
+  padding: 0;
 }
 
 
