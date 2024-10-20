@@ -6,6 +6,7 @@ Project for DSA3101
 
 To run, run docker-compose up --build in bash (make sure you have docker desktop running)
 
+```plaintext
 .
 ├── /backend
 |    └── /src
@@ -17,3 +18,5 @@ To run, run docker-compose up --build in bash (make sure you have docker desktop
 │    ├── public
 │    └── Dockerfile
 └── docker-compose.yml
+
+```
