@@ -1,0 +1,112 @@
+Subject,Predicate,Object
+NUS Medicine Dean's Office,is_under_faculty,Yong Loo Lin Sch of Medicine
+Architecture,is_under_faculty,College of Design and Engineering
+Accounting,is_under_faculty,NUS Business School
+Communications and New Media,is_under_faculty,Arts and Social Science
+History,is_under_faculty,Arts and Social Science
+Physiology,is_under_faculty,Yong Loo Lin Sch of Medicine
+Office of the Provost,is_under_faculty,NUS
+Sociology and Anthropology,is_under_faculty,Arts and Social Science
+FASS DO/Office of Programmes,is_under_faculty,Arts and Social Science
+Division of Graduate Medical Studies,is_under_faculty,Yong Loo Lin Sch of Medicine
+Anatomy,is_under_faculty,Yong Loo Lin Sch of Medicine
+NUS,is_under_faculty,Yong Loo Lin Sch of Medicine
+Strategy and Policy,is_under_faculty,NUS Business School
+BIZ Dean's Office,is_under_faculty,NUS Business School
+Analytics and Operations,is_under_faculty,NUS Business School
+Biological Sciences,is_under_faculty,Science
+Management and Organisation,is_under_faculty,NUS Business School
+Finance,is_under_faculty,NUS Business School
+Marketing,is_under_faculty,NUS Business School
+Surgery,is_under_faculty,Yong Loo Lin Sch of Medicine
+Biomedical Engineering,is_under_faculty,College of Design and Engineering
+Built Environment,is_under_faculty,College of Design and Engineering
+Information Systems and Analytics,is_under_faculty,Computing
+Computer Science,is_under_faculty,Computing
+FoD Dean's Office,is_under_faculty,Dentistry
+CDE Dean's Office,is_under_faculty,College of Design and Engineering
+Southeast Asian Studies,is_under_faculty,Arts and Social Science
+Geography,is_under_faculty,Arts and Social Science
+Industrial Design,is_under_faculty,College of Design and Engineering
+Civil and Environmental Engineering,is_under_faculty,College of Design and Engineering
+Electrical and Computer Engineering,is_under_faculty,College of Design and Engineering
+YSTCM Dean's Office,is_under_faculty,YST Conservatory of Music
+Centre for Future-ready Grads,is_under_faculty,NUS
+Computing and Engineering Programme,is_under_faculty,Multi Disciplinary Programme
+Chinese Studies,is_under_faculty,Arts and Social Science
+Chua Thian Poh Comm Leader Center,is_under_faculty,NUS
+Chemistry,is_under_faculty,Science
+Chemical and Biomolecular Engineering,is_under_faculty,College of Design and Engineering
+SCALE Dean's Office,is_under_faculty,Cont and Lifelong Education
+Physics,is_under_faculty,Science
+SoC Dean's Office,is_under_faculty,Computing
+Center for Engl Lang Comms,is_under_faculty,NUS
+Center for Computational Science and Engineering,is_under_faculty,Science
+NUS-ISS,is_under_faculty,NUS-ISS
+Centre for Language Studies,is_under_faculty,Arts and Social Science
+Economics,is_under_faculty,Arts and Social Science
+"English,Ling.andTheatre Studies",is_under_faculty,Arts and Social Science
+Political Science,is_under_faculty,Arts and Social Science
+Japanese Studies,is_under_faculty,Arts and Social Science
+Malay Studies,is_under_faculty,Arts and Social Science
+Philosophy,is_under_faculty,Arts and Social Science
+Psychology,is_under_faculty,Arts and Social Science
+South Asian Studies,is_under_faculty,Arts and Social Science
+Social Work,is_under_faculty,Arts and Social Science
+University Scholars Programme,is_under_faculty,University Scholars Programme
+Food Science and Technology,is_under_faculty,Science
+Mathematics,is_under_faculty,Science
+Physics,is_under_faculty,NUS
+FoS Dean's Office,is_under_faculty,Science
+Statistics and Data Science,is_under_faculty,Science
+Raffles Hall,is_under_faculty,NUS
+Office of Student Affairs,is_under_faculty,NUS
+Eusoff Hall,is_under_faculty,NUS
+NUS Centre for the Arts,is_under_faculty,NUS
+King Edward VII Hall,is_under_faculty,NUS
+Pioneer House,is_under_faculty,NUS
+Temasek Hall,is_under_faculty,NUS
+NUS Information Technology,is_under_faculty,NUS
+Temasek Defence Systems Inst,is_under_faculty,Temasek Defence Sys. Institute
+Division of Graduate Dental Studies,is_under_faculty,Dentistry
+Mechanical Engineering,is_under_faculty,College of Design and Engineering
+Centre for Biomedical Ethics,is_under_faculty,Yong Loo Lin Sch of Medicine
+Engineering Science Programme,is_under_faculty,College of Design and Engineering
+NUS Enterprise Academy,is_under_faculty,NUS
+Industrial Systems Engineering and Management,is_under_faculty,College of Design and Engineering
+Risk Management Institute,is_under_faculty,Risk Management Institute
+Asian Inst of Digital Finance,is_under_faculty,NUS
+NUS College Dean's Office,is_under_faculty,NUS College
+PharmacyandPharmaceuticalScience,is_under_faculty,Science
+Microbiology and Immunology,is_under_faculty,Yong Loo Lin Sch of Medicine
+SSH School of Public Health Dean's Office,is_under_faculty,SSH School of Public Health
+NUS,is_under_faculty,NUS
+Biochemistry,is_under_faculty,Yong Loo Lin Sch of Medicine
+Materials Science and Engineering,is_under_faculty,College of Design and Engineering
+Pharmacology,is_under_faculty,Yong Loo Lin Sch of Medicine
+Tembusu College,is_under_faculty,Residential College
+Residential College 4,is_under_faculty,Residential College
+Real Estate,is_under_faculty,NUS Business School
+Duke-NUS Dean's Office,is_under_faculty,Duke-NUS Medical School
+Duke-NUS Medical School,is_under_faculty,Duke-NUS Medical School
+NUSGS Dean’s Office,is_under_faculty,NUS Graduate School
+Risk Management Institute,is_under_faculty,NUS
+FoL Dean's Office,is_under_faculty,Law
+Logistics Inst - Asia Pac,is_under_faculty,Logistics Inst-Asia Pac
+Logistics Inst - Asia Pac,is_under_faculty,NUS
+Mechanobiology Institute (MBI),is_under_faculty,Mechanobiology Institute (MBI)
+Pathology,is_under_faculty,Yong Loo Lin Sch of Medicine
+Medicine,is_under_faculty,Yong Loo Lin Sch of Medicine
+Paediatrics,is_under_faculty,Yong Loo Lin Sch of Medicine
+Office of the President,is_under_faculty,NUS
+Materials Science,is_under_faculty,Science
+Nanoengineering Programme,is_under_faculty,College of Design and Engineering
+NUS College Dean's Office,is_under_faculty,NUS
+Alice Lee Center for Nursing Studies,is_under_faculty,Yong Loo Lin Sch of Medicine
+LKYSPP Dean's Office,is_under_faculty,LKY School of Public Policy
+Center for Quantum Technologies,is_under_faculty,NUS Graduate School
+Ridge View Residential College,is_under_faculty,Residential College
+University Scholars Programme,is_under_faculty,Computing
+College of Alice and Peter Tan,is_under_faculty,Residential College
+Residential Colleges,is_under_faculty,Residential College
+Yale-NUS College,is_under_faculty,Yale-NUS College
