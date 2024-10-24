@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard';
 import Modules from './pages/Modules';
 import Students from './pages/Students';
 import Jobs from './pages/Jobs';
+import Query from './pages/Query';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'; // Menu icon for toggle
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -15,6 +16,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import PeopleIcon from '@mui/icons-material/People';
 import LogoutIcon from '@mui/icons-material/Logout';
 import WorkIcon from '@mui/icons-material/Work';
+import SearchIcon from '@mui/icons-material/Search';
 
 Modal.setAppElement('#root');  // Accessibility setting for modals
 
@@ -94,6 +96,13 @@ function App() {
               </ListItemIcon>
               {isDrawerOpen && <ListItemText primary="Jobs" className="drawer-list-item-text" />}
             </ListItem>
+          
+            <ListItem button onClick={() => { navigate('/Query'); }} className="drawer-list-item">
+              <ListItemIcon className="MuiListItemIcon-root">
+                <SearchIcon />
+              </ListItemIcon>
+            {isDrawerOpen && <ListItemText primary="Query" className="drawer-list-item-text" />}
+          </ListItem>
           </List>
 
           <div style={{ flexGrow: 1 }} />
@@ -121,6 +130,7 @@ function App() {
           <Route path="/Modules" element={<Modules />} />
           <Route path="/Students" element={<Students />} />
           <Route path="/Jobs" element={<Jobs />} />
+          <Route path="/Query" element={<Query />} />
         </Routes>
       </div>
     </div>
