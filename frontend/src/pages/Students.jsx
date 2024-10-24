@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle,LinearProgress } from '@mui/material';
 
 const StudentVisualizer = () => {
   const [matricNumber, setMatricNumber] = useState('');
@@ -137,13 +137,12 @@ const StudentVisualizer = () => {
           </Button>
         </Box>
       </Box>
-
       {progress > 0 && (
-        <Typography variant="body2" style={{ marginTop: '10px' }}>
-          Upload Progress: {progress}%
-        </Typography>
+        <Box sx={{ width: '100%', marginTop: '10px' }}>
+          <Typography variant="body2">Upload Progress: {progress}%</Typography>
+          <LinearProgress variant="determinate" value={progress} />
+        </Box>
       )}
-
       {message && (
         <Typography variant="body2" style={{ marginTop: '10px', color: 'green' }}>
           {message}

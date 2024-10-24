@@ -12,7 +12,7 @@ document.getElementById("registerForm")?.addEventListener("submit", function(eve
     alert("Registration successful! Redirecting to login page.");
     window.location.href = "index.html";
 });
-
+// Listen for form submission
 // Login Logic
 document.getElementById("loginForm")?.addEventListener("submit", function(event) {
     event.preventDefault();
@@ -30,8 +30,6 @@ document.getElementById("loginForm")?.addEventListener("submit", function(event)
         alert("Invalid credentials, try again!");
     }
 });
-
-
 // Logout Logic
 document.getElementById("logout")?.addEventListener("click", function() {
     localStorage.removeItem("isLoggedIn");
@@ -121,3 +119,49 @@ function displayRecommendations(data) {
     }
 }
 });
+function createSalaryChart(salaries) {
+    const ctx = document.getElementById('salaryChart').getContext('2d');
+    const salaryChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: salaries.map(item => item.jobTitle), // Customize based on your data structure
+            datasets: [{
+                label: 'Salary',
+                data: salaries.map(item => item.salary), // Customize based on your data structure
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+function visualizeGraph(data) {
+    const config = {
+        container_id: "neo4jGraph",
+        server_url: "neo4j+s://67203e25.databases.neo4j.io",
+        server_user: "neo4j",
+        server_password: "KUKTrqvpgw9FLuAam0cCauBnsdQsTC3CW1lCboUWhaA",
+        labels: {
+            Job: { caption: "name" },
+            Module: { caption: "name" },
+            Skill: { caption: "name" },
+        },
+        relationships: {
+            REQUIRES: {
+                thickness: 2,
+                caption: false,
+            },
+        },
+        initial_cypher: "MATCH (j:Job)-[r:REQUIRES]->(m:Module) RETURN j, m",
+    };
+
+    const viz = new NeoVis.default(config);
+    viz.render();
+}
