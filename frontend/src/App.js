@@ -3,12 +3,15 @@ import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from
 import './App.css';
 import Login from './pages/Login';
 import Modal from 'react-modal';
-import Home from './Home';
 import Dashboard from './pages/Dashboard';
 import Modules from './pages/Modules';
 import Students from './pages/Students';
 import Jobs from './pages/Jobs';
+<<<<<<< Updated upstream
 import Query from './pages/Query';
+=======
+import Staffs from './pages/Staffs';
+>>>>>>> Stashed changes
 import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'; // Menu icon for toggle
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -16,7 +19,11 @@ import SchoolIcon from '@mui/icons-material/School';
 import PeopleIcon from '@mui/icons-material/People';
 import LogoutIcon from '@mui/icons-material/Logout';
 import WorkIcon from '@mui/icons-material/Work';
+<<<<<<< Updated upstream
 import SearchIcon from '@mui/icons-material/Search';
+=======
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+>>>>>>> Stashed changes
 
 Modal.setAppElement('#root');  // Accessibility setting for modals
 
@@ -29,7 +36,7 @@ function App() {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
-  const shouldShowDrawer = location.pathname !== '/' && location.pathname !== '/Login';
+  const shouldShowDrawer = location.pathname !== '/';
 
   // Close drawer when the route changes
   useEffect(() => {
@@ -37,7 +44,7 @@ function App() {
   }, [location]);
 
   const handleLogout = () => {
-    navigate('/Login'); // Redirect to login page
+    navigate('/'); // Redirect to login page
   };
 
   return (
@@ -90,6 +97,13 @@ function App() {
               {isDrawerOpen && <ListItemText primary="Students" className="drawer-list-item-text" />}
             </ListItem>
 
+            <ListItem button onClick={() => { navigate('/Staffs'); }} className="drawer-list-item">
+              <ListItemIcon className="MuiListItemIcon-root">
+                <AdminPanelSettingsIcon />
+              </ListItemIcon>
+              {isDrawerOpen && <ListItemText primary="Staffs" className="drawer-list-item-text" />}
+            </ListItem>
+
             <ListItem button onClick={() => { navigate('/Jobs'); }} className="drawer-list-item">
               <ListItemIcon className="MuiListItemIcon-root">
                 <WorkIcon />
@@ -120,8 +134,7 @@ function App() {
     )}
       <div className={`login-content ${isDrawerOpen && shouldShowDrawer ? 'shifted' : ''}`}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Login" element={<Login />} />
+          <Route path="/" element={<Login />} />
         </Routes>
       </div>
       <div className={`main-content ${isDrawerOpen && shouldShowDrawer ? 'shifted' : ''}`}>
@@ -129,6 +142,7 @@ function App() {
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/Modules" element={<Modules />} />
           <Route path="/Students" element={<Students />} />
+          <Route path="/Staffs" element={<Staffs />} />
           <Route path="/Jobs" element={<Jobs />} />
           <Route path="/Query" element={<Query />} />
         </Routes>

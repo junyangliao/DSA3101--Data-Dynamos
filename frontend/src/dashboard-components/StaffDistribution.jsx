@@ -12,7 +12,7 @@ const StaffDistribution = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/staff-distribution')
+        axios.get('http://localhost:5001/staff-distribution')
             .then(response => {
                 // Log the response data to verify it's as expected
                 console.log("API Response: ", response.data);

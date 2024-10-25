@@ -1,7 +1,6 @@
 import os
 import pandas as pd
 from neo4j import GraphDatabase
-from py2neo import Graph
 from utils import format_node,format_relationship
 
 neo4j_uri = os.getenv("NEO4J_URI")
@@ -9,7 +8,6 @@ neo4j_user = os.getenv("NEO4J_USER")
 neo4j_password = os.getenv("NEO4J_PASSWORD")
 
 driver = GraphDatabase.driver(neo4j_uri, auth=(neo4j_user, neo4j_password))
-graph = Graph(neo4j_uri, auth=(neo4j_user, neo4j_password))
 session = driver.session()
 
 def create_staff_node_and_relationships(tx, employee_name, employee_id, nric, birth_date, join_date, department, modules_taught):
@@ -23,14 +21,14 @@ def create_staff_node_and_relationships(tx, employee_name, employee_id, nric, bi
         MERGE (d:Department {name: $department})
         WITH d
         MATCH (st:Staff {employeeId: $employee_id})
-        MERGE (st)-[:employed_under]->(d)
+        MERGE (st)-[:EMPLOYED_UNDER]->(d)
     """, department=department, employee_id=employee_id)
 
     tx.run("""
-        MERGE (c:Course {moduleCode: $module_code})
-        WITH c
+        MERGE (m:Module {moduleCode: $module_code})
+        WITH m
         MATCH (st:Staff {employeeId: $employee_id})
-        MERGE (c)-[:taught_by]->(st)
+        MERGE (m)-[:TAUGHT_BY]->(st)
     """, employee_id=employee_id, module_code=modules_taught)
 
 def create_staffs(data):
@@ -41,7 +39,7 @@ def create_staffs(data):
             nric = row['NRIC']
             birth_date = row['DOB']
             join_date = row['DOJ']
-            department = row['Department_ID']
+            department = row['Department']
             modules_taught = row['Modules Taught']
 
             session.execute_write(create_staff_node_and_relationships, employee_name, employee_id, nric, birth_date, join_date, department, modules_taught)
@@ -54,7 +52,7 @@ def delete_staff_node_and_relationships(tx, employee_id):
 
 def delete_staff(data):
     with driver.session() as session:
-        employee_id = data.get('employee id')
+        employee_id = data
         session.execute_write(delete_staff_node_and_relationships, employee_id)
 
 def get_staffs_all_connections():

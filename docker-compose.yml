@@ -8,7 +8,7 @@ services:
       dockerfile: DockerFile
     container_name: flask-backend
     ports:
-      - "5000:5000"  # Map the Flask backend port
+      - "5001:5000"  # Map the Flask backend port
     volumes:
       - ./backend/src:/app  # Map the backend source directory
     environment:
