@@ -9,6 +9,7 @@ from neo4j.graph import Node, Relationship
 neo4j_uri = os.getenv("NEO4J_URI")
 neo4j_user = os.getenv("NEO4J_USER")
 neo4j_password = os.getenv("NEO4J_PASSWORD")
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
 driver = GraphDatabase.driver(neo4j_uri, auth=(neo4j_user, neo4j_password))
 session = driver.session()
@@ -90,7 +91,7 @@ def serialize_neo4j_value(value):
         return value  
 
 def generate_cypher_query(tx,prompt):
-    client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", "sk-gVa-k7L0f0CuaYpJuNwTqTXnNct6rc3DDm9N2XFDNeT3BlbkFJxgwzyqLRhs88LUxLKPVCJyWNeTnFXUGNkRhzKfp4cA"))
+    client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", openai_api_key))
     json_file_path = os.path.join(os.path.dirname(__file__), 'ontology_config_test.json')
     with open(json_file_path, 'r') as file:
         data = json.load(file)

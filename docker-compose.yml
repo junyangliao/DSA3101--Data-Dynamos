@@ -4,29 +4,30 @@ version: "3.8"
 services:
   flask-backend:
     build:
-      context: ./backend/src  # Path to the Flask app directory
+      context: ./backend/src  
       dockerfile: DockerFile
     container_name: flask-backend
     ports:
-      - "5001:5000"  # Map the Flask backend port
+      - "5001:5000"
     volumes:
-      - ./backend/src:/app  # Map the backend source directory
+      - ./backend/src:/app 
     environment:
-      - NEO4J_URI=neo4j+s://67203e25.databases.neo4j.io  # Assuming Neo4j runs on localhost
+      - NEO4J_URI=neo4j+s://67203e25.databases.neo4j.io 
       - NEO4J_USER=neo4j
-      - NEO4J_PASSWORD=KUKTrqvpgw9FLuAam0cCauBnsdQsTC3CW1lCboUWhaA  # Set Neo4j password here
+      - NEO4J_PASSWORD=KUKTrqvpgw9FLuAam0cCauBnsdQsTC3CW1lCboUWhaA  
+      - OPENAI_API_KEY=sk-gVa-k7L0f0CuaYpJuNwTqTXnNct6rc3DDm9N2XFDNeT3BlbkFJxgwzyqLRhs88LUxLKPVCJyWNeTnFXUGNkRhzKfp4cA
     networks:
       - mynetwork
 
   react-frontend:
     build:
-      context: ./frontend  # Path to the React app directory
+      context: ./frontend  
       dockerfile: DockerFile
     container_name: react-frontend
     ports:
-      - "3000:3000"  # Map the React frontend port
+      - "3000:3000"  
     depends_on:
-      - flask-backend  # React app will wait for Flask to be up
+      - flask-backend 
 
 networks:
   mynetwork:
