@@ -7,11 +7,8 @@ import Dashboard from './pages/Dashboard';
 import Modules from './pages/Modules';
 import Students from './pages/Students';
 import Jobs from './pages/Jobs';
-<<<<<<< Updated upstream
 import Query from './pages/Query';
-=======
 import Staffs from './pages/Staffs';
->>>>>>> Stashed changes
 import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'; // Menu icon for toggle
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -19,11 +16,8 @@ import SchoolIcon from '@mui/icons-material/School';
 import PeopleIcon from '@mui/icons-material/People';
 import LogoutIcon from '@mui/icons-material/Logout';
 import WorkIcon from '@mui/icons-material/Work';
-<<<<<<< Updated upstream
 import SearchIcon from '@mui/icons-material/Search';
-=======
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
->>>>>>> Stashed changes
 
 Modal.setAppElement('#root');  // Accessibility setting for modals
 
