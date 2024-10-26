@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Box, Paper, TextField, Button, Typography } from '@mui/material';
 import logo from '../logo.svg';
 import backgroundImage from '../background.jpg'
 
@@ -37,109 +38,105 @@ const Login = () => {
   };
 
   return (
-    <div className="mainContainer" style={styles.mainContainer}>
-      {/* Blurred Background */}
-      <div className="backgroundBlur" style={styles.backgroundBlur}></div>
-      <div class="rightContainer" style = {styles.rightContainer}>
-        <div className="logoContainer" >
-          <img src={logo} alt="Logo" style={styles.logo} />
-        </div>
-        <div className="sloganContainer">
-        <h1>Study with Purpose, Major in Confidence.</h1>
-        </div>
-      </div>
-      <div class="leftContainer"style = {styles.leftContainer}>
-      <div className="titleContainer" style={styles.titleContainer}>
-        <p>Login</p>
-        </div>
-        <div className="inputContainer">
-        <input
-          type="text"
-          value={username}
-          placeholder="Enter your username here"
-          onChange={(ev) => setUsername(ev.target.value)}
-          className="inputBox"
-        />
-        <label className="errorLabel">{usernameError}</label>
-      </div>
-      <br />
-      <div className="inputContainer">
-        <input
-          type="password"
-          value={password}
-          placeholder="Enter your password here"
-          onChange={(ev) => setPassword(ev.target.value)}
-          className="inputBox"
-        />
-        <label className="errorLabel">{passwordError}</label>
-      </div>
-      <br />
-      <div className="inputContainer">
-        <input
-          className="inputButton"
-          type="button"
-          value="Log in"
-          onClick={handleLogin}
-        />
-      </div>
-      </div>
-    </div>
-    
+    <Box
+      sx={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 4,
+        position: 'relative',
+      }}
+    >
+      <Box
+        sx={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: 4,
+        }}
+      >
+        <Paper
+          sx={{
+            padding: 4,
+            backgroundColor: 'rgba(255, 255, 255, 0.9)', // White background with transparency
+            textAlign: 'center',
+          }}
+          elevation={3}
+        >
+          <Box sx={{ mb: 3 }}>
+            <img src={logo} alt="Logo" style={{ width: '200px' }} />
+          </Box>
+          <Typography variant="h4" color="secondary" sx={{ fontWeight: 'bold' }}>
+            Study with Purpose, Major in Confidence.
+          </Typography>
+        </Paper>
+      </Box>
+
+      <Box
+        sx={{
+          flex: 0.4,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#ffffff',
+          padding: 4,
+          borderRadius: 2,
+          boxShadow: 3,
+        }}
+      >
+        <Typography
+          variant="h4"
+          sx={{
+            mb: 2,
+            color: 'primary.main',
+            fontWeight: 'bold',
+            fontFamily: 'Roboto, sans-serif',
+            letterSpacing: 1.5,
+          }}
+        >
+          Welcome Back!
+        </Typography>
+        <Box component="form" noValidate autoComplete="off" sx={{ width: '100%' }}>
+          <TextField
+            label="Username"
+            variant="outlined"
+            fullWidth
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            error={!!usernameError}
+            helperText={usernameError}
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            label="Password"
+            type="password"
+            variant="outlined"
+            fullWidth
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            error={!!passwordError}
+            helperText={passwordError}
+            sx={{ mb: 3 }}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            onClick={handleLogin}
+            sx={{ fontSize: '1rem', padding: '10px' }}
+          >
+            Log in
+          </Button>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
 export default Login;
-
-const styles = {
-  mainContainer: {
-    backgroundColor: '#F6F4E8',
-    height: '100vh',
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: '50px',
-    flexDirection: 'row' 
-    },  backgroundBlur: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '100%',
-      height: '100%',
-      backgroundImage: `url(${backgroundImage})`, // Add your image path
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      filter: 'blur(8px)', // Apply blur effect
-      zIndex: -1, // Send it behind the content
-    }, leftContainer: {
-      flex: 0.3,
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingLeft: '50px',
-      backgroundColor: '#FFFFFF'
-    },
-    rightContainer: {
-      flex: 1,
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingRight: '50px'
-    }, logoContainer: {
-    alignSelf: 'flex-end',
-    marginRight: '20px',
-    },logo: {
-    width: '300px',
-    marginRight: '20px',
-    alignSelf: 'flex-end'
-  },sloganContainer: {
-    marginLeft: '20px',
-  },
-  slogan: {
-    fontSize: '24px',
-    color: '#E59560',
-    textAlign: 'left',
-  },titleContainer: {
-    marginBottom: '15px',
-  }
-}

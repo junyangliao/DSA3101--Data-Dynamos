@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import { Button, Typography, Box, CircularProgress,TextField, Container, Card, CardContent} from '@mui/material';
+import { Button, Typography, Box, TextField, Container, Card, CardContent} from '@mui/material';
 
 const QueryProcessor = () => {
-  const [loading, setLoading] = useState(false);  // For showing loading state     
   const [error, setError] = useState(null);  
-  const [query, setQuery] = useState('');     // For error handling
+  const [query, setQuery] = useState('');  
   const [response,setResponse] = useState(null);
 
   // Handle button click to send query to backend
   const handleQuery = async (e) => {
     e.preventDefault();
-
-    setLoading(true);  
+    
     setError(null);    
     setResponse(null);    
     try {
@@ -39,7 +37,9 @@ const QueryProcessor = () => {
 
   return (
     <Container>
-        <Typography variant="h4" gutterBottom>Query Processor</Typography>
+        <Typography variant="h4" gutterBottom style={{ paddingTop: '10px' }}>
+          Query Processor
+        </Typography>
 
         <Box component="form" onSubmit={handleQuery} sx={{ mb: 4 }}>
           <TextField

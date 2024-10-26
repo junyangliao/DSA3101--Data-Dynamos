@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import StudentDistributionFaculty from '../dashboard-components/StudentDistributionFaculty';
 import StudentDistributionMajor from '../dashboard-components/StudentDistributionMajor';
 

@@ -388,110 +388,18 @@ def visualize_student():
     net.show(html_filename)
     return {"file_url": f"/visualizations/{html_filename}"}
 
-# @app.route('/visualize-student', methods=['POST'])
-# def visualize_student():
-#     matric_number = request.get_json().get('matric_number')
-#     with driver.session() as session:
-#         query = """
-#         MATCH (s:Student {matricNumber: $matric_number})
-#         OPTIONAL MATCH (s)-[:STUDYING_UNDER]->(f:Faculty)
-#         OPTIONAL MATCH (d:Department)-[:PART_OF]->(f:Faculty)
-#         OPTIONAL MATCH (s)-[:MAJOR_IN]->(m:Major)
-#         OPTIONAL MATCH (s)-[:SECOND_MAJOR_IN]->(sm:secondMajor)
-#         OPTIONAL MATCH (s)-[:COMPLETED]->(mod:Module)
-#         RETURN s, d, f, m, sm, mod;
-#         """
-#         data = session.run(query, matric_number=matric_number).data()
-
-#         # Initialize the network graph visualization
-#         net = Network(notebook=True, cdn_resources='in_line')
-
-#                 # Update physics settings to improve readability
-#         net.toggle_physics(True)  # Enable physics
-
-#         # Modify the physics options to make the graph more readable
-#         net.set_options("""
-#         {
-#             "nodes": {
-#                 "shape": "dot",
-#                 "size": 30,
-#                 "font": {
-#                     "size": 16
-#                 }
-#             },
-#             "edges": {
-#                 "length": 300,
-#                 "font": {
-#                     "size": 14
-#                 }
-#             },
-#             "physics": {
-#                 "forceAtlas2Based": {
-#                     "gravitationalConstant": -150,
-#                     "centralGravity": 0.01,
-#                     "springLength": 400,
-#                     "springConstant": 0.08
-#                 },
-#                 "minVelocity": 0.75,
-#                 "solver": "forceAtlas2Based",
-#                 "timestep": 0.35
-#             }
-#         }
-#         """)
-
-#         # Add nodes and edges to the visualization
-#         for record in data:
-#             student = record['s']
-#             department = record.get('d')
-#             faculty = record.get('f')
-#             major = record.get('m')
-#             second_major = record.get('sm')
-#             module = record.get('mod')
-
-#             matric_number = student['matricNumber']
-#             net.add_node(matric_number, label=f"Student: {matric_number}", color='lightblue')
-
-#             if faculty:
-#                 fac_name = faculty['name']
-#                 net.add_node(fac_name, label=f"Faculty: {fac_name}", color='lightcoral')
-#                 net.add_edge(matric_number, fac_name, label='STUDYING_UNDER', length=300, font={'size': 14})
-
-#                 if department:
-#                     dept_name = department['name']
-#                     net.add_node(dept_name, label=f"Department: {dept_name}", color='lightgreen')
-#                     net.add_edge(dept_name, fac_name, label='PART_OF', length=300, font={'size': 14})
-
-#             if major:
-#                 major_name = major['name']
-#                 net.add_node(major_name, label=f"Major: {major_name}", color='yellow')
-#                 net.add_edge(matric_number, major_name, label='MAJOR_IN', length=300, font={'size': 14})
-
-#             if second_major:
-#                 second_major = second_major['name']
-#                 net.add_node(second_major, label=f"Second Major: {second_major}", color='yellow')
-#                 net.add_edge(matric_number, second_major, label='SECOND_MAJOR_IN', length=300, font={'size': 14})
-
-#             if module:
-#                 module_code = module['moduleCode']
-#                 net.add_node(module_code, label=f"Module: {module_code}", color='lightblue')
-#                 net.add_edge(matric_number, module_code, label='COMPLETED', length=300, font={'size': 14})
-#                 net.add_edge(module_code, dept_name, label='BELONGS_TO', length=300, font={'size': 14})
-
-#     # Display the graph
-#     html_filename = f"{matric_number}_graph.html"
-#     net.show(html_filename)
-#     return {"file_url": f"/visualizations/{html_filename}"}
-
-@app.route('/visualize-job', methods=['POST'])
-def visualize_job():
-    job_title = request.get_json().get('job_title')
+@app.route('/visualize-staff', methods=['POST'])
+def visualize_staff():
+    employee_id = request.get_json().get('employee_id')
     with driver.session() as session:
         query = """
-        MATCH (j:Job {jobTitle: $job_title})
-        OPTIONAL MATCH (j)-[:REQUIRES]->(s:Skill)
-        RETURN j, s
+        MATCH (st:Staff {employeeId: $employee_id})
+        OPTIONAL MATCH (st)-[:EMPLOYED_UNDER]->(d:Department)
+        OPTIONAL MATCH (d:Department)-[:PART_OF]->(f:Faculty)
+        OPTIONAL MATCH (m:Module)-[:TAUGHT_BY]->(st)
+        RETURN st,d,f,m
         """
-        data = session.run(query, job_title=job_title).data()
+        data = session.run(query, employee_id=employee_id).data()
 
         # Initialize the network graph visualization
         net = Network(notebook=True, cdn_resources='in_line')
@@ -531,19 +439,31 @@ def visualize_job():
 
         # Add nodes and edges to the visualization
         for record in data:
-            job = record['j']
-            skill = record.get('s')
+            staff = record['st']
+            department = record.get('d')
+            faculty = record.get('f')
+            module = record.get('m')
 
-            job_title = job['jobTitle']
-            net.add_node(job_title, label=f"Job Title: {job_title}", color='lightblue')
+            employee_name = staff['employeeName']
+            net.add_node(employee_name, label=f"Employee Name: {employee_name}", color='lightblue')
 
-            if skill:
-                skill_name = skill['name']
-                net.add_node(skill_name, label=f"Skill: {skill_name}", color='lightcoral')
-                net.add_edge(job_title, skill_name, label='REQUIRES', length=300, font={'size': 14})
+            if department:
+                dept_name = department['name']
+                net.add_node(dept_name, label=f"Department: {dept_name}", color='lightgreen')
+                net.add_edge(dept_name, employee_name, label='EMPLOYED_UNDER', length=300, font={'size': 14})
+
+            if faculty:
+                fac_name = faculty['name']
+                net.add_node(fac_name, label=f"Faculty: {fac_name}", color='lightcoral')
+                net.add_edge(dept_name, fac_name, label='STUDYING_UNDER', length=300, font={'size': 14})
+            
+            if module:
+                module_code = module['moduleCode']
+                net.add_node(module_code, label=f"Module: {module_code}", color='lightblue')
+                net.add_edge(employee_name, module_code, label='TAUGHT_BY', length=300, font={'size': 14})
 
     # Display the graph
-    html_filename = f"{job_title}_graph.html"
+    html_filename = f"{employee_name}_graph.html"
     net.show(html_filename)
     return {"file_url": f"/visualizations/{html_filename}"}
 

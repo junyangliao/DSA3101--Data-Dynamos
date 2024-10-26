@@ -40,6 +40,7 @@ const StaffVisualizer = () => {
         },
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setProgress(percentCompleted)
           console.log(`File upload progress: ${percentCompleted}%`);
         }
       });
@@ -70,8 +71,7 @@ const StaffVisualizer = () => {
     });
   };
 
-  const handleClickOpen = (deleteMode = false) => {
-    setIsDeleteMode(deleteMode);
+  const handleClickOpen = () => {
     setOpen(true);
   };
 
@@ -131,12 +131,17 @@ const StaffVisualizer = () => {
             variant="contained"
             color="secondary"
             style={{ marginRight: '10px' }}
-            onClick={() => handleClickOpen(true)}
+            onClick={() => { setIsDeleteMode(true); handleClickOpen(); }}
             >
             Delete Staff
           </Button>
 
-          <Button variant="contained" color="primary" style={{ marginRight: '10px' }} onClick={handleClickOpen}>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ marginRight: '10px' }}
+            onClick={() => { setIsDeleteMode(false); handleClickOpen(); }}
+          >
             Create Staff
           </Button>
 

@@ -39,6 +39,7 @@ const ModuleVisualizer = () => {
         },
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setProgress(percentCompleted)
           console.log(`File upload progress: ${percentCompleted}%`);
         }
       });
@@ -62,8 +63,7 @@ const ModuleVisualizer = () => {
     });
   };
 
-  const handleClickOpen = (deleteMode = false) => {
-    setIsDeleteMode(deleteMode);
+  const handleClickOpen = () => {
     setOpen(true);
   };
 
@@ -121,12 +121,17 @@ const ModuleVisualizer = () => {
             variant="contained"
             color="secondary"
             style={{ marginRight: '10px' }}
-            onClick={() => handleClickOpen(true)}
+            onClick={() => { setIsDeleteMode(true); handleClickOpen(); }}
             >
             Delete Module
           </Button>
 
-          <Button variant="contained" color="primary" style={{ marginRight: '10px' }} onClick={handleClickOpen}>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ marginRight: '10px' }}
+            onClick={() => { setIsDeleteMode(false); handleClickOpen(); }}
+          >
             Create Module
           </Button>
 
