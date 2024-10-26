@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Paper, TextField, Button, Typography } from '@mui/material';
 import logo from '../logo.svg';
-import backgroundImage from '../background.jpg'
+import backgroundImage from '../dashboard-components/background.jpg'
 
 const Login = () => {
   const [username, setUsername] = useState('');

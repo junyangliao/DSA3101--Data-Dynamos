@@ -9,7 +9,6 @@ const QueryProcessor = () => {
   // Handle button click to send query to backend
   const handleQuery = async (e) => {
     e.preventDefault();
-    
     setError(null);    
     setResponse(null);    
     try {
