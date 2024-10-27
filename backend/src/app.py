@@ -483,7 +483,9 @@ def process_query():
     
     try:
         cypher_query, result = evaluate_prompt(query)
-        if isinstance(result[0],list):
+        if isinstance(result,list):
+            serialized_result = result
+        elif isinstance(result[0],list):
             serialized_result = result
         else:
             serialized_result = [serialize_neo4j_value(record) for record in result][0]['properties']
