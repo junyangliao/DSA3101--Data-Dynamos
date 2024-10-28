@@ -13,7 +13,7 @@
             "unique": ["name"]
         },
         "STUDENT": {
-            "attributes": ["Student_Name","Matric_Number","NRIC","Year","Faculties","Major","Second Major","Grades"],
+            "attributes": ["Student_Name","Matric_Number","NRIC","Year","Major","Second Major","Grades"],
             "unique": ["Matric_Number"]
         },
         "SEMESTER": {
@@ -29,8 +29,8 @@
             "unique":["name"]
         },
         "STAFF": {
-            "attributes":["employeeName","employeeId","NRIC","dob","doj"],
-            "unique":["employeeId"]
+            "attributes":["Employee_Name","Employee_ID","NRIC","DOB","DOJ"],
+            "unique":["Employee_ID"]
         },
         "JOB": {
             "attributes":["jobTitle"],
@@ -52,7 +52,7 @@
         },
         "STUDYING_UNDER": {
             "from": "STUDENT",
-            "to": "MAJOR"
+            "to": "FACULTY"
         },
         "MAJOR_IN": {
             "from": "STUDENT",
@@ -72,7 +72,7 @@
         },
         "EMPLOYED_UNDER": {
             "from": "STAFF",
-            "to": "FACULTY"
+            "to": "DEPARTMENT"
         },
         "TAUGHT_BY": {
             "from": "MODULE",
@@ -106,5 +106,10 @@
             "from": "MODULE",
             "to": "PRECLUSIONGROUP"
         }
-    }
+    },
+    "representative_entities": [
+        "MODULE",
+        "STUDENT",
+        "STAFF"
+    ]
 }

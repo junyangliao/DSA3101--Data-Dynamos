@@ -4,7 +4,7 @@ import pandas as pd
 from openai import OpenAI
 import os
 from neo4j import GraphDatabase
-from neo4j.graph import Node, Relationship
+from neo4j.graph import Node, Relationship 
 
 neo4j_uri = os.getenv("NEO4J_URI")
 neo4j_user = os.getenv("NEO4J_USER")
@@ -24,57 +24,84 @@ def format_relationship(rel):
     rel_type = rel.__class__.__name__  
     return f"-[:{rel_type}]->"
 
-def create_entity(tx, row, ontology):
-    # Extract attributes that don't contain 'entities' in the column name
-    attributes = {k: v for k, v in row.items() if 'entities' not in k.lower()}
-    
-    # List of entity columns to handle dynamically
-    entity_columns = ['Module_entities', 'Department_entities', 'Faculty_entities', 'Description_entities', 'Student_entities', 'Major_entities', 'Staff_entities', 'Job_entities']
-    
+def create_entity(tx, row):
+    entity_columns = row.filter(regex='entities').index 
+    representative_entities = ontology['representative_entities']
     for entity_column in entity_columns:
-        # Check if the entity column exists in the row
-        if entity_column in row and pd.notna(row[entity_column]):
-            # Safely evaluate the entity data
-            entity_data = ast.literal_eval(row[entity_column])
-            
-            if entity_data:
-                entity_type = entity_data[0][1]  # Extract entity type (e.g., MODULE, DEPARTMENT, etc.)
-                entity_name = entity_data[0][0]  # Extract entity name (e.g., ABM5001 for modules)
-                
-                # Fetch entity configuration from the ontology
-                entity_config = ontology['entities'].get(entity_type)
-                if not entity_config:
-                    raise ValueError(f"Unknown entity type: {entity_type}")
-                
-                # For 'Module_entities', use the dynamically generated attributes
-                if entity_column in ['Module_entities','Student_entities', 'Staff_entities', ]:
-                    attributes_str = ', '.join([f"{k}: ${k}" for k in attributes])
-                    query = f"""
-                        MERGE (n:{entity_type} {{{attributes_str}}})
-                    """
-                    tx.run(query, attributes)
-                
-                # For other entities like department or faculty, use 'name' as a unique identifier
-                else:
-                    query = f"""
-                        MERGE (n:{entity_type} {{name: $name}})
-                    """
-                    parameters = {'name': entity_name}
-                    tx.run(query, parameters)
+        for entity in ast.literal_eval(row[entity_column]):
+            entity_type = entity[1]
+            config = ontology["entities"].get(entity_type)
+            if not config:
+                raise ValueError(f"Entity type {entity_type} not found in ontology.")
 
-                # Log or print the action for debugging
-                print(f"Entity of type {entity_type} created with name: {entity_name}")
+            if entity_type in representative_entities:
+              if entity_type == 'MODULE' and 'moduleCode' in row.index:
+                unique_key = config["unique"][0]
+                unique_value = row.get(unique_key)
+                if not unique_value:
+                    raise ValueError(f"Missing unique identifier {unique_key} for {entity_type}.")
 
-# # Apply the function to each row in the DataFrame
-# def handle_csv():
-#   for _, row in modules.iterrows():
-#       session.execute_write(create_entity, row, ontology)
+                attributes = {k: v for k, v in row.items() if k in config["attributes"]}
+                query = f"""
+                MERGE (e:{entity_type} {{{unique_key}: $unique_value}})
+                SET e += $attributes
+                """
+                tx.run(query, unique_value=unique_value, attributes=attributes)
+              elif entity_type in ['STUDENT','STAFF']:
+                unique_key = config["unique"][0]
+                unique_value = row.get(unique_key) 
+                if not unique_value:
+                    raise ValueError(f"Missing unique identifier {unique_key} for {entity_type}.")
+                attributes = {k: v for k, v in row.items() if k in config["attributes"]}
+                query = f"""
+                MERGE (e:{entity_type} {{{unique_key}: $unique_value}}) 
+                SET e += $attributes
+                """
+                tx.run(query, unique_value=unique_value, attributes=attributes)
+
+            else:
+              unique_value = entity[0]
+              query = f"""
+              MERGE (e:{entity_type} {{name: $unique_value}}) 
+              """
+              tx.run(query, unique_value=unique_value)
+
+def create_relationship(tx, from_type, from_id, to_type, to_id, relationship_type):
+    relationship_config = ontology["relationships"].get(relationship_type)
+    if not relationship_config or relationship_config["from"] != from_type or relationship_config["to"] != to_type:
+        raise ValueError(f"Invalid relationship {relationship_type} between {from_type} and {to_type}.")
+
+    unique_from_entity_identifier = ontology['entities'][from_type]['unique'][0]
+    unique_to_entity_identifier = ontology['entities'][to_type]['unique'][0]
+
+    query = f"""
+    MATCH (a:{from_type} {{{unique_from_entity_identifier}: $from_id}})
+    MATCH (b:{to_type} {{{unique_to_entity_identifier}: $to_id}})
+    MERGE (a)-[r:{relationship_type}]->(b)
+    """
+    tx.run(query, from_id=from_id, to_id=to_id)
+
+def batch_create_entities_and_relationships(driver, df):
+    ontology = json.load(open('/content/ontology_config.json'))
+    with driver.session() as session:
+        for index, row in df.iterrows():  
+            session.execute_write(create_entity, row)
+
+            if pd.notna(row['Relationships']):
+              relationships = ast.literal_eval(row['Relationships'])
+              for relationship in relationships:
+                  session.execute_write(
+                      create_relationship,
+                      relationship["from_type"],
+                      relationship["from_id"],
+                      relationship["to_type"],
+                      relationship["to_id"],
+                      relationship["type"]
+              )
 
 def serialize_neo4j_value(value):
     if isinstance(value, Node):
         return {
-            'id': value.id,
-            'labels': list(value.labels),
             'properties': dict(value)
         }
     elif isinstance(value, Relationship):
@@ -94,9 +121,10 @@ def generate_cypher_query(tx,prompt):
     client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", openai_api_key))
     json_file_path = os.path.join(os.path.dirname(__file__), 'ontology_config_test.json')
     with open(json_file_path, 'r') as file:
-        data = json.load(file)
+        onotology_data = json.load(file)
+        ontology = json.dumps(onotology_data)
     system_prompt = f"""
-    This is how my neo4j database ontology looks like: {data}.
+    this is how my neo4j database ontology looks like: {ontology}.
     keep in mind these rules : Mixing label expression symbols ('|', '&', '!', and '%') with colon (':') between labels is not allowed. Please only use one set of symbols. This expression could be expressed as :PrerequisiteGroup|(pg&PreclusionGroup)
     """
     model="gpt-4-1106-preview"
@@ -118,16 +146,11 @@ def generate_cypher_query(tx,prompt):
         ]
     )
 
-    try:
-        cypher_query = ast.literal_eval(completion.choices[0].message.content)['query']
-        
-        # Run the generated Cypher query
-        result = tx.run(cypher_query).value()
-        
-        return cypher_query, result
-    
-    except (KeyError, ValueError) as e:
-        raise Exception(f"Failed to generate Cypher query: {str(e)}")
+    cypher_query = ast.literal_eval(completion.choices[0].message.content)['query']
+
+    result = tx.run(cypher_query).value()
+    serialized_result = serialize_neo4j_value(result)
+    return cypher_query, serialized_result
 
 def evaluate_prompt(prompt):
     with driver.session() as session:
