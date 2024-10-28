@@ -15,8 +15,8 @@ The entire application stack runs on docker, so make sure you have Docker instal
 Once all containers are running the frontend app should now be accessible on ```http://localhost:3000/ ```. 
 
 ## Log-in Credentials
-Username: data dynamos
-Password: DSA3101isdabest
+- Username: data dynamos
+- Password: DSA3101isdabest
 
 ## Project Folder Structure
 ```plaintext

@@ -7,6 +7,7 @@ const JobVisualizer = () => {
   const [error, setError] = useState(null);
   const [iframeUrl, setIframeUrl] = useState('');
   const [open, setOpen] = useState(false);
+  const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [progress, setProgress] = useState(0);          
   const [message, setMessage] = useState('');
 
@@ -33,12 +34,13 @@ const JobVisualizer = () => {
       setProgress(0);
       setMessage('');
 
-      const response = await axios.post('http://localhost:5000/upload-jobs-csv', formData, {
+      const response = await axios.post('http://localhost:5001/upload-jobs-csv', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setProgress(percentCompleted)
           console.log(`File upload progress: ${percentCompleted}%`);
         }
       });
@@ -74,7 +76,7 @@ const JobVisualizer = () => {
 
   const handleCreateJob = async () => {
     try {
-      await axios.post('http://localhost:5000/job', jobData);
+      await axios.post('http://localhost:5001/job', jobData);
       console.log('Job created successfully');
       setOpen(false); 
     } catch (error) {
@@ -82,13 +84,23 @@ const JobVisualizer = () => {
     }
   };
 
+  const handleDeleteJob = async () => {
+    try {
+      await axios.post('http://localhost:5001/delete-job', { job_title: jobData.job_title });
+      console.log('Job deleted successfully');
+      setOpen(false); 
+    } catch (error) {
+      console.error('Error deleting Job:', error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/visualize-job', { job_title: jobTitle });
+      const response = await axios.post('http://localhost:5001/visualize-job', { job_title: jobTitle });
   
       const { file_url } = response.data;
-      setIframeUrl(`http://localhost:5000${file_url}`);
+      setIframeUrl(`http://localhost:5001${file_url}`);
     } catch (err) {
       setError('Failed to load Job visualization');
     }
@@ -110,7 +122,21 @@ const JobVisualizer = () => {
           justifyContent="flex-end"
           alignItems="center"
         >
-          <Button variant="contained" color="primary" style={{ marginRight: '10px' }} onClick={handleClickOpen}>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ marginRight: '10px' }}
+            onClick={() => { setIsDeleteMode(true); handleClickOpen(); }}
+            >
+            Delete Job
+          </Button>
+
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ marginRight: '10px' }}
+            onClick={() => { setIsDeleteMode(false); handleClickOpen(); }}
+          >
             Create Job
           </Button>
 
@@ -149,7 +175,7 @@ const JobVisualizer = () => {
       )}
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Create New Job</DialogTitle>
+      <DialogTitle>{isDeleteMode ? 'Delete Job' : 'Create New Job'}</DialogTitle>
         <DialogContent>
           <TextField
             label="Job Title"
@@ -159,21 +185,29 @@ const JobVisualizer = () => {
             onChange={handleChange}
             value={jobData.job_title}
           />
-          <TextField
-            label="Skills"
-            name="skills"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={jobData.skills}
-          />
+          {!isDeleteMode && (
+            <>
+              <TextField
+                label="Skills"
+                name="skills"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={jobData.skills}
+              />
+            </>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="secondary">
             Cancel
           </Button>
-          <Button onClick={handleCreateJob} color="primary" variant="contained">
-            Create
+          <Button
+            onClick={isDeleteMode ? handleDeleteJob : handleCreateJob}
+            color={isDeleteMode ? 'error' : 'primary'}
+            variant="contained"
+          >
+            {isDeleteMode ? 'Delete' : 'Create'}
           </Button>
         </DialogActions>
       </Dialog>

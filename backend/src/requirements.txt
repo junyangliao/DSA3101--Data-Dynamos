@@ -6,3 +6,4 @@ neo4j
 py2neo
 pyvis
 pandas
+openai

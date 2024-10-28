@@ -38,6 +38,17 @@ def create_jobs_and_skills(data):
 
             session.execute_write(create_jobs_and_skills_nodes_and_relationships, job_title, skills)
 
+def delete_job_node_and_relationships(tx, job_title):
+    tx.run("""
+        MATCH (j:Job {jobTitle: $job_title})
+        DETACH DELETE j;
+    """, job_title=job_title)   
+
+def delete_job(data):
+    with driver.session() as session:
+        job_title = data
+        session.execute_write(delete_job_node_and_relationships, job_title)
+
 def get_jobs_all_connections():
     output = []
     query = """

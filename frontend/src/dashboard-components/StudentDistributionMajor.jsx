@@ -12,7 +12,7 @@ const StudentDistributionMajor = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/student-distribution-major')
+        axios.get('http://localhost:5001/student-distribution-major')
             .then(response => {
                 // Log the response data to verify it's as expected
                 console.log("API Response: ", response.data);

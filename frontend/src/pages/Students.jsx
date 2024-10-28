@@ -7,6 +7,7 @@ const StudentVisualizer = () => {
   const [error, setError] = useState(null);
   const [iframeUrl, setIframeUrl] = useState('');
   const [open, setOpen] = useState(false);
+  const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [progress, setProgress] = useState(0);          
   const [message, setMessage] = useState('');
 
@@ -33,12 +34,13 @@ const StudentVisualizer = () => {
       setProgress(0);
       setMessage('');
 
-      const response = await axios.post('http://localhost:5000/upload-student-csv', formData, {
+      const response = await axios.post('http://localhost:5001/upload-student-csv', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setProgress(percentCompleted)
           console.log(`File upload progress: ${percentCompleted}%`);
         }
       });
@@ -81,7 +83,7 @@ const StudentVisualizer = () => {
 
   const handleCreateStudent = async () => {
     try {
-      await axios.post('http://localhost:5000/student', studentData);
+      await axios.post('http://localhost:5001/student', studentData);
       console.log('Student created successfully');
       setOpen(false); 
     } catch (error) {
@@ -89,13 +91,23 @@ const StudentVisualizer = () => {
     }
   };
 
+  const handleDeleteStudent = async () => {
+    try {
+      await axios.post('http://localhost:5001/delete-student', { matric_number: studentData.matric_number });
+      console.log('Student deleted successfully');
+      setOpen(false); 
+    } catch (error) {
+      console.error('Error deleting Student:', error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/visualize-student', { matric_number: matricNumber });
+      const response = await axios.post('http://localhost:5001/visualize-student', { matric_number: matricNumber });
   
       const { file_url } = response.data;
-      setIframeUrl(`http://localhost:5000${file_url}`);
+      setIframeUrl(`http://localhost:5001${file_url}`);
     } catch (err) {
       setError('Failed to load student visualization');
     }
@@ -117,7 +129,21 @@ const StudentVisualizer = () => {
           justifyContent="flex-end"
           alignItems="center"
         >
-          <Button variant="contained" color="primary" style={{ marginRight: '10px' }} onClick={handleClickOpen}>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ marginRight: '10px' }}
+            onClick={() => { setIsDeleteMode(true); handleClickOpen(); }}
+            >
+            Delete Student
+          </Button>
+
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ marginRight: '10px' }}
+            onClick={() => { setIsDeleteMode(false); handleClickOpen(); }}
+          >
             Create Student
           </Button>
 
@@ -155,16 +181,8 @@ const StudentVisualizer = () => {
       )}
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Create New Student</DialogTitle>
+        <DialogTitle>{isDeleteMode ? 'Delete Student' : 'Create New Student'}</DialogTitle>
         <DialogContent>
-          <TextField
-            label="Name"
-            name="name"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={studentData.name}
-          />
           <TextField
             label="Matric Number"
             name="matric_number"
@@ -173,69 +191,85 @@ const StudentVisualizer = () => {
             onChange={handleChange}
             value={studentData.matric_number}
           />
-          <TextField
-            label="NRIC"
-            name="nric"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={studentData.nric}
-          />
-          <TextField
-            label="Year"
-            name="year"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={studentData.year}
-          />
-          <TextField
-            label="Faculty"
-            name="faculty"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={studentData.faculty}
-          />
-          <TextField
-            label="Major"
-            name="major"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={studentData.major}
-          />
-          <TextField
-            label="Second Major"
-            name="second_major"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={studentData.second_major}
-          />
-          <TextField
-            label="Modules Completed"
-            name="modules_completed"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={studentData.modules_completed}
-          />
-          <TextField
-            label="Grades"
-            name="grades"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={studentData.grades}
-          />
+          {!isDeleteMode && (
+            <>
+              <TextField
+                label="Name"
+                name="name"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={studentData.name}
+              />
+              <TextField
+                label="NRIC"
+                name="nric"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={studentData.nric}
+              />
+              <TextField
+                label="Year"
+                name="year"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={studentData.year}
+              />
+              <TextField
+                label="Faculty"
+                name="faculty"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={studentData.faculty}
+              />
+              <TextField
+                label="Major"
+                name="major"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={studentData.major}
+              />
+              <TextField
+                label="Second Major"
+                name="second_major"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={studentData.second_major}
+              />
+              <TextField
+                label="Modules Completed"
+                name="modules_completed"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={studentData.modules_completed}
+              />
+              <TextField
+                label="Grades"
+                name="grades"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={studentData.grades}
+              />
+        </>
+      )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="secondary">
             Cancel
           </Button>
-          <Button onClick={handleCreateStudent} color="primary" variant="contained">
-            Create
+          <Button
+            onClick={isDeleteMode ? handleDeleteStudent : handleCreateStudent}
+            color={isDeleteMode ? 'error' : 'primary'}
+            variant="contained"
+          >
+            {isDeleteMode ? 'Delete' : 'Create'}
           </Button>
         </DialogActions>
       </Dialog>

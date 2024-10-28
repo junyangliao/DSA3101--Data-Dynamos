@@ -73,10 +73,9 @@
   background: #fff; /* Optional: background color for each chart */
   border: 1px solid #ddd; /* Optional: border for styling */
   border-radius: 8px; /* Optional: rounded corners */
-  display: flex; /* Center content */
+  flex-grow: 1; /* Ensure the chart grows to fill the container */
   align-items: center; /* Center vertically */
   justify-content: center; /* Center horizontally */
-  padding: 20px; /* Padding around the chart */
 }
 
 .main-content {

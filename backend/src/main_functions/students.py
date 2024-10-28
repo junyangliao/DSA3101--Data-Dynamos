@@ -1,9 +1,7 @@
 import os
 import pandas as pd
-from flask import Flask, request, render_template
+import ast
 from neo4j import GraphDatabase
-from py2neo import Graph
-from pyvis.network import Network   
 from utils import format_node,format_relationship
 
 neo4j_uri = os.getenv("NEO4J_URI")
@@ -36,13 +34,13 @@ def create_student_node_and_relationships(tx, student_name, matric_number, nric,
     
     if isinstance(second_major,str):
       tx.run("""
-          MERGE (sm:secondMajor {name: $second_major})
-          WITH sm
+          MERGE (m:Major {name: $major})
+          WITH m
           MATCH (s:Student {matricNumber: $matric_number})
-          MERGE (s)-[:SECOND_MAJOR_IN]->(sm)
-      """, second_major=second_major, matric_number=matric_number)
+          MERGE (s)-[:SECOND_MAJOR_IN]->(m)
+      """, major=second_major, matric_number=matric_number)
 
-    if isinstance(modules_completed, list) and len(modules_completed) > 0:
+    if modules_completed:
       for module in modules_completed:
           tx.run("""
               MERGE (m:Module {moduleCode: $module_code})
@@ -75,7 +73,7 @@ def create_students(student_data_list):
             faculty = row['Faculties']
             major = row['Major']
             second_major = row['Second Major']
-            modules_completed = row['Modules_Completed']
+            modules_completed = ast.literal_eval(row['Modules_Completed'])
             grades = row['Grades']
 
             session.execute_write(create_student_node_and_relationships, student_name, matric_number, nric, year, faculty, major, second_major, modules_completed, grades)
@@ -88,7 +86,7 @@ def delete_student_node_and_relationships(tx, matric_number):
 
 def delete_student(data):
     with driver.session() as session:
-        matric_number = data.get('matric number')
+        matric_number = data
         session.execute_write(delete_student_node_and_relationships, matric_number)
 
 def get_students_all_connections():

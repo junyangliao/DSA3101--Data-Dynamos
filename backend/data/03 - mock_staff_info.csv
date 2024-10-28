@@ -1,4 +1,4 @@
-﻿Employee ID,Employee Name,NRIC,DOB,DOJ,Department_ID,Modules Taught
+﻿Employee ID,Employee Name,NRIC,DOB,DOJ,Department,Modules Taught
 NUSPF12345,Marin Sergio Hernandez,XXXXX479A,1983-02-23T00:00:00Z,2009-10-31T00:00:00Z,Electrical and Computer Engineering,CEG5003
 NUSPF12346,Kathryn Cordova,XXXXX815A,1985-09-02T00:00:00Z,2009-06-07T00:00:00Z,Civil and Environmental Engineering,ESE2102
 NUSPF12347,Barbara Sanchez,XXXXX777A,1971-07-30T00:00:00Z,2008-05-09T00:00:00Z,Centre for Language Studies,LAT4201HM

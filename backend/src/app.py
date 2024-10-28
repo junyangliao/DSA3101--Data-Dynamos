@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from neo4j import GraphDatabase
-from main_functions.students import create_student_node_and_relationships, create_student, create_students, delete_student_node_and_relationships, delete_student, get_students_all_connections
-from main_functions.modules import create_module_node_and_relationships, create_module, create_modules
-from main_functions.job_skills import create_job_and_skills, create_jobs_and_skills
+from main_functions.students import create_student, create_students, delete_student
+from main_functions.modules import create_module, create_modules, delete_module
+from main_functions.job_skills import create_job_and_skills, create_jobs_and_skills, delete_job
+from main_functions.staffs import create_staffs, delete_staff
+from utils import evaluate_prompt, serialize_neo4j_value
 from pyvis.network import Network
 import pandas as pd
 import os
@@ -87,6 +89,71 @@ def upload_jobs_csv():
         return jsonify({'message': 'CSV data integrated successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/upload-staffs-csv', methods=['POST'])
+def upload_staffs_csv():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file provided'}), 400
+    
+    file = request.files['file']
+    
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+
+    try:
+        df = pd.read_csv(file)
+        create_staffs(df)
+        return jsonify({'message': 'CSV data integrated successfully'}), 201
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/delete-module', methods=['POST'])
+def delete_module_node():
+    data = request.json
+    module_code = data.get('module_code')
+
+    if not module_code:
+        return jsonify({'error': 'Module Code is required'}), 400
+    
+    delete_module(module_code)
+
+    return jsonify({'message': f"Module with Module Code {module_code} deleted successfully"}), 201
+
+@app.route('/delete-student', methods=['POST'])
+def delete_student_node():
+    data = request.json
+    matric_number = data.get('matric_number')
+
+    if not matric_number:
+        return jsonify({'error': 'Student Matric Number is required'}), 400
+    
+    delete_student(matric_number)
+
+    return jsonify({'message': f"Student with Matric Number {matric_number} deleted successfully"}), 201
+
+@app.route('/delete-staff', methods=['POST'])
+def delete_staff_node():
+    data = request.json
+    employee_id = data.get('employee_id')
+
+    if not employee_id:
+        return jsonify({'error': 'Employee ID is required'}), 400
+    
+    delete_staff(employee_id)
+
+    return jsonify({'message': f"Employee with ID {employee_id} deleted successfully"}), 201
+
+@app.route('/delete-job', methods=['POST'])
+def delete_job_node():
+    data = request.json
+    job_title = data.get('job_title')
+
+    if not job_title:
+        return jsonify({'error': 'Job Title is required'}), 400
+    
+    delete_job(job_title)
+
+    return jsonify({'message': f"Job with Job Title {job_title} deleted successfully"}), 201
 
 # Function to create graph showing the staff distribution by department
 @app.route('/staff-distribution', methods=['GET'])
@@ -321,16 +388,18 @@ def visualize_student():
     net.show(html_filename)
     return {"file_url": f"/visualizations/{html_filename}"}
 
-@app.route('/visualize-job', methods=['POST'])
-def visualize_job():
-    job_title = request.get_json().get('job_title')
+@app.route('/visualize-staff', methods=['POST'])
+def visualize_staff():
+    employee_id = request.get_json().get('employee_id')
     with driver.session() as session:
         query = """
-        MATCH (j:Job {jobTitle: $job_title})
-        OPTIONAL MATCH (j)-[:REQUIRES]->(s:Skill)
-        RETURN j, s
+        MATCH (st:Staff {employeeId: $employee_id})
+        OPTIONAL MATCH (st)-[:EMPLOYED_UNDER]->(d:Department)
+        OPTIONAL MATCH (d:Department)-[:PART_OF]->(f:Faculty)
+        OPTIONAL MATCH (m:Module)-[:TAUGHT_BY]->(st)
+        RETURN st,d,f,m
         """
-        data = session.run(query, job_title=job_title).data()
+        data = session.run(query, employee_id=employee_id).data()
 
         # Initialize the network graph visualization
         net = Network(notebook=True, cdn_resources='in_line')
@@ -370,19 +439,31 @@ def visualize_job():
 
         # Add nodes and edges to the visualization
         for record in data:
-            job = record['j']
-            skill = record.get('s')
+            staff = record['st']
+            department = record.get('d')
+            faculty = record.get('f')
+            module = record.get('m')
 
-            job_title = job['jobTitle']
-            net.add_node(job_title, label=f"Job Title: {job_title}", color='lightblue')
+            employee_name = staff['employeeName']
+            net.add_node(employee_name, label=f"Employee Name: {employee_name}", color='lightblue')
 
-            if skill:
-                skill_name = skill['name']
-                net.add_node(skill_name, label=f"Skill: {skill_name}", color='lightcoral')
-                net.add_edge(job_title, skill_name, label='REQUIRES', length=300, font={'size': 14})
+            if department:
+                dept_name = department['name']
+                net.add_node(dept_name, label=f"Department: {dept_name}", color='lightgreen')
+                net.add_edge(dept_name, employee_name, label='EMPLOYED_UNDER', length=300, font={'size': 14})
+
+            if faculty:
+                fac_name = faculty['name']
+                net.add_node(fac_name, label=f"Faculty: {fac_name}", color='lightcoral')
+                net.add_edge(dept_name, fac_name, label='STUDYING_UNDER', length=300, font={'size': 14})
+            
+            if module:
+                module_code = module['moduleCode']
+                net.add_node(module_code, label=f"Module: {module_code}", color='lightblue')
+                net.add_edge(employee_name, module_code, label='TAUGHT_BY', length=300, font={'size': 14})
 
     # Display the graph
-    html_filename = f"{job_title}_graph.html"
+    html_filename = f"{employee_name}_graph.html"
     net.show(html_filename)
     return {"file_url": f"/visualizations/{html_filename}"}
 
@@ -392,6 +473,30 @@ def serve_visualization(filename):
     response = send_from_directory(os.getcwd(), filename)
     os.remove(file_path)
     return response
+
+@app.route('/process_query', methods=['POST'])
+def process_query():
+    query = request.get_json().get('query')
+
+    if not query:
+        return jsonify({'error': 'Query is required'}), 400
+    
+    try:
+        cypher_query, result = evaluate_prompt(query)
+        if isinstance(result,list):
+            serialized_result = result
+        elif isinstance(result[0],list):
+            serialized_result = result
+        else:
+            serialized_result = [serialize_neo4j_value(record) for record in result][0]['properties']
+        
+        return jsonify({
+            'cypher_query': cypher_query,
+            'result': serialized_result
+        }), 201
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/test-neo4j', methods=['GET'])
 def test_neo4j():

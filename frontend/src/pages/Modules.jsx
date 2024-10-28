@@ -7,6 +7,7 @@ const ModuleVisualizer = () => {
   const [error, setError] = useState(null);
   const [iframeUrl, setIframeUrl] = useState('');
   const [open, setOpen] = useState(false);
+  const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [progress, setProgress] = useState(0);          
   const [message, setMessage] = useState('');           
 
@@ -32,12 +33,13 @@ const ModuleVisualizer = () => {
       setProgress(0);
       setMessage('');
 
-      const response = await axios.post('http://localhost:5000/upload-modules-csv', formData, {
+      const response = await axios.post('http://localhost:5001/upload-modules-csv', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
         onUploadProgress: (progressEvent) => {
           const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setProgress(percentCompleted)
           console.log(`File upload progress: ${percentCompleted}%`);
         }
       });
@@ -71,7 +73,7 @@ const ModuleVisualizer = () => {
 
   const handleCreateModule = async () => {
     try {
-      await axios.post('http://localhost:5000/module', moduleData);
+      await axios.post('http://localhost:5001/module', moduleData);
       console.log('Module created successfully');
       setOpen(false); 
     } catch (error) {
@@ -79,15 +81,25 @@ const ModuleVisualizer = () => {
     }
   };
 
+  const handleDeleteModule = async () => {
+    try {
+      await axios.post('http://localhost:5001/delete-module', { module_code: moduleData.module_code });
+      console.log('Module deleted successfully');
+      setOpen(false); 
+    } catch (error) {
+      console.error('Error deleting module:', error);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       // Make sure to point the request to the Flask backend on port 5000
-      const response = await axios.post('http://localhost:5000/visualize-module', { module_code: moduleCode });
+      const response = await axios.post('http://localhost:5001/visualize-module', { module_code: moduleCode });
   
       // Create a URL from the blob response
       const { file_url } = response.data;
-      setIframeUrl(`http://localhost:5000${file_url}`);  // Set the iframe URL
+      setIframeUrl(`http://localhost:5001${file_url}`);  // Set the iframe URL
     } catch (err) {
       setError('Failed to load module visualization');
     }
@@ -105,7 +117,21 @@ const ModuleVisualizer = () => {
         </Typography>
 
         <Box>
-          <Button variant="contained" color="primary" style={{ marginRight: '10px' }} onClick={handleClickOpen}>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ marginRight: '10px' }}
+            onClick={() => { setIsDeleteMode(true); handleClickOpen(); }}
+            >
+            Delete Module
+          </Button>
+
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ marginRight: '10px' }}
+            onClick={() => { setIsDeleteMode(false); handleClickOpen(); }}
+          >
             Create Module
           </Button>
 
@@ -144,7 +170,7 @@ const ModuleVisualizer = () => {
       )}
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Create New Module</DialogTitle>
+      <DialogTitle>{isDeleteMode ? 'Delete Module' : 'Create New Module'}</DialogTitle>
         <DialogContent>
           <TextField
             label="Module Code"
@@ -154,77 +180,85 @@ const ModuleVisualizer = () => {
             onChange={handleChange}
             value={moduleData.moduleCode}
           />
-          <TextField
-            label="Title"
-            name="title"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={moduleData.title}
-          />
-          <TextField
-            label="Description"
-            name="description"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={moduleData.description}
-          />
-          <TextField
-            label="Module Credit"
-            name="module_credit"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={moduleData.moduleCredit}
-          />
-          <TextField
-            label="Department"
-            name="department"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={moduleData.department}
-          />
-          <TextField
-            label="Faculty"
-            name="faculty"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={moduleData.faculty}
-          />
-          <TextField
-            label="Prerequisites (Input in nested list format)"
-            name="prerequisites"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={moduleData.prerequisites}
-          />
-          <TextField
-            label="Preclusions (Input in list format)"
-            name="preclusions"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={moduleData.preclusions}
-          />
-          <TextField
-            label="Semesters (Input in list format)"
-            name="semesters"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={moduleData.semesters}
-          />
+          {!isDeleteMode && (
+            <>
+              <TextField
+                label="Title"
+                name="title"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={moduleData.title}
+              />
+              <TextField
+                label="Description"
+                name="description"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={moduleData.description}
+              />
+              <TextField
+                label="Module Credit"
+                name="module_credit"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={moduleData.moduleCredit}
+              />
+              <TextField
+                label="Department"
+                name="department"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={moduleData.department}
+              />
+              <TextField
+                label="Faculty"
+                name="faculty"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={moduleData.faculty}
+              />
+              <TextField
+                label="Prerequisites (Input in nested list format)"
+                name="prerequisites"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={moduleData.prerequisites}
+              />
+              <TextField
+                label="Preclusions (Input in list format)"
+                name="preclusions"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={moduleData.preclusions}
+              />
+              <TextField
+                label="Semesters (Input in list format)"
+                name="semesters"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={moduleData.semesters}
+              />
+            </>
+          )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="secondary">
+        <Button onClick={handleClose} color="secondary">
             Cancel
           </Button>
-          <Button onClick={handleCreateModule} color="primary" variant="contained">
-            Create
+          <Button
+            onClick={isDeleteMode ? handleDeleteModule : handleCreateModule}
+            color={isDeleteMode ? 'error' : 'primary'}
+            variant="contained"
+          >
+            {isDeleteMode ? 'Delete' : 'Create'}
           </Button>
         </DialogActions>
       </Dialog>

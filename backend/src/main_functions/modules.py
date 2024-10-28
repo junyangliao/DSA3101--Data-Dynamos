@@ -12,7 +12,7 @@ neo4j_password = os.getenv("NEO4J_PASSWORD")
 driver = GraphDatabase.driver(neo4j_uri, auth=(neo4j_user, neo4j_password))
 session = driver.session()
 
-def create_module_node_and_relationships(tx, module_code, title, description, module_credit, department, faculty, prerequisites, preclusions, semesters):
+def create_module_node_and_relationships(tx, module_code, title, description, module_credit, department, faculty, prerequisites, preclusions, semesters, skills):
     tx.run("""
         MERGE (m:Module {moduleCode: $module_code})
         ON CREATE SET m.title = $title, m.description = $description, m.moduleCredit = $module_credit
@@ -41,7 +41,7 @@ def create_module_node_and_relationships(tx, module_code, title, description, mo
                 for prereq in prereq_list:
                     tx.run("""
                         MATCH (p:Module {moduleCode: $prereq}), (g:PrerequisiteGroup {name: $group_name})
-                        MERGE (g)-[:INCLUDED_AS_PREREQUISITE]->(p)
+                        MERGE (p)-[:INCLUDED_AS_PREREQUISITE]->(g)
                     """, prereq=prereq, group_name=group_name)
                 
                 # Connect main module to the group
@@ -59,7 +59,7 @@ def create_module_node_and_relationships(tx, module_code, title, description, mo
         for preclusion in preclusions:
             tx.run("""
                 MATCH (p:Module {moduleCode: $preclusion}), (g:PreclusionGroup {name: $group_name})
-                MERGE (g)-[:INCLUDED_AS_PRECLUSION]->(p)
+                MERGE (p)-[:INCLUDED_AS_PRECLUSION]->(g)
             """, preclusion=preclusion, group_name=group_name)
 
         tx.run("""
@@ -74,6 +74,15 @@ def create_module_node_and_relationships(tx, module_code, title, description, mo
             MATCH (m:Module {moduleCode: $module_code})
             MERGE (m)-[:OFFERED_IN]->(s)
         """, semester=semester, module_code=module_code)
+    
+    if skills:
+        for skill in skills:
+            tx.run("""
+                MERGE (m:Module {moduleCode: $module_code})
+                WITH m
+                MATCH (s:Skill {name: $skill})
+                MERGE (m)-[:SKILL_TAUGHT]->(s)
+            """, module_code=module_code, skill = skill)
 
 # May throw an error
 def create_module(data):
@@ -101,15 +110,16 @@ def create_modules(data):
             faculty = row['faculty']
             prerequisites = ast.literal_eval(row['prerequisite'])
             preclusions = ast.literal_eval(row['preclusion'])
+            skills = ast.literal_eval(row['Description_entities']).get('Skill')
             semesters = []
             if row['semester_01'] > 0: semesters.append(1)
             if row['semester_02'] > 0: semesters.append(2)
             if row['semester_03'] > 0: semesters.append(3)
             if row['semester_04'] > 0: semesters.append(4)
             
-            session.execute_write(create_module_node_and_relationships, module_code, title, description, module_credit, department, faculty, prerequisites, preclusions, semesters)
+            session.execute_write(create_module_node_and_relationships, module_code, title, description, module_credit, department, faculty, prerequisites, preclusions, semesters,skills)
 
-def setting_constraints_for_modules(tx, module_code, title, description, module_credit, department, faculty, prerequisites, preclusions, semesters):
+def delcaring_constraints_for_modules(tx):
     # Enforce constraint on moduleCode
     tx.run("""
         CREATE CONSTRAINT IF NOT EXISTS
@@ -134,34 +144,8 @@ def delete_module_node_and_relationships(tx, module_code):
 
 def delete_module(data):
     with driver.session() as session:
-        module_code = data.get('module code')
+        module_code = data
         session.execute_write(delete_module_node_and_relationships, module_code)
-
-def get_modules_all_connections():
-    output = []
-    query = """
-        MATCH (m:Module)
-        WITH m
-        LIMIT 15
-        MATCH (m)-[r]-(connectedNode)
-        RETURN m, r, connectedNode;
-        """
-    query_data = session.run(query).data()
-    
-    for result in query_data:
-        module_node = result['m']  
-        relationship = result['r']  
-        connected_node = result['connectedNode']  
-
-        formatted_module = format_node(module_node)
-        formatted_connected_node = format_node(connected_node)
-        formatted_relationship = format_relationship(relationship)
-        
-        connection = f"{formatted_module}{formatted_relationship}{formatted_connected_node}"
-        output.append(connection)
-
-    output_df = pd.DataFrame({'results':output})
-    return output_df
     
 
 # def get_job_recommendations(query):
