@@ -5,5 +5,7 @@ requests
 neo4j
 py2neo
 pyvis
-pandas
 openai
+google-generativeai
+nltk
+python-dotenv
