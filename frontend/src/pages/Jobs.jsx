@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Paper } from '@mui/material';
 
 const JobVisualizer = () => {
   const [jobTitle, setJobTitle] = useState('');
@@ -10,6 +10,10 @@ const JobVisualizer = () => {
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [progress, setProgress] = useState(0);          
   const [message, setMessage] = useState('');
+  const [jobDescription, setJobDescription] = useState('');
+  const [matricNumber, setMatricNumber] = useState('');
+  const [recommendations, setRecommendations] = useState(null);
+  const [loadingRecommendations, setLoadingRecommendations] = useState(false);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -103,6 +107,23 @@ const JobVisualizer = () => {
       setIframeUrl(`http://localhost:5001${file_url}`);
     } catch (err) {
       setError('Failed to load Job visualization');
+    }
+  };
+
+  const handleRecommendationSubmit = async (e) => {
+    e.preventDefault();
+    setLoadingRecommendations(true);
+    setError(null);
+    try {
+      const response = await axios.post('http://localhost:5001/api/job-recommendations', {
+        jobDescription,
+        matricNumber: matricNumber || undefined
+      });
+      setRecommendations(response.data.recommendations);
+    } catch (err) {
+      setError('Failed to get job recommendations: ' + err.message);
+    } finally {
+      setLoadingRecommendations(false);
     }
   };
 
@@ -228,6 +249,63 @@ const JobVisualizer = () => {
           Submit
         </Button>
       </form>
+
+      {/* Add Divider between existing content and recommendations section */}
+      <Divider style={{ margin: '40px 0' }} />
+
+      {/* Job Recommendations section */}
+      <Typography variant="h4" gutterBottom>
+        Job Recommendations
+      </Typography>
+
+      <Paper elevation={3} style={{ padding: '20px', marginBottom: '20px' }}>
+        <form onSubmit={handleRecommendationSubmit}>
+          <TextField
+            label="Job Description"
+            variant="outlined"
+            value={jobDescription}
+            onChange={(e) => setJobDescription(e.target.value)}
+            placeholder="e.g., data scientist"
+            required
+            fullWidth
+            style={{ marginBottom: '16px' }}
+          />
+
+          <TextField
+            label="Matric Number (Optional)"
+            variant="outlined"
+            value={matricNumber}
+            onChange={(e) => setMatricNumber(e.target.value)}
+            placeholder="e.g., A0255150H"
+            fullWidth
+            style={{ marginBottom: '16px' }}
+          />
+
+          <Button 
+            type="submit" 
+            variant="contained" 
+            color="primary"
+            disabled={loadingRecommendations}
+          >
+            {loadingRecommendations ? 'Getting Recommendations...' : 'Get Recommendations'}
+          </Button>
+        </form>
+
+        {recommendations && (
+          <Paper 
+            elevation={1} 
+            style={{ 
+              marginTop: '20px', 
+              padding: '20px',
+              whiteSpace: 'pre-wrap',
+              fontFamily: 'monospace',
+              backgroundColor: '#f5f5f5'
+            }}
+          >
+            {recommendations}
+          </Paper>
+        )}
+      </Paper>
       
       {iframeUrl && (
         <iframe
