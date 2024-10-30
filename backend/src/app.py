@@ -5,6 +5,7 @@ from main_functions.students import create_student, create_students, delete_stud
 from main_functions.modules import create_module, create_modules, delete_module
 from main_functions.job_skills import create_job_and_skills, create_jobs_and_skills, delete_job
 from main_functions.staffs import create_staffs, delete_staff
+from main_functions.job_recommendations import get_job_recommendations
 from utils import evaluate_prompt, serialize_neo4j_value
 from pyvis.network import Network
 import pandas as pd
@@ -16,6 +17,7 @@ CORS(app)
 neo4j_uri = os.getenv("NEO4J_URI")
 neo4j_user = os.getenv("NEO4J_USER")
 neo4j_password = os.getenv("NEO4J_PASSWORD")
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 driver = GraphDatabase.driver(neo4j_uri, auth=(neo4j_user, neo4j_password),max_connection_pool_size=10)
 
 # Function to create a new student individually
@@ -509,3 +511,18 @@ def test_neo4j():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port = 5000)
+
+@app.route('/api/job-recommendations', methods=['POST'])
+def job_recommendations():
+    data = request.get_json()
+    job_description = data.get('jobDescription')
+    matric_number = data.get('matricNumber')
+    
+    if not job_description:
+        return jsonify({'error': 'Job description is required'}), 400
+    
+    try:
+        recommendations = get_job_recommendations(job_description, matric_number)
+        return jsonify({'recommendations': recommendations}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500

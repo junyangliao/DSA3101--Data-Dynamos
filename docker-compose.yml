@@ -16,6 +16,7 @@ services:
       - NEO4J_USER=neo4j
       - NEO4J_PASSWORD=KUKTrqvpgw9FLuAam0cCauBnsdQsTC3CW1lCboUWhaA  
       - OPENAI_API_KEY=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
+      - GOOGLE_API_KEY=AIzaSyACdvWDLdk00vEvtLn_T2H5mX8NAMz-w3M
     networks:
       - mynetwork
 
