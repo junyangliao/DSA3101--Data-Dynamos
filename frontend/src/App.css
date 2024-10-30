@@ -1,0 +1,139 @@
+.mainContainer {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  font-size: 64px;
+  font-weight: bolder;
+  align-items: center;
+  justify-content: center;
+}
+
+.resultContainer, .historyItem { 
+  flex-direction: row;
+  display: flex;
+  width: 400px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.historyContainer {
+  flex-direction: column;
+  display: flex;
+  height: 200px;
+  align-items: center;
+  flex-grow: 5;
+  justify-content: flex-start;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 260px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.inputContainer > .errorLabel {
+  color: red;
+  font-size: 12px;
+}
+
+.inputBox {
+  height: 48px;
+  width: 400px;
+  font-size: large;
+  border-radius: 8px;
+  border: 1px solid grey;
+  padding-left: 8px;
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Creates 2 equal columns */
+  grid-template-rows: repeat(2, 1fr); /* Creates 2 equal rows */
+  gap: 20px; /* Space between the charts */
+  height: calc(100vh - 40px); /* Fill almost the entire screen height, accounting for padding */
+}
+
+.chart-container {
+  background: #fff; /* Optional: background color for each chart */
+  border: 1px solid #ddd; /* Optional: border for styling */
+  border-radius: 8px; /* Optional: rounded corners */
+  flex-grow: 1; /* Ensure the chart grows to fill the container */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+}
+
+.main-content {
+transition: margin-left 0.3s; 
+margin-left: 60px; 
+}
+
+.login-content {
+  transition: margin-left 0.3s; 
+  margin-left: 0px; 
+}
+
+.main-content.shifted {
+margin-left: 180px; 
+}
+
+.drawer-content {
+  background: #404040;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.drawer-content .MuiListItemIcon-root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white !important;
+}
+
+.drawer-toggle-btn {
+  color: white;
+  justify-content: center;
+}
+
+.MuiListItemIcon-root {
+  color: white !important;
+  min-width: 0; /* Ensures the icons are centered properly without extra space */
+}
+
+.drawer-list-item {
+  padding: 0px;
+}
+
+.drawer-list-item-text {
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

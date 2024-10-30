@@ -1,0 +1,1572 @@
+Subject,Predicate,Object
+ACC1701X,teaches_skill,Inventory Management
+ACC1701X,teaches_skill,Accounting
+ACC1701X,teaches_skill,Cash
+ACC1701X,teaches_skill,Management
+ACC1701X,teaches_skill,Accounts Receivable
+ACC1701X,teaches_skill,Sales
+ACC1701X,teaches_skill,Financial Accounting
+ACC1701X,teaches_skill,Internal Controls
+ACC1701X,teaches_skill,Financial Statements
+ACC1701X,teaches_skill,Warranty
+ACC1701X,teaches_skill,Mechanics
+ACC1701X,teaches_skill,C
+AH2201,teaches_skill,Art
+AH2201,teaches_skill,Research
+AH2201,teaches_skill,English
+ALS1010,teaches_skill,Health
+ALS1010,teaches_skill,Wellness
+AN2101,teaches_skill,Research
+BN2403,teaches_skill,Design
+BN2403,teaches_skill,Transform
+BN5104,teaches_skill,English
+BN5210,teaches_skill,Electrical
+BSN3714,teaches_skill,Marketing
+BSN3714,teaches_skill,Research
+BSN3714,teaches_skill,Management
+BSN3714,teaches_skill,Consulting
+BSN3714,teaches_skill,Entrepreneurship
+BSN3714,teaches_skill,Strategy
+BSN3714,teaches_skill,Digital Strategy
+BSN3714,teaches_skill,Teaching
+BSN3714,teaches_skill,Networking
+BSP1702,teaches_skill,Research
+BSP1703,teaches_skill,Economics
+BSP1703,teaches_skill,STEM
+BT1101,teaches_skill,Data Mining
+BT1101,teaches_skill,R
+BT1101,teaches_skill,Forecasting
+BT1101,teaches_skill,Business Analytics
+BT1101,teaches_skill,Analytics
+BT1101,teaches_skill,Testing
+BT2101,teaches_skill,R
+BT2101,teaches_skill,Interpreting
+BT2101,teaches_skill,Business Analytics
+BT2101,teaches_skill,Analytics
+BT2102,teaches_skill,Tableau
+BT2102,teaches_skill,SQL
+BT2102,teaches_skill,Consultation
+BT2102,teaches_skill,MySQL
+BT2102,teaches_skill,Python
+BT2102,teaches_skill,MongoDB
+BT3017,teaches_skill,Pandas
+BT3017,teaches_skill,Calculus
+BT3017,teaches_skill,Analytics
+BT3017,teaches_skill,Business Analytics
+BT3017,teaches_skill,Algebra
+BT3017,teaches_skill,Machine Learning
+BT3017,teaches_skill,Python
+BT3102,teaches_skill,Programming
+BT3102,teaches_skill,Business Analytics
+BT3102,teaches_skill,Machine Learning
+BT3102,teaches_skill,Analytics
+BT3102,teaches_skill,Army
+BT3102,teaches_skill,R
+BT3102,teaches_skill,Python
+BT3102,teaches_skill,Teaching
+BT3103,teaches_skill,GitHub
+BT3103,teaches_skill,DevOps
+BT3103,teaches_skill,Management
+BT3103,teaches_skill,Git
+BT3103,teaches_skill,JavaScript
+BT3103,teaches_skill,Scrum
+BT3103,teaches_skill,Project Management
+BT3103,teaches_skill,HTML
+BT3103,teaches_skill,Testing
+BT4211,teaches_skill,Forecasting
+BT4211,teaches_skill,Teaching
+BT4212,teaches_skill,Google Analytics
+BT4212,teaches_skill,R
+BT4212,teaches_skill,Analytics
+BT4212,teaches_skill,Testing
+BT4212,teaches_skill,Machine Learning
+BT4212,teaches_skill,Python
+BT4222,teaches_skill,Pandas
+CDE2000,teaches_skill,Adobe Photoshop
+CDE2000,teaches_skill,Canva
+CDE2212,teaches_skill,Intelligence
+CDE2501,teaches_skill,Planning
+CE1103,teaches_skill,Engineering
+CE1103,teaches_skill,Structural Engineering
+CE1103,teaches_skill,Materials
+CE1103,teaches_skill,Mechanics
+CE1103,teaches_skill,Law
+CE2134,teaches_skill,Engineering
+CE2134,teaches_skill,Mechanics
+CE5805QA,teaches_skill,Construction
+CFG1002,teaches_skill,Materials
+CFG1002,teaches_skill,Branding
+CFG1002,teaches_skill,Networking
+CFG1003,teaches_skill,Art
+CG1111A,teaches_skill,Law
+CG1111A,teaches_skill,Motors
+CG2023,teaches_skill,Transform
+CG2027,teaches_skill,Design
+CG2028,teaches_skill,Design
+CG2028,teaches_skill,Architecture
+CG2111A,teaches_skill,Design
+CG2111A,teaches_skill,HTML
+CG2111A,teaches_skill,GitHub
+CG4002,teaches_skill,Design
+CH1101E,teaches_skill,English
+CL1101E,teaches_skill,English
+CL1101E,teaches_skill,Linguistics
+CL1101E,teaches_skill,C
+CL2102,teaches_skill,English
+CLC1101,teaches_skill,C
+CLC2204,teaches_skill,Sports
+CM1102,teaches_skill,Engineering
+CM1102,teaches_skill,Environment
+CM1102,teaches_skill,Chemistry
+CM1102,teaches_skill,Materials
+CM1102,teaches_skill,R
+CM1102,teaches_skill,Greenhouse
+CM1102,teaches_skill,Consumer Products
+CM1102,teaches_skill,Law
+CM2112,teaches_skill,Chemistry
+CM2122,teaches_skill,Chemistry
+CM2122,teaches_skill,C
+CM2122,teaches_skill,Medicine
+CM3212,teaches_skill,Chemistry
+CM3221,teaches_skill,Chemistry
+CM3225,teaches_skill,Chemistry
+CM3251,teaches_skill,Chemistry
+CM3252,teaches_skill,Chemistry
+CM3252,teaches_skill,Materials
+CM3253,teaches_skill,Teaching
+CM3253,teaches_skill,Chemistry
+CM3253,teaches_skill,X-ray
+CM4215,teaches_skill,Chemistry
+CM4225,teaches_skill,Health
+CM4225,teaches_skill,Chemistry
+CM4225,teaches_skill,Analytical Chemistry
+CM4225,teaches_skill,C
+CM4228,teaches_skill,Engineering
+CM4269,teaches_skill,Chemistry
+CM4269,teaches_skill,Management
+CM5221,teaches_skill,English
+CM5221,teaches_skill,Chemistry
+CM5221,teaches_skill,Writing
+CM5221,teaches_skill,Automation
+CN1101A,teaches_skill,Engineering
+CN1101A,teaches_skill,English
+CN1101A,teaches_skill,Chemistry
+CN2102,teaches_skill,Design
+CN2102,teaches_skill,Engineering
+CN2102,teaches_skill,Cell Culture
+CN2103,teaches_skill,MATLAB
+CN2103,teaches_skill,Law
+CN2104,teaches_skill,Law
+CN2104,teaches_skill,Engineering
+CN2105,teaches_skill,Design
+CN2106,teaches_skill,Machinery
+CN2106,teaches_skill,Mechanics
+CN3103,teaches_skill,Engineering
+CN3103,teaches_skill,Mechanics
+CN3104,teaches_skill,Design
+CN3104,teaches_skill,Windows
+CN3104,teaches_skill,MATLAB
+CN3104,teaches_skill,Mac
+CN3135,teaches_skill,Environment
+CN3135,teaches_skill,Risk Analysis
+CN3135,teaches_skill,Law
+CN4227R,teaches_skill,Design
+CN4227R,teaches_skill,Transform
+CN5191,teaches_skill,Engineering
+CN5191,teaches_skill,Project Engineering
+CP3108B,teaches_skill,Research
+CS1010,teaches_skill,C
+CS1010,teaches_skill,C++
+CS1010,teaches_skill,Python
+CS1010,teaches_skill,Materials
+CS1010,teaches_skill,Engineering
+CS1010,teaches_skill,Visual Basic for Applications
+CS1010,teaches_skill,Visual Basic
+CS1010,teaches_skill,Programming
+CS1010E,teaches_skill,Programming
+CS1010E,teaches_skill,Python
+CS1010E,teaches_skill,C
+CS1010E,teaches_skill,Engineering
+CS1010E,teaches_skill,Java
+CS1010E,teaches_skill,JavaScript
+CS1010E,teaches_skill,GitHub
+CS1010E,teaches_skill,Data Science
+CS1010E,teaches_skill,Teaching
+CS1010E,teaches_skill,Writing
+CS1010E,teaches_skill,Problem Solving
+CS1010E,teaches_skill,Materials
+CS1010E,teaches_skill,Computer Science
+CS1010E,teaches_skill,Yoga
+CS1010E,teaches_skill,C++
+CS1010J,teaches_skill,Java
+CS1010S,teaches_skill,Programming
+CS1010S,teaches_skill,Python
+CS1010S,teaches_skill,R
+CS1010X,teaches_skill,Programming
+CS1010X,teaches_skill,Teaching
+CS1010X,teaches_skill,Java
+CS1010X,teaches_skill,Python
+CS1010X,teaches_skill,C
+CS1010X,teaches_skill,Video
+CS1010X,teaches_skill,Engineering
+CS1010X,teaches_skill,Facebook
+CS1010X,teaches_skill,Education
+CS1010X,teaches_skill,Electrical
+CS1010X,teaches_skill,Electrical Engineering
+CS1010X,teaches_skill,Credit
+CS1010X,teaches_skill,C++
+CS1010X,teaches_skill,Computer Science
+CS1101S,teaches_skill,Python
+CS1101S,teaches_skill,Programming
+CS1101S,teaches_skill,English
+CS1101S,teaches_skill,HTML5
+CS1101S,teaches_skill,JavaScript
+CS1101S,teaches_skill,Environment
+CS1101S,teaches_skill,C
+CS1101S,teaches_skill,Computer Science
+CS1101S,teaches_skill,Java
+CS1231,teaches_skill,Mathematics
+CS1231,teaches_skill,C
+CS1231,teaches_skill,Teaching
+CS1231,teaches_skill,Intelligence
+CS1231,teaches_skill,Computer Science
+CS1231S,teaches_skill,C
+CS1231S,teaches_skill,Teaching
+CS1231S,teaches_skill,Computer Science
+CS2030,teaches_skill,Design
+CS2030,teaches_skill,Programming
+CS2030,teaches_skill,Materials
+CS2030,teaches_skill,Java
+CS2030,teaches_skill,GitHub
+CS2030,teaches_skill,Python
+CS2030,teaches_skill,English
+CS2030,teaches_skill,C
+CS2030,teaches_skill,Teaching
+CS2030,teaches_skill,Visual Basic
+CS2030,teaches_skill,C#
+CS2030S,teaches_skill,Programming
+CS2030S,teaches_skill,Yoga
+CS2030S,teaches_skill,Typing
+CS2030S,teaches_skill,Java
+CS2030S,teaches_skill,Linux
+CS2040,teaches_skill,English
+CS2040,teaches_skill,Java
+CS2040,teaches_skill,C
+CS2040,teaches_skill,Programming
+CS2040,teaches_skill,Extract
+CS2040,teaches_skill,Python
+CS2040,teaches_skill,Teaching
+CS2040C,teaches_skill,C
+CS2040C,teaches_skill,Java
+CS2040C,teaches_skill,C++
+CS2040C,teaches_skill,Engineering
+CS2040C,teaches_skill,Information Security
+CS2040C,teaches_skill,Security
+CS2040C,teaches_skill,R
+CS2040C,teaches_skill,Python
+CS2040S,teaches_skill,Java
+CS2040S,teaches_skill,Programming
+CS2100,teaches_skill,Programming
+CS2100,teaches_skill,Algebra
+CS2100,teaches_skill,C
+CS2100,teaches_skill,Integration
+CS2100,teaches_skill,Architecture
+CS2100,teaches_skill,Yoga
+CS2100,teaches_skill,Computer Science
+CS2100,teaches_skill,C++
+CS2100,teaches_skill,Engineering
+CS2101,teaches_skill,Communication
+CS2101,teaches_skill,STEM
+CS2101,teaches_skill,English
+CS2101,teaches_skill,Teaching
+CS2101,teaches_skill,Intelligence
+CS2101,teaches_skill,Negotiation
+CS2102,teaches_skill,SQL
+CS2102,teaches_skill,Yoga
+CS2102,teaches_skill,Algebra
+CS2102,teaches_skill,Calculus
+CS2102,teaches_skill,PHP
+CS2102,teaches_skill,JavaScript
+CS2102,teaches_skill,HTML
+CS2103,teaches_skill,Computer Science
+CS2103,teaches_skill,Testing
+CS2103,teaches_skill,Java
+CS2103,teaches_skill,C++
+CS2103,teaches_skill,Engineering
+CS2103T,teaches_skill,Java
+CS2103T,teaches_skill,Git
+CS2103T,teaches_skill,GitHub
+CS2104,teaches_skill,Programming
+CS2105,teaches_skill,Network Security
+CS2105,teaches_skill,Security
+CS2105,teaches_skill,Python
+CS2105,teaches_skill,Networking
+CS2105,teaches_skill,C++
+CS2105,teaches_skill,Java
+CS2105,teaches_skill,Programming
+CS2105,teaches_skill,Computer Networking
+CS2105,teaches_skill,Computer Science
+CS2106,teaches_skill,Scheduling
+CS2106,teaches_skill,Management
+CS2106,teaches_skill,Communication
+CS2106,teaches_skill,C
+CS2106,teaches_skill,C++
+CS2106,teaches_skill,Unix
+CS2106,teaches_skill,Linux
+CS2106,teaches_skill,Writing
+CS2106,teaches_skill,Architecture
+CS2107,teaches_skill,Information Security
+CS2107,teaches_skill,Network Security
+CS2107,teaches_skill,Access Control
+CS2107,teaches_skill,Security
+CS2107,teaches_skill,SQL
+CS2107,teaches_skill,Programming
+CS2107,teaches_skill,Mac
+CS2107,teaches_skill,C
+CS2107,teaches_skill,Linux
+CS2107,teaches_skill,Unix
+CS2108,teaches_skill,Music
+CS2108,teaches_skill,MATLAB
+CS2108,teaches_skill,NA
+CS2108,teaches_skill,Transform
+CS2108,teaches_skill,Algebra
+CS2109S,teaches_skill,English
+CS2109S,teaches_skill,Engineering
+CS2109S,teaches_skill,Computer Science
+CS2309,teaches_skill,Research
+CS3103,teaches_skill,HTML
+CS3103,teaches_skill,C++
+CS3103,teaches_skill,C
+CS3103,teaches_skill,Python
+CS3103,teaches_skill,Programming
+CS3103,teaches_skill,Security
+CS3203,teaches_skill,Windows
+CS3203,teaches_skill,Linux
+CS3203,teaches_skill,Writing
+CS3203,teaches_skill,C++
+CS3203,teaches_skill,C
+CS3203,teaches_skill,Unix
+CS3203,teaches_skill,GitHub
+CS3203,teaches_skill,Programming
+CS3203,teaches_skill,Mac
+CS3203,teaches_skill,Scrum
+CS3203,teaches_skill,Engineering
+CS3203,teaches_skill,Computer Science
+CS3203,teaches_skill,Machine Learning
+CS3203,teaches_skill,Consultation
+CS3203,teaches_skill,Jenkins
+CS3203,teaches_skill,DevOps
+CS3203,teaches_skill,Java
+CS3210,teaches_skill,Programming
+CS3210,teaches_skill,C++
+CS3210,teaches_skill,Scheduling
+CS3210,teaches_skill,C
+CS3211,teaches_skill,C++
+CS3211,teaches_skill,Teaching
+CS3216,teaches_skill,Engineering
+CS3216,teaches_skill,Design
+CS3216,teaches_skill,Writing
+CS3216,teaches_skill,Product Design
+CS3216,teaches_skill,Machine Learning
+CS3217,teaches_skill,C
+CS3219,teaches_skill,Engineering
+CS3230,teaches_skill,C
+CS3230,teaches_skill,Design
+CS3230,teaches_skill,Programming
+CS3230,teaches_skill,Accounting
+CS3230,teaches_skill,C++
+CS3230,teaches_skill,Computer Science
+CS3230,teaches_skill,Teaching
+CS3230,teaches_skill,Java
+CS3233,teaches_skill,Programming
+CS3233,teaches_skill,C
+CS3234,teaches_skill,Testing
+CS3234,teaches_skill,Computer Science
+CS3234,teaches_skill,Programming
+CS3234,teaches_skill,Calculus
+CS3234,teaches_skill,Algebra
+CS3235,teaches_skill,Information Security
+CS3235,teaches_skill,Security
+CS3235,teaches_skill,GitHub
+CS3235,teaches_skill,Access Control
+CS3235,teaches_skill,SQL
+CS3235,teaches_skill,Infrastructure
+CS3235,teaches_skill,Unix
+CS3240,teaches_skill,Design
+CS3241,teaches_skill,Programming
+CS3241,teaches_skill,Graphics
+CS3241,teaches_skill,C++
+CS3241,teaches_skill,Windows
+CS3241,teaches_skill,Mac
+CS3241,teaches_skill,Algebra
+CS3242,teaches_skill,Computer Science
+CS3243,teaches_skill,Teaching
+CS3243,teaches_skill,Python
+CS3243,teaches_skill,Intelligence
+CS3244,teaches_skill,Machine Learning
+CS3244,teaches_skill,Engineering
+CS3244,teaches_skill,Mathematics
+CS3244,teaches_skill,Python
+CS3247,teaches_skill,Team Management
+CS3247,teaches_skill,Management
+CS3247,teaches_skill,Git
+CS3247,teaches_skill,C++
+CS3247,teaches_skill,Programming
+CS3247,teaches_skill,Graphics
+CS3247,teaches_skill,Networking
+CS3247,teaches_skill,Strategy
+CS3247,teaches_skill,Sound
+CS3247,teaches_skill,Mechanics
+CS4211,teaches_skill,Engineering
+CS4211,teaches_skill,C#
+CS4211,teaches_skill,C
+CS4212,teaches_skill,Engineering
+CS4212,teaches_skill,Programming
+CS4212,teaches_skill,Java
+CS4215,teaches_skill,C#
+CS4215,teaches_skill,JavaScript
+CS4215,teaches_skill,TypeScript
+CS4215,teaches_skill,Python
+CS4215,teaches_skill,C
+CS4215,teaches_skill,Java
+CS4215,teaches_skill,C++
+CS4215,teaches_skill,Testing
+CS4218,teaches_skill,Java
+CS4221,teaches_skill,Teaching
+CS4221,teaches_skill,SQL
+CS4222,teaches_skill,Networking
+CS4224,teaches_skill,DevOps
+CS4224,teaches_skill,R
+CS4224,teaches_skill,SQL
+CS4224,teaches_skill,Strategy
+CS4224,teaches_skill,Linux
+CS4225,teaches_skill,Hadoop
+CS4225,teaches_skill,SQL
+CS4225,teaches_skill,Java
+CS4226,teaches_skill,Law
+CS4226,teaches_skill,Programming
+CS4226,teaches_skill,Design
+CS4226,teaches_skill,Java
+CS4226,teaches_skill,Python
+CS4231,teaches_skill,Computer Science
+CS4234,teaches_skill,GitHub
+CS4234,teaches_skill,Design
+CS4234,teaches_skill,Python
+CS4234,teaches_skill,Programming
+CS4234,teaches_skill,C++
+CS4239,teaches_skill,Engineering
+CS4239,teaches_skill,Security
+CS4239,teaches_skill,C
+CS4239,teaches_skill,Linux
+CS4242,teaches_skill,Social Media
+CS4242,teaches_skill,Machine Learning
+CS4242,teaches_skill,Teaching
+CS4242,teaches_skill,Analytics
+CS4243,teaches_skill,Algebra
+CS4243,teaches_skill,GitHub
+CS4243,teaches_skill,Deep Learning
+CS4243,teaches_skill,Transform
+CS4243,teaches_skill,Machine Learning
+CS4243,teaches_skill,Python
+CS4243,teaches_skill,Calculus
+CS4246,teaches_skill,Planning
+CS4246,teaches_skill,Intelligence
+CS4246,teaches_skill,Programming
+CS4247,teaches_skill,Programming
+CS4247,teaches_skill,Mathematics
+CS4247,teaches_skill,Mac
+CS4247,teaches_skill,C
+CS4247,teaches_skill,C++
+CS4248,teaches_skill,STEM
+CS4248,teaches_skill,Machine Learning
+CS4248,teaches_skill,C
+CS4248,teaches_skill,Intelligence
+CS4249,teaches_skill,Design
+CS4249,teaches_skill,Psychology
+CS4249,teaches_skill,R
+CS4249,teaches_skill,Law
+CS4261,teaches_skill,Computer Science
+CS4268,teaches_skill,Teaching
+CS4269,teaches_skill,Computer Science
+CS4277,teaches_skill,Python
+CS4347,teaches_skill,Singing
+CS4347,teaches_skill,Machine Learning
+CS4347,teaches_skill,Transform
+CS4347,teaches_skill,Speech
+CS4347,teaches_skill,Teaching
+CS4347,teaches_skill,Music
+CS4347,teaches_skill,Education
+CS4347,teaches_skill,Deep Learning
+CS4347,teaches_skill,Sound
+CS4347,teaches_skill,Health
+CS5218,teaches_skill,Calculus
+CS5218,teaches_skill,C++
+CS5223,teaches_skill,Programming
+CS5223,teaches_skill,Java
+CS5228,teaches_skill,Python
+CS5228,teaches_skill,Teaching
+CS5228,teaches_skill,Data Mining
+CS5228,teaches_skill,Data Science
+CS5230,teaches_skill,Scribe
+CS5231,teaches_skill,C
+CS5233,teaches_skill,Data Analysis
+CS5233,teaches_skill,Architecture
+CS5233,teaches_skill,Engineering
+CS5233,teaches_skill,Python
+CS5233,teaches_skill,C
+CS5233,teaches_skill,Testing
+CS5239,teaches_skill,Linux
+CS5239,teaches_skill,Windows
+CS5239,teaches_skill,Machine Learning
+CS5239,teaches_skill,Law
+CS5240,teaches_skill,Design
+CS5246,teaches_skill,Administration
+CS5246,teaches_skill,Python
+CS5250,teaches_skill,C
+CS5250,teaches_skill,C++
+CS5250,teaches_skill,Linux
+CS5260,teaches_skill,Machine Learning
+CS5260,teaches_skill,Architecture
+CS5260,teaches_skill,English
+CS5260,teaches_skill,Teaching
+CS5346,teaches_skill,Tableau
+CS5421,teaches_skill,SQL
+CS5421,teaches_skill,Python
+CS5425,teaches_skill,Java
+CS5425,teaches_skill,Hadoop
+CS5425,teaches_skill,Microsoft Azure
+CS5477,teaches_skill,GitHub
+CS5562,teaches_skill,Machine Learning
+CS5647,teaches_skill,Deep Learning
+CS5647,teaches_skill,Sound
+CS5647,teaches_skill,Singing
+CS5647,teaches_skill,Health
+CS5647,teaches_skill,Education
+CS5647,teaches_skill,Machine Learning
+CS5647,teaches_skill,Speech
+CS5647,teaches_skill,Music
+DAO2702,teaches_skill,Data Science
+DAO2702,teaches_skill,Pandas
+DAO2702,teaches_skill,Python
+DBA3702,teaches_skill,R
+DBA3702,teaches_skill,Python
+DBA3803,teaches_skill,R
+DBA3803,teaches_skill,Python
+DBA4811,teaches_skill,R
+DBA4811,teaches_skill,Python
+DMC1401CS,teaches_skill,Design
+DSA1101,teaches_skill,R
+DSA1101,teaches_skill,Data Science
+DSA1101,teaches_skill,Data Analytics
+DSA1101,teaches_skill,Analytics
+DSA1101,teaches_skill,SQL
+DSA2101,teaches_skill,R
+DSA2101,teaches_skill,GitHub
+DSA2101,teaches_skill,Tableau
+DSA2101,teaches_skill,HTML
+DSA2101,teaches_skill,Windows
+DSA2101,teaches_skill,Python
+DSA2101,teaches_skill,Data Analytics
+DSA2101,teaches_skill,Analytics
+DSA2101,teaches_skill,Programming
+DSA2102,teaches_skill,R
+DSA2102,teaches_skill,Fitting
+DSA2102,teaches_skill,Integration
+DSA2102,teaches_skill,Python
+DSA2102,teaches_skill,Data Analytics
+DSA2102,teaches_skill,Programming
+DSA2102,teaches_skill,Analytics
+DSA2102,teaches_skill,Algebra
+DSA2102,teaches_skill,MATLAB
+DSA3101,teaches_skill,R
+DSA3101,teaches_skill,Git
+DSA3101,teaches_skill,Python
+DSA3101,teaches_skill,Video
+DSA3101,teaches_skill,JavaScript
+DSA3101,teaches_skill,SQL
+DSA3101,teaches_skill,Storytelling
+DSA3101,teaches_skill,HTML
+DSA3101,teaches_skill,Data Science
+DSA3102,teaches_skill,Machine Learning
+DSA3102,teaches_skill,Data Analytics
+DSA3102,teaches_skill,Analytics
+DSA3361,teaches_skill,Video
+DSA3361,teaches_skill,R
+DSA3361,teaches_skill,Fitting
+DSA3361,teaches_skill,Testing
+DSA3361,teaches_skill,Machine Learning
+DSA3361,teaches_skill,C
+DSA4211,teaches_skill,R
+DSA4211,teaches_skill,Python
+DSA4212,teaches_skill,Python
+DSA4213,teaches_skill,Engineering
+DSA4213,teaches_skill,Natural Language Processing
+DSA4213,teaches_skill,Architecture
+DSA4213,teaches_skill,Training
+DSA4213,teaches_skill,Python
+DSA4266,teaches_skill,Management
+DSA4266,teaches_skill,R
+DSA4266,teaches_skill,Biology
+DSA4266,teaches_skill,Management Systems
+DSA4266,teaches_skill,Data Analysis
+DSA4266,teaches_skill,Testing
+DSA4266,teaches_skill,Unix
+DSE1101,teaches_skill,R
+DTK1234,teaches_skill,Design
+DTK1234,teaches_skill,Teaching
+DTK1234,teaches_skill,Video
+DTK1234,teaches_skill,Law
+DTK1234,teaches_skill,C
+EBA5001,teaches_skill,Project Management
+EBA5001,teaches_skill,Communication
+EBA5001,teaches_skill,Management
+EBA5001,teaches_skill,Analytics
+EC1101E,teaches_skill,Government
+EC1101E,teaches_skill,Economics
+EC1101E,teaches_skill,Banking
+EC1101E,teaches_skill,Mathematics
+EC2101,teaches_skill,Economics
+EC2101,teaches_skill,Government
+EC2101,teaches_skill,Accounting
+EC2101,teaches_skill,Cash
+EC2101,teaches_skill,Law
+EC2101,teaches_skill,Mathematics
+EC2102,teaches_skill,Mathematics
+EC2102,teaches_skill,Economics
+EC2102,teaches_skill,Credit
+EC2104,teaches_skill,Integration
+EC2104,teaches_skill,Teaching
+EC2104,teaches_skill,Calculus
+EC2104,teaches_skill,Algebra
+EC2104,teaches_skill,English
+EC2205,teaches_skill,Engineering
+EC2205,teaches_skill,Government
+EC2205,teaches_skill,Economics
+EC2205,teaches_skill,Management
+EC2303,teaches_skill,C
+EC3101,teaches_skill,Strategy
+EC3101,teaches_skill,Economics
+EC3102,teaches_skill,Government
+EC3102,teaches_skill,Economics
+EC3304,teaches_skill,Writing
+EC3304,teaches_skill,Teaching
+EC3304,teaches_skill,Forecasting
+EC3322,teaches_skill,C
+EC3332,teaches_skill,Management
+EC3332,teaches_skill,Economics
+EC3332,teaches_skill,Banking
+EC3332,teaches_skill,Credit
+EC3333,teaches_skill,Investments
+EC3333,teaches_skill,Corporate Finance
+EC3333,teaches_skill,Finance
+EC3333,teaches_skill,Economics
+EC3333,teaches_skill,Writing
+EC3343,teaches_skill,Economics
+EC4301,teaches_skill,Law
+EC4304,teaches_skill,Forecasting
+EC4304,teaches_skill,R
+EC4304,teaches_skill,Data Science
+EC4304,teaches_skill,CEOs
+EC4304,teaches_skill,Python
+EC4308,teaches_skill,R
+EC4308,teaches_skill,Economics
+EC4308,teaches_skill,Python
+EC4331,teaches_skill,Design
+EC4371,teaches_skill,Economics
+EC4371,teaches_skill,Research
+EC4394,teaches_skill,Economics
+EC4394HM,teaches_skill,Economics
+EE1111A,teaches_skill,Design
+EE2012,teaches_skill,MATLAB
+EE2012,teaches_skill,Python
+EE2023,teaches_skill,Transform
+EE2026,teaches_skill,Design
+EE2026,teaches_skill,English
+EE2026,teaches_skill,C
+EE2026,teaches_skill,Python
+EE2026,teaches_skill,Engineering
+EE2026,teaches_skill,Electrical
+EE2026,teaches_skill,Electrical Engineering
+EE2028,teaches_skill,C
+EE2028,teaches_skill,Programming
+EE2028,teaches_skill,Python
+EE2028,teaches_skill,Architecture
+EE2111A,teaches_skill,Research
+EE2211,teaches_skill,Windows
+EE2211,teaches_skill,Teaching
+EE2211,teaches_skill,Administration
+EE2211,teaches_skill,Python
+EE3131C,teaches_skill,Engineering
+EE3131C,teaches_skill,Communication
+EE3131C,teaches_skill,Systems Engineering
+EE3431C,teaches_skill,Electronics
+EE4032,teaches_skill,Programming
+EE4032,teaches_skill,JavaScript
+EE4032,teaches_skill,C++
+EE4032,teaches_skill,Bitcoin
+EE4032,teaches_skill,GitHub
+EE4204,teaches_skill,Computer Networking
+EE4204,teaches_skill,Architecture
+EE4204,teaches_skill,Networking
+EE4308,teaches_skill,C++
+EE4409,teaches_skill,Electronics
+EE4437,teaches_skill,English
+EE4437,teaches_skill,Intelligence
+EE4505,teaches_skill,English
+EE4509,teaches_skill,SOLIDWORKS
+EE4704,teaches_skill,MATLAB
+EE5137,teaches_skill,Testing
+EE5434,teaches_skill,Integration
+EE5502,teaches_skill,C
+EG1311,teaches_skill,Video
+EG1311,teaches_skill,C
+EG1311,teaches_skill,Teaching
+EG1311,teaches_skill,NA
+EG1311,teaches_skill,Design
+EG1611,teaches_skill,Networking
+EG2401A,teaches_skill,Engineering
+EG2605,teaches_skill,Engineering
+EG2605,teaches_skill,Research
+EL1101E,teaches_skill,Computer Science
+EL1101E,teaches_skill,Linguistics
+EL1101E,teaches_skill,English
+EL1101E,teaches_skill,Research
+EL2101,teaches_skill,Linguistics
+EL2102,teaches_skill,Linguistics
+EL2102,teaches_skill,Sound
+EL2151,teaches_skill,English
+ES1103,teaches_skill,C
+ES1103,teaches_skill,English
+ES2631,teaches_skill,English
+ES2631,teaches_skill,Engineering
+ES2631,teaches_skill,Design
+ES2660,teaches_skill,C
+ES2660,teaches_skill,Engineering
+ES2660,teaches_skill,Digital Transformation
+ES2660,teaches_skill,Healthcare
+ES2660,teaches_skill,Education
+ES2660,teaches_skill,Critical Thinking
+ES2660,teaches_skill,English
+ES2660,teaches_skill,Communication
+ES2660,teaches_skill,Speech
+ES2660,teaches_skill,Writing
+ES2660,teaches_skill,Transportation
+ES2660,teaches_skill,Teaching
+ESE2101,teaches_skill,Video
+ESE2102,teaches_skill,Project Planning
+ESE2102,teaches_skill,Planning
+ESP2111,teaches_skill,Electronics
+FAS1101,teaches_skill,Research
+FAS1101,teaches_skill,English
+FAS1101,teaches_skill,Writing
+FE5213,teaches_skill,Python
+FIN3702B,teaches_skill,Portfolio Management
+FIN3702B,teaches_skill,Management
+FIN3716,teaches_skill,Corporate Finance
+FIN3716,teaches_skill,Programming
+FIN3716,teaches_skill,Finance
+FIN3719,teaches_skill,Management
+FIN3719,teaches_skill,Credit
+FIN3719,teaches_skill,Insurance
+FIN3719,teaches_skill,Estate Planning
+FIN3719,teaches_skill,Planning
+FIN3720,teaches_skill,Corporate Finance
+FIN3720,teaches_skill,Finance
+FST2102B,teaches_skill,Teaching
+GE2215,teaches_skill,Data Management
+GE2215,teaches_skill,Management
+GE2215,teaches_skill,Data Analysis
+GE2215,teaches_skill,Editing
+GE2215,teaches_skill,Data Visualization
+GE2215,teaches_skill,Windows
+GE2215,teaches_skill,Mac
+GE3216,teaches_skill,Mac
+GE3230A,teaches_skill,Teaching
+GE3257,teaches_skill,Finance
+GE3257,teaches_skill,Writing
+GEA1000,teaches_skill,Mathematics
+GEA1000,teaches_skill,English
+GEA1000,teaches_skill,Finance
+GEA1000,teaches_skill,English Literature
+GEA1000,teaches_skill,Microsoft Excel
+GEA1000,teaches_skill,STEM
+GEA1000,teaches_skill,Biology
+GEA1000,teaches_skill,Data Analysis
+GEA1000,teaches_skill,R
+GEA1000,teaches_skill,Testing
+GEA1000,teaches_skill,Design
+GEA1000,teaches_skill,Teaching
+GEA1000,teaches_skill,Design of Experiments
+GEA1000,teaches_skill,C
+GEA1000,teaches_skill,Research
+GEC1005,teaches_skill,Religion
+GEC1015,teaches_skill,Health
+GEC1015,teaches_skill,Research
+GEC1016,teaches_skill,Law
+GEC1031,teaches_skill,Research
+GEC1031,teaches_skill,English
+GEC1032,teaches_skill,English
+GEH1022,teaches_skill,STEM
+GEH1043,teaches_skill,Biology
+GEH1049,teaches_skill,Health
+GEH1049,teaches_skill,Research
+GEH1049,teaches_skill,Healthcare
+GEH1049,teaches_skill,Teaching
+GEH1049,teaches_skill,Economics
+GEH1056,teaches_skill,Religion
+GEH1079,teaches_skill,Research
+GEN2061X,teaches_skill,Video
+GEN2070X,teaches_skill,Health
+GEN2070X,teaches_skill,Child Development
+GEN2070Y,teaches_skill,Management
+GES1002,teaches_skill,Finance
+GES1003,teaches_skill,Calculus
+GES1003,teaches_skill,Tourism
+GES1003,teaches_skill,Planning
+GES1003,teaches_skill,C
+GES1003,teaches_skill,English
+GES1003,teaches_skill,Teaching
+GES1004,teaches_skill,Environment
+GES1005,teaches_skill,Video
+GES1007,teaches_skill,Education
+GES1007,teaches_skill,Teaching
+GES1020,teaches_skill,Music
+GES1020,teaches_skill,C
+GES1020,teaches_skill,Sound
+GES1035,teaches_skill,Integration
+GES1035,teaches_skill,Security
+GES1038,teaches_skill,English
+GESS1000,teaches_skill,Security
+GESS1000,teaches_skill,C
+GESS1001,teaches_skill,C
+GESS1012,teaches_skill,Education
+GESS1014,teaches_skill,Environment
+GESS1015,teaches_skill,C
+GESS1025,teaches_skill,English
+GESS1036,teaches_skill,Law
+GET1002,teaches_skill,English
+GET1020,teaches_skill,Religion
+GET1020,teaches_skill,C
+GET1020,teaches_skill,Engineering
+GET1020,teaches_skill,Mechanical Engineering
+GET1020,teaches_skill,Mechanical
+GET1023,teaches_skill,Spanish
+GET1025,teaches_skill,Design
+GET1026,teaches_skill,Drawing
+GET1028,teaches_skill,Windows
+GET1030,teaches_skill,Python
+GET1050,teaches_skill,HTML
+GET1050,teaches_skill,Microsoft Excel
+GET1050,teaches_skill,Video
+GEX1004,teaches_skill,English
+GEX1012,teaches_skill,C
+GEX1015,teaches_skill,Government
+HS1501,teaches_skill,Education
+HS1501,teaches_skill,Economics
+HS1501,teaches_skill,Video
+HS1501,teaches_skill,Intelligence
+HS1501,teaches_skill,Engineering
+HS1501,teaches_skill,C
+HS1501,teaches_skill,Marketing
+HS1501,teaches_skill,Design
+HS1501,teaches_skill,Law
+HS1501,teaches_skill,Finance
+HS1501,teaches_skill,Python
+HS2914,teaches_skill,C
+HSA1000,teaches_skill,Design
+HSA1000,teaches_skill,Environment
+HSA1000,teaches_skill,Religion
+HSA1000,teaches_skill,C
+HSA1000,teaches_skill,Hospitality
+HSA1000,teaches_skill,Compounding
+HSA1000,teaches_skill,STEM
+HSA1000,teaches_skill,English
+HSA1000,teaches_skill,Writing
+HSH1000,teaches_skill,Theatre
+HSH1000,teaches_skill,Linguistics
+HSH1000,teaches_skill,English
+HSH1000,teaches_skill,Materials
+HSI1000,teaches_skill,Environment
+HSI1000,teaches_skill,C
+HSI2004,teaches_skill,Research
+HSI2005,teaches_skill,Teaching
+HSI2010,teaches_skill,English
+HSI2010,teaches_skill,C
+HSI2010,teaches_skill,Teaching
+HSI2011,teaches_skill,Video
+HSI2011,teaches_skill,C
+HSI2013,teaches_skill,Windows
+HSI2013,teaches_skill,Logic Pro
+HSI2013,teaches_skill,C
+HSI2013,teaches_skill,Mac
+HSI2013,teaches_skill,Piano
+HSI2013,teaches_skill,Music
+HSI2013,teaches_skill,Music Composition
+HSI2014,teaches_skill,Health
+HSI2014,teaches_skill,Biology
+HSI2014,teaches_skill,Entertainment
+HSI2014,teaches_skill,Cell Biology
+HSS1000,teaches_skill,Psychology
+HSS1000,teaches_skill,Framing
+HSS1000,teaches_skill,Social Work
+HSS1000,teaches_skill,Economics
+HSS1000,teaches_skill,Design
+HSS1000,teaches_skill,English
+HSS1000,teaches_skill,Video
+HY1101E,teaches_skill,Art
+ID2115,teaches_skill,Lighting
+ID2115,teaches_skill,Design
+ID2115,teaches_skill,Clip Studio Paint
+ID2115,teaches_skill,Teaching
+ID2115,teaches_skill,Paint
+IE2100,teaches_skill,Law
+IE2110,teaches_skill,Research
+IE2110,teaches_skill,Engineering
+IE2110,teaches_skill,Scheduling
+IE2110,teaches_skill,Systems Engineering
+IE2110,teaches_skill,R
+IE2110,teaches_skill,Transportation
+IE2110,teaches_skill,Programming
+IE2110,teaches_skill,C
+IE2110,teaches_skill,Algebra
+IE2141,teaches_skill,Project Management
+IE2141,teaches_skill,Instagram
+IE2141,teaches_skill,Management
+IE2141,teaches_skill,Testing
+IE2141,teaches_skill,Video
+IE2141,teaches_skill,Teaching
+IE4210,teaches_skill,Programming
+IE5208,teaches_skill,Project Management
+IE5208,teaches_skill,Management
+IFS4101,teaches_skill,Personal Data Protection
+IFS4101,teaches_skill,Cybersecurity
+IFS4101,teaches_skill,Law
+IFS4101,teaches_skill,English
+IFS4101,teaches_skill,Security
+IFS4103,teaches_skill,Linux
+IFS4103,teaches_skill,Penetration Testing
+IFS4103,teaches_skill,Testing
+IS1108,teaches_skill,Planning
+IS1108,teaches_skill,Design
+IS1108,teaches_skill,Automation
+IS1108,teaches_skill,Interaction Design
+IS1108,teaches_skill,Intelligence
+IS2101,teaches_skill,Canva
+IS2103,teaches_skill,Git
+IS2218,teaches_skill,Marketing
+IS2218,teaches_skill,Accounting
+IS2218,teaches_skill,Finance
+IS2238,teaches_skill,Economics
+IS2238,teaches_skill,Video
+IS3103,teaches_skill,Publishing
+IS3103,teaches_skill,Research
+IS3103,teaches_skill,Consultation
+IS3103,teaches_skill,Leadership
+IS3106,teaches_skill,MySQL
+IS3106,teaches_skill,Java
+IS3106,teaches_skill,HTML
+IS4100,teaches_skill,Project Management
+IS4100,teaches_skill,Management
+IS4100,teaches_skill,IT Project Management
+IS4231,teaches_skill,Cybersecurity
+IS4243,teaches_skill,Writing
+IS4243,teaches_skill,Resume Writing
+IS4302,teaches_skill,Writing
+IT1244,teaches_skill,Programming
+IT1244,teaches_skill,Python
+IT1244,teaches_skill,Linux
+IT1244,teaches_skill,Deep Learning
+IT1244,teaches_skill,Intelligence
+IT1244,teaches_skill,English
+IT1244,teaches_skill,Machine Learning
+IT1244,teaches_skill,Writing
+IT1244,teaches_skill,Pandas
+IT2002,teaches_skill,Algebra
+IT2002,teaches_skill,Calculus
+IT2002,teaches_skill,SQL
+IT2002,teaches_skill,Python
+IT2900,teaches_skill,English
+IT3010,teaches_skill,MongoDB
+IT3010,teaches_skill,SQL
+IT5001,teaches_skill,Python
+IT5002,teaches_skill,Python
+IT5002,teaches_skill,C
+IT5002,teaches_skill,C++
+IT5007,teaches_skill,MongoDB
+IT5007,teaches_skill,HTML
+IT5008,teaches_skill,SQL
+IT5100B,teaches_skill,Teaching
+IT5100E,teaches_skill,SQL
+JS1101E,teaches_skill,Research
+LAF3201,teaches_skill,English
+LAF3202,teaches_skill,Writing
+LAG1201,teaches_skill,Video
+LAG1201,teaches_skill,English
+LAG2201,teaches_skill,Video
+LAG3201,teaches_skill,Video
+LAJ1201,teaches_skill,Pharmacy
+LAJ1201,teaches_skill,C
+LAJ1201,teaches_skill,Spanish
+LAJ2201,teaches_skill,English
+LAJ2201,teaches_skill,Travel
+LAJ2201,teaches_skill,C
+LAJ2201,teaches_skill,Writing
+LAJ2202,teaches_skill,C
+LAJ3202,teaches_skill,Education
+LAK1201,teaches_skill,STEM
+LAK1201,teaches_skill,English
+LAK2201,teaches_skill,Entertainment
+LAK2201,teaches_skill,Sports
+LAK2201,teaches_skill,English
+LAK3201,teaches_skill,Video
+LAK3201,teaches_skill,English
+LAK3202,teaches_skill,English
+LAK3202,teaches_skill,Writing
+LAR1201,teaches_skill,Teaching
+LAS1201,teaches_skill,Spanish
+LAS1201,teaches_skill,Video
+LAS2201,teaches_skill,Spanish
+LAS3202,teaches_skill,Video
+LAS3202,teaches_skill,Spanish
+LAS4201,teaches_skill,Video
+LAS4201,teaches_skill,Spanish
+LAT2201,teaches_skill,English
+LSM1111,teaches_skill,Video
+LSM1301,teaches_skill,Biology
+LSM1303,teaches_skill,Communication
+LSM1303,teaches_skill,Animal Welfare
+LSM1303,teaches_skill,Management
+LSM2251,teaches_skill,Teaching
+LSM3212,teaches_skill,Bar
+LSM3223,teaches_skill,Teaching
+LSM3227,teaches_skill,Biology
+LSM3227,teaches_skill,Molecular Biology
+LSM3228,teaches_skill,Teaching
+LSM3232,teaches_skill,Teaching
+LSM3232,teaches_skill,Testing
+LSM3254,teaches_skill,Teaching
+LSM4221,teaches_skill,Teaching
+LSM4222,teaches_skill,Teaching
+LSM4251,teaches_skill,Teaching
+MA1100,teaches_skill,Mathematics
+MA1100,teaches_skill,C
+MA1100,teaches_skill,Algebra
+MA1100,teaches_skill,Biology
+MA1100,teaches_skill,Construction
+MA1100T,teaches_skill,Mathematics
+MA1100T,teaches_skill,Algebra
+MA1100T,teaches_skill,R
+MA1100T,teaches_skill,C
+MA1301,teaches_skill,Mathematics
+MA1301,teaches_skill,Integration
+MA1301,teaches_skill,Computer Science
+MA1301,teaches_skill,Engineering
+MA1301X,teaches_skill,Mathematics
+MA1301X,teaches_skill,Integration
+MA1301X,teaches_skill,Video
+MA1312,teaches_skill,Integration
+MA1505,teaches_skill,Integration
+MA1505,teaches_skill,Teaching
+MA1508E,teaches_skill,MATLAB
+MA1508E,teaches_skill,Algebra
+MA1508E,teaches_skill,Teaching
+MA1511,teaches_skill,Mathematics
+MA1511,teaches_skill,Calculus
+MA1511,teaches_skill,Economics
+MA1511,teaches_skill,C
+MA1511,teaches_skill,Teaching
+MA1512,teaches_skill,Transform
+MA1512,teaches_skill,Law
+MA1512,teaches_skill,Engineering
+MA1512,teaches_skill,MATLAB
+MA1512,teaches_skill,Mathematics
+MA1512,teaches_skill,Teaching
+MA1512,teaches_skill,C
+MA1513,teaches_skill,MATLAB
+MA1513,teaches_skill,Mathematics
+MA1521,teaches_skill,Calculus
+MA1521,teaches_skill,Algebra
+MA1521,teaches_skill,Mathematics
+MA1521,teaches_skill,Integration
+MA1521,teaches_skill,C
+MA1521,teaches_skill,Teaching
+MA1522,teaches_skill,MATLAB
+MA1522,teaches_skill,Load
+MA1522,teaches_skill,Algebra
+MA1522,teaches_skill,Python
+MA2001,teaches_skill,MATLAB
+MA2001,teaches_skill,Algebra
+MA2001,teaches_skill,C
+MA2001,teaches_skill,STEM
+MA2001,teaches_skill,Calculus
+MA2002,teaches_skill,Integration
+MA2002,teaches_skill,Mathematics
+MA2002,teaches_skill,Python
+MA2002,teaches_skill,Calculus
+MA2002,teaches_skill,Law
+MA2002,teaches_skill,Finance
+MA2002,teaches_skill,Data Science
+MA2002,teaches_skill,C
+MA2101,teaches_skill,Algebra
+MA2101S,teaches_skill,Algebra
+MA2104,teaches_skill,English
+MA2104,teaches_skill,Mathematics
+MA2104,teaches_skill,Integration
+MA2104,teaches_skill,Calculus
+MA2104,teaches_skill,STEM
+MA2104,teaches_skill,Engineering
+MA2108,teaches_skill,C
+MA2108,teaches_skill,R
+MA2108,teaches_skill,Mathematics
+MA2108,teaches_skill,Algebra
+MA2108,teaches_skill,Engineering
+MA2108,teaches_skill,STEM
+MA2108,teaches_skill,Calculus
+MA2108S,teaches_skill,C
+MA2108S,teaches_skill,R
+MA2108S,teaches_skill,Engineering
+MA2108S,teaches_skill,Construction
+MA2108S,teaches_skill,Mathematics
+MA2116,teaches_skill,Mathematics
+MA2116,teaches_skill,Strategy
+MA2116,teaches_skill,Law
+MA2116,teaches_skill,Calculus
+MA2202,teaches_skill,Algebra
+MA2202S,teaches_skill,Algebra
+MA2213,teaches_skill,C
+MA2213,teaches_skill,MATLAB
+MA2213,teaches_skill,Integration
+MA2213,teaches_skill,Mathematics
+MA2213,teaches_skill,English
+MA2214,teaches_skill,Mathematics
+MA2214,teaches_skill,C
+MA2311,teaches_skill,Calculus
+MA3201,teaches_skill,NA
+MA3201,teaches_skill,Algebra
+MA3201,teaches_skill,R
+MA3205,teaches_skill,Mathematics
+MA3205,teaches_skill,R
+MA3210,teaches_skill,Algebra
+MA3210,teaches_skill,Materials
+MA3210,teaches_skill,Integration
+MA3210,teaches_skill,Calculus
+MA3211,teaches_skill,Calculus
+MA3211S,teaches_skill,Algebra
+MA3220,teaches_skill,Drawing
+MA3220,teaches_skill,Teaching
+MA3236,teaches_skill,Programming
+MA3238,teaches_skill,Law
+MA3264,teaches_skill,Calculus
+MA3265,teaches_skill,Algebra
+MA3288,teaches_skill,STEM
+MA3288,teaches_skill,Algebra
+MA4199,teaches_skill,Mathematics
+MA4199,teaches_skill,Design
+MA4199,teaches_skill,Algebra
+MA4199,teaches_skill,Testing
+MA4199,teaches_skill,MATLAB
+MA4199,teaches_skill,Python
+MA4207,teaches_skill,Calculus
+MA4207,teaches_skill,Facebook
+MA4211,teaches_skill,Integration
+MA4211,teaches_skill,Algebra
+MA4211,teaches_skill,R
+MA4211,teaches_skill,English
+MA4211,teaches_skill,C
+MA4221,teaches_skill,R
+MA4230,teaches_skill,Mathematics
+MA4254,teaches_skill,Programming
+MA4255,teaches_skill,MATLAB
+MA4261,teaches_skill,Algebra
+MA4262,teaches_skill,Integration
+MA4262,teaches_skill,Construction
+MA4264,teaches_skill,Mathematics
+MA4264,teaches_skill,English
+MA4266,teaches_skill,Mathematics
+MA4268,teaches_skill,Mathematics
+MA4268,teaches_skill,Programming
+MA4268,teaches_skill,Python
+MA4270,teaches_skill,Machine Learning
+MA4270,teaches_skill,Programming
+MA4270,teaches_skill,Algebra
+MA4270,teaches_skill,Python
+MA4270,teaches_skill,Analytics
+MA4270,teaches_skill,Data Science
+MA5204,teaches_skill,Algebra
+MA5205,teaches_skill,Integration
+MA5213,teaches_skill,Mathematics
+MA5218,teaches_skill,Algebra
+MA5232,teaches_skill,Mathematics
+MA5232,teaches_skill,Windows
+MA5232,teaches_skill,Python
+MA5233,teaches_skill,Mathematics
+MA5233,teaches_skill,Programming
+MA5243,teaches_skill,Mathematics
+MA5248,teaches_skill,Finance
+MA5259,teaches_skill,Teaching
+MA5260,teaches_skill,Construction
+MA5260,teaches_skill,Law
+MA6252,teaches_skill,Mathematics
+MA6252,teaches_skill,C
+ME2102,teaches_skill,Engineering
+ME2102,teaches_skill,Manufacturing
+ME2102,teaches_skill,Design
+ME2102,teaches_skill,Manufacturing Processes
+ME2102,teaches_skill,Drawing
+ME2104,teaches_skill,Electricity
+ME2121,teaches_skill,Law
+ME2135,teaches_skill,Engineering
+ME2135,teaches_skill,Mechanical Engineering
+ME2135,teaches_skill,Mechanical
+ME2142,teaches_skill,Translation
+ME2142,teaches_skill,Algebra
+ME3241,teaches_skill,C
+ME3243,teaches_skill,Video
+ME3243,teaches_skill,Planning
+ME3243,teaches_skill,C++
+ME4233,teaches_skill,MATLAB
+ME4233,teaches_skill,Mechanics
+ME4291,teaches_skill,Engineering
+ME4291,teaches_skill,Calculus
+ME5304,teaches_skill,MATLAB
+ME5409,teaches_skill,Teaching
+ME5411,teaches_skill,Teaching
+ME5418,teaches_skill,Planning
+ME5418,teaches_skill,Engineering
+ME5418,teaches_skill,Mechanical Engineering
+ME5418,teaches_skill,Computer Science
+ME5418,teaches_skill,Machine Learning
+ME5418,teaches_skill,Mechanical
+ME5421,teaches_skill,Teaching
+ME5422,teaches_skill,Design
+ME5422,teaches_skill,Teaching
+MKT1705A,teaches_skill,C
+MKT3718,teaches_skill,English
+MKT3718,teaches_skill,Advertising
+MKT3718,teaches_skill,Marketing
+MLE1001B,teaches_skill,Teaching
+MLE2001A,teaches_skill,Teaching
+MLE2001A,teaches_skill,Materials
+MLE2102,teaches_skill,Teaching
+MLE2102,teaches_skill,Chemistry
+MLE2102,teaches_skill,Materials
+MLE2103A,teaches_skill,Teaching
+MLE2105,teaches_skill,Teaching
+MLE2301,teaches_skill,Engineering
+MLE2301,teaches_skill,Teaching
+MLE2301,teaches_skill,Mechanical
+MLE2301,teaches_skill,Materials
+MLE3101,teaches_skill,Teaching
+MLE3101,teaches_skill,Teamwork
+MLE3101A,teaches_skill,Teaching
+MLE3101A,teaches_skill,Engineering
+MLE3101A,teaches_skill,Materials
+MLE3102,teaches_skill,Teaching
+MLE3103,teaches_skill,Design
+MLE3103,teaches_skill,Teaching
+MLE3103,teaches_skill,Mechanical
+MLE3103,teaches_skill,Materials
+MLE3103,teaches_skill,Engineering
+MLE3104,teaches_skill,Materials
+MLE3104,teaches_skill,C
+MLE4202,teaches_skill,Teaching
+MLE4203,teaches_skill,Teaching
+MLE4206,teaches_skill,Teaching
+MLE4207,teaches_skill,Teaching
+MLE4208,teaches_skill,Teaching
+MLE4210,teaches_skill,Teaching
+MLE4212,teaches_skill,Teaching
+MLE4219,teaches_skill,Writing
+MLE4222,teaches_skill,Teaching
+MLE4228,teaches_skill,Teaching
+MLE5224,teaches_skill,Testing
+MLE5229,teaches_skill,Teaching
+MNO1706E,teaches_skill,Communication
+MT5913,teaches_skill,Entrepreneurship
+MUH3203,teaches_skill,Music
+MUT1201,teaches_skill,C
+NM1101E,teaches_skill,Instagram
+NM1101E,teaches_skill,Research
+NM1101E,teaches_skill,Communication
+NM1101X,teaches_skill,Research
+NM1101X,teaches_skill,Adobe Illustrator
+NM1101X,teaches_skill,Design
+NM1101X,teaches_skill,Strategy
+NM1101X,teaches_skill,Communication
+NM1101X,teaches_skill,Paint
+NM1101X,teaches_skill,Instagram
+NM1101X,teaches_skill,Storytelling
+NM2101,teaches_skill,Research
+NM2101,teaches_skill,Communication
+NM2101,teaches_skill,Teaching
+NM2101,teaches_skill,Video
+NM2101,teaches_skill,Command
+NM2103,teaches_skill,Research
+NM2103,teaches_skill,R
+NM2103,teaches_skill,Quantitative Research
+NM2104,teaches_skill,Research
+NM2104,teaches_skill,Communication
+NM2207,teaches_skill,JavaScript
+NM2207,teaches_skill,HTML
+NM2209,teaches_skill,Teaching
+NM2219,teaches_skill,Public Relations
+NM2220,teaches_skill,Social Media
+NM2220,teaches_skill,Writing
+NM3217,teaches_skill,Branding
+NM3219,teaches_skill,Social Media
+NM3219,teaches_skill,Management
+NM3219,teaches_skill,Writing
+NM3219,teaches_skill,Communication
+NM3219,teaches_skill,Public Relations
+NM3230,teaches_skill,Environment
+NM3230,teaches_skill,Adobe Premiere Pro
+NM4228,teaches_skill,Design
+NM4228,teaches_skill,Communication
+NM4230,teaches_skill,Communication
+NM4230HM,teaches_skill,Communication
+NM4244,teaches_skill,Research
+NM4244,teaches_skill,Writing
+NM4245,teaches_skill,Social Media
+NM4245,teaches_skill,Communication
+NM4245HM,teaches_skill,Social Media
+NM4245HM,teaches_skill,Communication
+NM4247,teaches_skill,Writing
+NM4249,teaches_skill,Research
+NM4253,teaches_skill,Environment
+NM4253HM,teaches_skill,Environment
+NM4255,teaches_skill,Social Media
+NM4255,teaches_skill,Communication
+NM4255,teaches_skill,Strategy
+NM4255,teaches_skill,Social Media Marketing
+NM4255,teaches_skill,Marketing
+NM4255HM,teaches_skill,Social Media
+NM4255HM,teaches_skill,Communication
+NM4255HM,teaches_skill,Strategy
+NM4257,teaches_skill,Video
+NM4257,teaches_skill,Advertising
+NM4880H,teaches_skill,Entertainment
+NM4880HHM,teaches_skill,Entertainment
+NTW2036,teaches_skill,Research
+NTW2036,teaches_skill,Planning
+NUR1113A,teaches_skill,Nursing
+NUR3119,teaches_skill,Medicine
+PC1101,teaches_skill,Mathematics
+PC1101,teaches_skill,Mechanics
+PC1101,teaches_skill,STEM
+PC1101,teaches_skill,Electricity
+PC1201,teaches_skill,Electricity
+PC1201,teaches_skill,Mechanics
+PC2020,teaches_skill,Electricity
+PC2020,teaches_skill,Law
+PC2031,teaches_skill,Electricity
+PC2031,teaches_skill,Calculus
+PC2032,teaches_skill,Calculus
+PC2032,teaches_skill,Mechanics
+PC2130,teaches_skill,Mechanics
+PC2174A,teaches_skill,Calculus
+PC2174A,teaches_skill,Algebra
+PC2174A,teaches_skill,Integration
+PC2193,teaches_skill,Microsoft Office
+PC2193,teaches_skill,Python
+PC2193,teaches_skill,MATLAB
+PC2193,teaches_skill,X-ray
+PC2193,teaches_skill,Electronics
+PC2193,teaches_skill,Writing
+PC3130,teaches_skill,Teaching
+PC3130,teaches_skill,Mechanics
+PC3193,teaches_skill,Teaching
+PC3231,teaches_skill,Paint
+PC3235,teaches_skill,Law
+PC3261,teaches_skill,Mechanics
+PC3274A,teaches_skill,Transform
+PC4230,teaches_skill,Design
+PC4241,teaches_skill,Mathematics
+PC4241,teaches_skill,Mechanics
+PC4241,teaches_skill,Lecturing
+PC4243,teaches_skill,Python
+PC4246,teaches_skill,Python
+PC4274A,teaches_skill,Calculus
+PC5210,teaches_skill,Calculus
+PC5210,teaches_skill,Mechanics
+PC5252,teaches_skill,Machine Learning
+PC5252,teaches_skill,Python
+PF1101,teaches_skill,Engineering
+PF1101,teaches_skill,English
+PF1101,teaches_skill,Project Management
+PF1101,teaches_skill,Manufacturing
+PF1101,teaches_skill,Management
+PF1101,teaches_skill,Retail
+PF2107,teaches_skill,Procore
+PF2107,teaches_skill,Construction
+PH2211,teaches_skill,Religion
+PL1101E,teaches_skill,Research
+PL1101E,teaches_skill,Teaching
+PL1101E,teaches_skill,Psychology
+PL1101E,teaches_skill,Video
+PL1101E,teaches_skill,Environment
+PL1101E,teaches_skill,Materials
+PL1101E,teaches_skill,Chemistry
+PL1101E,teaches_skill,Biology
+PL2131,teaches_skill,Design
+PL2131,teaches_skill,Research
+PL2131,teaches_skill,Testing
+PL2131,teaches_skill,Psychology
+PL3103,teaches_skill,Psychology
+PL4227,teaches_skill,Biology
+PL4233,teaches_skill,Psychology
+PL4233,teaches_skill,Negotiation
+PL4245,teaches_skill,R
+PL4246,teaches_skill,R
+PL4246,teaches_skill,Psychology
+PL4246HM,teaches_skill,Psychology
+PL4246HM,teaches_skill,R
+PL4880P,teaches_skill,Psychology
+PL4880P,teaches_skill,Religion
+PLB1201,teaches_skill,Research
+PLS8001,teaches_skill,Psychology
+PLS8003,teaches_skill,Psychology
+PLS8003,teaches_skill,Mindfulness
+PR2154,teaches_skill,Pharmacy
+PS1101E,teaches_skill,International Relations
+PS1101E,teaches_skill,Teaching
+PS2204,teaches_skill,English
+PS2237,teaches_skill,Teaching
+PS2237,teaches_skill,Security
+PS2238,teaches_skill,Teaching
+PS2240,teaches_skill,Teaching
+PS2249,teaches_skill,Teaching
+QF1100,teaches_skill,Loans
+QF1100,teaches_skill,Mathematics
+QF1100,teaches_skill,Finance
+QF2103,teaches_skill,Pandas
+QF2103,teaches_skill,Machine Learning
+QF2103,teaches_skill,Python
+QF2103,teaches_skill,Credit
+QF2104,teaches_skill,Compounding
+QF2104,teaches_skill,Security
+QF2104,teaches_skill,Cash
+QF2104,teaches_skill,Strategy
+QF3101,teaches_skill,Mathematics
+QF4103,teaches_skill,Mathematics
+QF4103,teaches_skill,Finance
+RE4711,teaches_skill,Time Management
+RE4711,teaches_skill,Research
+RE4711,teaches_skill,Qualitative Research
+RE4711,teaches_skill,Management
+RVC1001,teaches_skill,Teaching
+RVC1001,teaches_skill,Instagram
+SC1101E,teaches_skill,Social Work
+SC2101,teaches_skill,Research
+SC2101,teaches_skill,Data Analysis
+SC2209,teaches_skill,Finance
+SC2209,teaches_skill,Credit
+SC2216,teaches_skill,Writing
+SE1101E,teaches_skill,Religion
+SN3275,teaches_skill,English
+SP1541,teaches_skill,Writing
+SP1541,teaches_skill,Biology
+SP1541,teaches_skill,Mathematics
+SP1541,teaches_skill,Communication
+SP1541,teaches_skill,Computer Science
+SP1541,teaches_skill,Chemistry
+SP1541,teaches_skill,English
+SP1541,teaches_skill,NA
+SP1541,teaches_skill,Teaching
+SP2271,teaches_skill,English
+SP2271,teaches_skill,Writing
+SP2271,teaches_skill,Research
+SP2271,teaches_skill,Communication
+SP2271,teaches_skill,Teaching
+SP2274,teaches_skill,Gel Electrophoresis
+SP2274,teaches_skill,Biology
+SP2274,teaches_skill,Research
+SP2274,teaches_skill,Cell Biology
+SP2274,teaches_skill,Molecular Biology
+SP2274,teaches_skill,Polymerase Chain Reaction
+SP2274,teaches_skill,Teaching
+SPH2001,teaches_skill,R
+SPH2001,teaches_skill,Research
+SPH2001,teaches_skill,Data Analysis
+SPH3101,teaches_skill,R
+SPH3501,teaches_skill,Health
+SPH3501,teaches_skill,Communication
+ST1131,teaches_skill,Art
+ST1131,teaches_skill,Data Analysis
+ST1131,teaches_skill,R
+ST1131,teaches_skill,Data Collection
+ST1131,teaches_skill,Programming
+ST1131,teaches_skill,Mathematics
+ST1131,teaches_skill,Real Estate
+ST1131,teaches_skill,Testing
+ST2131,teaches_skill,Mathematics
+ST2131,teaches_skill,Strategy
+ST2131,teaches_skill,Law
+ST2131,teaches_skill,Calculus
+ST2131,teaches_skill,Windows
+ST2131,teaches_skill,C
+ST2131,teaches_skill,Mac
+ST2131,teaches_skill,English
+ST2131,teaches_skill,Consultation
+ST2132,teaches_skill,Mathematics
+ST2132,teaches_skill,Computer Science
+ST2132,teaches_skill,R
+ST2132,teaches_skill,Testing
+ST2132,teaches_skill,Data Analysis
+ST2132,teaches_skill,Python
+ST2137,teaches_skill,SAS
+ST2137,teaches_skill,R
+ST2137,teaches_skill,Python
+ST2137,teaches_skill,Data Analysis
+ST2137,teaches_skill,Testing
+ST2334,teaches_skill,Administration
+ST2334,teaches_skill,Mathematics
+ST3131,teaches_skill,R
+ST3131,teaches_skill,SAS
+ST3131,teaches_skill,Teaching
+ST3131,teaches_skill,Economics
+ST3131,teaches_skill,Data Science
+ST3131,teaches_skill,Analytics
+ST3131,teaches_skill,Engineering
+ST3131,teaches_skill,Systems Engineering
+ST3232,teaches_skill,Design
+ST3232,teaches_skill,R
+ST3232,teaches_skill,Planning
+ST3236,teaches_skill,Law
+ST3247,teaches_skill,R
+ST3248,teaches_skill,R
+ST4233,teaches_skill,Algebra
+ST4234,teaches_skill,R
+ST4234,teaches_skill,Data Analysis
+ST4248,teaches_skill,R
+ST4248,teaches_skill,Deep Learning
+ST4253,teaches_skill,Forecasting
+ST4253,teaches_skill,R
+ST5201,teaches_skill,SAS
+ST5201,teaches_skill,R
+ST5201,teaches_skill,Python
+ST5213,teaches_skill,R
+ST5227,teaches_skill,Engineering
+ST5227,teaches_skill,Data Mining
+ST5227,teaches_skill,R
+ST5227,teaches_skill,Machine Learning
+ST5227,teaches_skill,Python
+SW1101E,teaches_skill,Social Work
+TCE2183,teaches_skill,Construction
+TIC1001,teaches_skill,C++
+TIC2003,teaches_skill,C
+TIC2003,teaches_skill,C++
+TIC2401,teaches_skill,C
+TIC2501,teaches_skill,Programming
+TIC2601,teaches_skill,SQL
+TIC2601,teaches_skill,Design
+TIC2601,teaches_skill,Node.js
+TRA2101,teaches_skill,English
+TRA2101,teaches_skill,Translation
+TS2243,teaches_skill,R
+TS3103,teaches_skill,Theatre
+TS3103,teaches_skill,Communication
+TS3222,teaches_skill,Theatre
+TS3551,teaches_skill,Research
+UTS2105,teaches_skill,English
+UTW1001O,teaches_skill,Engineering
+UTW1001O,teaches_skill,Research

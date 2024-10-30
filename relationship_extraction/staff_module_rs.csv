@@ -1,0 +1,1184 @@
+Subject,Predicate,Object
+ACC1701X,teaches_module,Prof Chan
+ACC1701X,teaches_module,Prof Winston
+ACC1701X,teaches_module,Prof Deon
+ACC1701X,teaches_module,Prof Hanny
+ACC1701X,teaches_module,prof shi
+ACC1701X,teaches_module,Prof Shi
+AH2101,teaches_module,Dr Priya
+AN2203,teaches_module,Prof Elliott
+BL5602,teaches_module,Prof Gong
+BL5602,teaches_module,Prof Pan
+BL5602,teaches_module,Prof Ge
+BN2403,teaches_module,Prof Huang Zhiwei
+BN5101,teaches_module,Prof Yu Haoyong
+BN5104,teaches_module,Prof Leo
+BN5104,teaches_module,Prof Cheow
+BN5104,teaches_module,Prof Cheow Lih
+BSN3714,teaches_module,Prof Yong
+BSN3714,teaches_module,Prof Titus
+BSP1703,teaches_module,Prof Xu Le
+BSP1707A,teaches_module,Prof Ong Pinchuan
+BT1101,teaches_module,Prof Sharon
+BT1101,teaches_module,Prof Yingda
+BT1101,teaches_module,prof sharon
+BT1101,teaches_module,Prof Yinda
+BT1101,teaches_module,Prof Samantha Sow
+BT1101,teaches_module,Dr Desmond
+BT1101,teaches_module,Prof Desmond
+BT1101,teaches_module,Dr Ong
+BT1101,teaches_module,Prof Sharon Tan
+BT1101,teaches_module,Prof Geng
+BT2101,teaches_module,Prof Varun
+BT2102,teaches_module,Prof Danny
+BT2102,teaches_module,Prof Danny Poo
+BT3017,teaches_module,Prof Ng
+BT3102,teaches_module,Prof Adi
+BT3102,teaches_module,Prof Stanley
+BT3102,teaches_module,Prof Aditya
+BT3102,teaches_module,Prof Aditya Karanam
+BT3102,teaches_module,Dr Stanley
+BT3102,teaches_module,Prof  Pieter Abbeel
+BT4013,teaches_module,Prof Stanley
+BT4211,teaches_module,Prof Vivek Sundar
+BT4211,teaches_module,Prof Vivek
+BT4212,teaches_module,Prof Jin Chen
+BT4221,teaches_module,Prof Um Sungyong
+BT4222,teaches_module,Prof Qiao
+CDE2000,teaches_module,Dr Uma
+CE1103,teaches_module,Prof Darren Chian
+CE1103,teaches_module,Prof Qian
+CE1103,teaches_module,Prof Darren
+CE1103,teaches_module,Prof Qian Xudong
+CE2155,teaches_module,Dr Du Hongjian
+CE2407B,teaches_module,Prof Kuang
+CG1111A,teaches_module,Prof Sangit
+CG2023,teaches_module,Dr Zhang
+CG2023,teaches_module,Dr Sahoo
+CG2027,teaches_module,Prof Jerald
+CG2027,teaches_module,Prof Minghui
+CG2027,teaches_module,DRAM
+CG2111A,teaches_module,Prof Boyd
+CG2111A,teaches_module,Prof Boyd Anderson
+CG2111A,teaches_module,PROFESSORS
+CG2111A,teaches_module,Prof Ravi
+CG2111A,teaches_module,Prof Colin
+CG2271,teaches_module,Prof He Bingsheng
+CG2271,teaches_module,Prof Ravi
+CG4002,teaches_module,Prof Jithin
+CH1101E,teaches_module,Prof Koh Khee
+CL1101E,teaches_module,Prof Phua
+CL1101E,teaches_module,Prof Peng
+CL2102,teaches_module,Prof Shen Ruiqing
+CLC3303,teaches_module,Dr Angeline
+CM1102,teaches_module,Dr Chong
+CM1102,teaches_module,Prof Chin Wee
+CM1102,teaches_module,Prof Chin
+CM1102,teaches_module,Prof Chng Shu
+CM1102,teaches_module,Prof Chng
+CM1102,teaches_module,Prof Francis
+CM1102,teaches_module,Prof Chong
+CM1417,teaches_module,Prof Saradha
+CM1417,teaches_module,Prof  Saradha
+CM2112,teaches_module,Prof Chui
+CM2112,teaches_module,Prof John
+CM2122,teaches_module,Prof Zhu Ru
+CM2122,teaches_module,Prof Zhu
+CM2122,teaches_module,Prof Hoang
+CM2133,teaches_module,Prof Kang Hway
+CM3212,teaches_module,dr steph chui
+CM3221,teaches_module,Prof Zhao Yu
+CM3221,teaches_module,Prof Koh Ming
+CM3221,teaches_module,Prof Koh
+CM3221,teaches_module,Prof Zhao
+CM3225,teaches_module,Prof Chng
+CM3252,teaches_module,Prof Tan
+CM3252,teaches_module,Prof Chi
+CM3252,teaches_module,Dr Chi
+CM3252,teaches_module,Dr Tan
+CM3253,teaches_module,Prof Eda
+CM3253,teaches_module,Prof Chuah
+CM3296,teaches_module,Prof Zhang
+CM4225,teaches_module,Prof Ge
+CM4258,teaches_module,Prof Jiang Donglin
+CM4269,teaches_module,Prof Jason Yeo
+CM4269,teaches_module,Prof Jason
+CM4269,teaches_module,Prof Simon Watts
+CN1101A,teaches_module,Prof Farooq Shamsuzzaman
+CN2103,teaches_module,Prof Sergey
+CN2103,teaches_module,Prof Loh
+CN2103,teaches_module,Prof Yung
+CN2103,teaches_module,Prof Zhang Sui
+CN2104,teaches_module,Prof Sergey
+CN2104,teaches_module,Dr Karthiga
+CN2104,teaches_module,Prof Karthiga
+CN2104,teaches_module,Prof Lanry
+CN2104,teaches_module,Prof Kozlov
+CN2105,teaches_module,Prof Yan
+CN2105,teaches_module,Prof Lin
+CN2106,teaches_module,Prof Jiang
+CN2106,teaches_module,Prof Wang
+CN3135,teaches_module,Prof Jangam
+CN4205R,teaches_module,Dr Jangam
+CN4227R,teaches_module,Prof Chiu
+CP2201,teaches_module,Prof Victor
+CS1010,teaches_module,Prof Wei Tsang
+CS1010,teaches_module,Prof Gary
+CS1010E,teaches_module,Dr Henry
+CS1010E,teaches_module,Prof KHOO Siau
+CS1010E,teaches_module,Prof Tan
+CS1010E,teaches_module,Prof Alan
+CS1010E,teaches_module,Prof Zhou
+CS1010E,teaches_module,Prof Khoo
+CS1010E,teaches_module,Prof Joxan Jaffar
+CS1010E,teaches_module,Dr Chong
+CS1010E,teaches_module,Prof Alan CHENG
+CS1010J,teaches_module,Prof Lifeng
+CS1010J,teaches_module,DrJava
+CS1010S,teaches_module,Prof Ashish
+CS1010S,teaches_module,Prof Leong
+CS1010S,teaches_module,Prof Ben Leong
+CS1010S,teaches_module,Prof Ben
+CS1010S,teaches_module,Prof Leong Wai
+CS1010X,teaches_module,Prof Tan Tiow
+CS1010X,teaches_module,Prof Tan
+CS1010X,teaches_module,Prof Ben Leong
+CS1010X,teaches_module,Prof Tan Sun
+CS1010X,teaches_module,Prof Ben
+CS1101S,teaches_module,Prof Boyd
+CS1101S,teaches_module,Professors
+CS1101S,teaches_module,Prof Henz
+CS1101S,teaches_module,Prof Martin
+CS1101S,teaches_module,Prof Sanka
+CS1101S,teaches_module,Prof Low Kok
+CS1101S,teaches_module,Prof Boyd Anderson
+CS1101S,teaches_module,Prof Martin Henz
+CS1101S,teaches_module,Dr Low
+CS1231,teaches_module,Prof Bressan
+CS1231,teaches_module,Prof Tay Tiong
+CS1231,teaches_module,Prof Tay
+CS1231,teaches_module,Prof Wong
+CS1231,teaches_module,Prof Bryan Low
+CS1231,teaches_module,Prof Byran
+CS1231,teaches_module,Prof Colin
+CS1231,teaches_module,Prof Low
+CS1231,teaches_module,Prof Bressan Stephane
+CS1231,teaches_module,Prof Tin Lok
+CS1231,teaches_module,Prof Liwei
+CS1231,teaches_module,prof liwei
+CS1231,teaches_module,Prof Li Wei
+CS1231,teaches_module,Prof Wong Tin
+CS1231,teaches_module,Prof Aaron
+CS1231,teaches_module,Prof Terence
+CS1231,teaches_module,Instructor Wong
+CS1231S,teaches_module,Prof Aaron
+CS1231S,teaches_module,Prof Chin Wei
+CS1231S,teaches_module,Prof Chin
+CS1231S,teaches_module,Dr Ashish
+CS1231S,teaches_module,Prof Rajendra
+CS1231S,teaches_module,Prof Tin Lok
+CS1231S,teaches_module,Prof Lawrence Wong
+CS2030,teaches_module,Dr Chia
+CS2030,teaches_module,Prof Chin Wei
+CS2030,teaches_module,Prof Henry Chia
+CS2030,teaches_module,Prof Henry
+CS2030,teaches_module,Prof Boyd
+CS2030,teaches_module,Prof Boyd Anderson
+CS2030,teaches_module,Prof Ooi
+CS2030,teaches_module,Prof Wei Tsang
+CS2030S,teaches_module,Prof Adi
+CS2030S,teaches_module,Lecturer Adi
+CS2030S,teaches_module,Prof Ooi Wei
+CS2040,teaches_module,Prof Chong
+CS2040,teaches_module,Prof Roger
+CS2040,teaches_module,Prof Tan
+CS2040,teaches_module,Prof Tan Sun
+CS2040,teaches_module,Prof Chong Ket
+CS2040C,teaches_module,Prof Alan
+CS2040C,teaches_module,Prof Steven
+CS2040C,teaches_module,Prof Stevens
+CS2040C,teaches_module,prof alan
+CS2040S,teaches_module,Prof Harold
+CS2040S,teaches_module,Prof Arnab Bhattacharya
+CS2040S,teaches_module,Prof Halim
+CS2040S,teaches_module,Prof Seth Gilbert
+CS2040S,teaches_module,Prof Seth
+CS2040S,teaches_module,Prof Lin
+CS2040S,teaches_module,Prof Arnab
+CS2040S,teaches_module,Prof Ben
+CS2100,teaches_module,Prof Ad
+CS2100,teaches_module,Prof Prabhu
+CS2100,teaches_module,Prof Ravi
+CS2100,teaches_module,Prof Colin
+CS2100,teaches_module,Prof Aaron
+CS2100,teaches_module,Prof Wong Weng
+CS2100,teaches_module,Prof Collin
+CS2100,teaches_module,Lecturer Prabhu
+CS2100,teaches_module,Prof Trevor
+CS2100,teaches_module,Prof Soo
+CS2101,teaches_module,Dr Noelle
+CS2102,teaches_module,Prof Chris
+CS2102,teaches_module,Prof Chan
+CS2102,teaches_module,Prof XiaoKui
+CS2102,teaches_module,Prof Lee
+CS2102,teaches_module,Prof Bressan
+CS2102,teaches_module,Prof Lee Mong
+CS2102,teaches_module,Prof Sham
+CS2103,teaches_module,Prof Damith
+CS2103,teaches_module,Prof Henry Chia
+CS2103T,teaches_module,Prof Damith
+CS2103T,teaches_module,Prof Damith Prof
+CS2103T,teaches_module,Dr Damith
+CS2104,teaches_module,Prof Chin
+CS2104,teaches_module,Prof Martin
+CS2104,teaches_module,Prof Martin Henz
+CS2105,teaches_module,Prof Jithin Vachery
+CS2105,teaches_module,Dr Jithin
+CS2105,teaches_module,Prof Richard
+CS2105,teaches_module,Prof Zhou
+CS2105,teaches_module,Prof Anand
+CS2106,teaches_module,Prof Jialin
+CS2106,teaches_module,Prof Aaron
+CS2106,teaches_module,Prof Colin
+CS2106,teaches_module,prof colin
+CS2106,teaches_module,Prof Wong Weng
+CS2106,teaches_module,Prof Wong
+CS2106,teaches_module,Prof Colin Tan
+CS2106,teaches_module,Prof Li Jialin
+CS2106,teaches_module,Prof Cristina
+CS2106,teaches_module,Prof Cristina Carbunaru
+CS2107,teaches_module,Dr Sufatrio
+CS2107,teaches_module,Prof Sufatrio
+CS2107,teaches_module,Prof Ee
+CS2107,teaches_module,Prof Chang
+CS2107,teaches_module,Prof Anderson
+CS2107,teaches_module,Prof Hugh
+CS2107,teaches_module,Prof Ee Chien
+CS2109S,teaches_module,Dr Rizki
+CS2109S,teaches_module,Prof Ben
+CS2109S,teaches_module,Prof Kan
+CS2309,teaches_module,Prof Anthony
+CS3203,teaches_module,Prof Bimlesh
+CS3203,teaches_module,Professional
+CS3203,teaches_module,Prof Henz
+CS3203,teaches_module,Dr Zhao
+CS3203,teaches_module,Prof Ganesh
+CS3210,teaches_module,Prof Cristina
+CS3210,teaches_module,Prof Cristina Carbunaru
+CS3210,teaches_module,Prof Christina
+CS3210,teaches_module,Prof Christina Carbunaru
+CS3210,teaches_module,Prof Carbunaru
+CS3216,teaches_module,Prof Ben
+CS3216,teaches_module,Prof Ben Leong
+CS3217,teaches_module,Prof Ben
+CS3219,teaches_module,prof akshay
+CS3230,teaches_module,Prof Arnab
+CS3230,teaches_module,Prof Rahul
+CS3230,teaches_module,Prof Halim
+CS3230,teaches_module,Prof Diptarka
+CS3230,teaches_module,Prof Ken
+CS3230,teaches_module,Prof Chang Yi
+CS3230,teaches_module,Prof Leong Hon
+CS3230,teaches_module,Prof Sanjay Jain
+CS3230,teaches_module,Prof Rahl
+CS3230,teaches_module,Prof  Chakraborty
+CS3230,teaches_module,Prof Chang
+CS3230,teaches_module,Prof Lee Wee
+CS3230,teaches_module,Prof Lee
+CS3231,teaches_module,Prof Stephen Frank
+CS3231,teaches_module,Prof Sanjay
+CS3233,teaches_module,Prof Halim
+CS3233,teaches_module,Dr Halim
+CS3234,teaches_module,Prof Danvy
+CS3234,teaches_module,Prof Bressan
+CS3235,teaches_module,Prof Hugh
+CS3235,teaches_module,Prof Prateek
+CS3235,teaches_module,Prof Hugh Anderson
+CS3236,teaches_module,Prof Jonathan
+CS3241,teaches_module,Prof Kok Lim
+CS3241,teaches_module,Prof Alan
+CS3241,teaches_module,Prof Holun Cheng
+CS3241,teaches_module,Prof Cheng Holun
+CS3241,teaches_module,Prof Cheng
+CS3241,teaches_module,Lecturer Great
+CS3243,teaches_module,Prof Kuldeep Meel
+CS3243,teaches_module,Prof Meel
+CS3243,teaches_module,Prof Daren
+CS3243,teaches_module,Prof Yair
+CS3243,teaches_module,Prof Daren Ler
+CS3244,teaches_module,Prof Bryan
+CS3244,teaches_module,Prof Brian
+CS3244,teaches_module,Prof Bresson Xavier
+CS3244,teaches_module,Prof Xavier Bresson
+CS3244,teaches_module,Prof Kan
+CS3245,teaches_module,Prof Zhao Jin
+CS3245,teaches_module,Prof Min
+CS3264,teaches_module,Prof Bryan Kian
+CS3264,teaches_module,Prof Yaser Abu
+CS3264,teaches_module,Prof Bryan
+CS4211,teaches_module,Prof Dong
+CS4212,teaches_module,Prof Wong
+CS4215,teaches_module,Prof Henz
+CS4215,teaches_module,Prof Martin
+CS4218,teaches_module,Prof Cristina Carbunaru
+CS4218,teaches_module,Prof Carbunaru
+CS4220,teaches_module,Prof Niranjan Nagarajan
+CS4221,teaches_module,Prof Bressan
+CS4221,teaches_module,Prof Stephane
+CS4222,teaches_module,Prof Ambuj
+CS4223,teaches_module,Dragon
+CS4224,teaches_module,Prof Chan
+CS4225,teaches_module,Prof Ai Xin
+CS4225,teaches_module,Prof Bingsheng
+CS4226,teaches_module,Prof Richard
+CS4226,teaches_module,Prof Ma
+CS4230,teaches_module,Prof Prashant
+CS4231,teaches_module,Prof Yu Haifeng
+CS4231,teaches_module,Prof Yu
+CS4231,teaches_module,Prof Haifeng Yu
+CS4234,teaches_module,Prof Halim
+CS4239,teaches_module,Prof Roland
+CS4242,teaches_module,Prof Chua
+CS4242,teaches_module,Prof Chua Tat
+CS4243,teaches_module,Prof Angela
+CS4243,teaches_module,Prof Amir
+CS4243,teaches_module,Prof Yao
+CS4243,teaches_module,Prof Xavier
+CS4246,teaches_module,Lecturer Rizki
+CS4247,teaches_module,Prof Low
+CS4247,teaches_module,Prof Low Kok
+CS4247,teaches_module,Prof Kok Lim
+CS4248,teaches_module,Prof Chris
+CS4248,teaches_module,Prof Min
+CS4248,teaches_module,Prof Ng Twee
+CS4248,teaches_module,Prof Ng
+CS4249,teaches_module,Prof Zhao
+CS4261,teaches_module,Prof Yair
+CS4261,teaches_module,Prof Warut
+CS4268,teaches_module,Prof Divesh
+CS4277,teaches_module,Prof Gim Hee
+CS4278,teaches_module,Prof Hsu
+CS4278,teaches_module,Prof David Hsu
+CS4347,teaches_module,Prof Wang Ye
+CS4347,teaches_module,Prof Ye
+CS5223,teaches_module,Prof Yu Haifeng
+CS5223,teaches_module,Prof Haifeng
+CS5224,teaches_module,Prof Teo
+CS5233,teaches_module,Prof Gary
+CS5234,teaches_module,Prof Diptarka
+CS5234,teaches_module,Prof Gilbert
+CS5239,teaches_module,Prof Cristina
+CS5250,teaches_module,Prof Weng
+CS5250,teaches_module,Prof Wong
+CS5330,teaches_module,Prof Chang
+CS5330,teaches_module,Prof Arnab
+CS5330,teaches_module,Prof Seth
+CS5330,teaches_module,Prof Seth Gilbert
+CS5346,teaches_module,Prof Bimlesh
+CS5421,teaches_module,Prof Bressan
+CS5446,teaches_module,Lecturer Rizki
+CS5647,teaches_module,Prof Ye
+DAO1704X,teaches_module,Prof Eli
+DAO2702,teaches_module,Prof Xiong Peng
+DAO2702,teaches_module,Prof Bin Huang
+DBA3702,teaches_module,Prof Liu
+DBA3803,teaches_module,Prof Quek
+DBA4811,teaches_module,Prof Tam Trinh
+DMX1401,teaches_module,Prof Tan
+DSA1101,teaches_module,Prof Daisy
+DSA1101,teaches_module,Prof Pham Kim
+DSA2101,teaches_module,Prof Yuting
+DSA2101,teaches_module,Prof Huang
+DSA2102,teaches_module,Prof Xin Yee
+DSA2102,teaches_module,Prof Lam
+DSA2102,teaches_module,Prof Wertz
+DSA2102,teaches_module,Prof Timothy Wertz
+DSA2102,teaches_module,Prof Lam Xin
+DSA3101,teaches_module,Dr Vik
+DSA3102,teaches_module,Prof Tan
+DSA4212,teaches_module,Prof Alex
+DSA4262,teaches_module,Prof Young
+DSA4266,teaches_module,Profiling
+DSE1101,teaches_module,Prof Huang
+DSE1101,teaches_module,Prof Denis
+DTK1234,teaches_module,Prof Brian Stone
+DTK1234,teaches_module,Prof Donn Koh
+EC1101E,teaches_module,Prof Ong Ee
+EC1101E,teaches_module,Prof Chan Kok
+EC1101E,teaches_module,Dr Ong
+EC1101E,teaches_module,Prof Chan
+EC1101E,teaches_module,Prof Ong
+EC2101,teaches_module,Prof Kwong
+EC2101,teaches_module,Lecturer Dr Wong
+EC2101,teaches_module,Dr Ong
+EC2101,teaches_module,Prof Ong
+EC2101,teaches_module,Dr Zhang
+EC2101,teaches_module,Dr Zhang Yang
+EC2102,teaches_module,Prof Wong Wei
+EC2102,teaches_module,Prof Wong
+EC2102,teaches_module,prof wong
+EC2102,teaches_module,Dr Seet
+EC2205,teaches_module,Lecturer and Tutor
+EC2303,teaches_module,Prof Wong
+EC2303,teaches_module,Prof Seo
+EC2303,teaches_module,Prof Seo Juwon
+EC3101,teaches_module,Prof Tim
+EC3101,teaches_module,Prof Sng
+EC3101,teaches_module,Dr Bian
+EC3101,teaches_module,Dr Timothy
+EC3303,teaches_module,Dr Kelvin
+EC3303,teaches_module,Prof Kelvin
+EC3304,teaches_module,prof denis
+EC3304,teaches_module,Dr Denis
+EC3305,teaches_module,Dr Guyon
+EC3314,teaches_module,Prof Lu
+EC3314,teaches_module,Prof Lu Jinfeng
+EC3322,teaches_module,Prof Kelvin
+EC3322,teaches_module,Prof Eric
+EC3333,teaches_module,Prof Mun
+EC3333,teaches_module,Prof Wong Wei
+EC3333,teaches_module,Prof Wong
+EC3351,teaches_module,Prof Chan
+EC3351,teaches_module,Prof Chia
+EC3361,teaches_module,Dr Ong
+EC3381,teaches_module,Prof Tim
+EC4304,teaches_module,Prof Denis
+EC4308,teaches_module,Prof Denis
+EC4331,teaches_module,Prof Zhang
+EC4371,teaches_module,Prof Shamdasani
+EC4372,teaches_module,Prof Shin
+EE1111A,teaches_module,Prof Sahoo Sanjib
+EE2012,teaches_module,Prof Zhang
+EE2012,teaches_module,Prof Li Haizhou
+EE2012,teaches_module,Prof Li
+EE2012,teaches_module,Prof Zhang Jianwen
+EE2023,teaches_module,Prof Sahoo
+EE2023,teaches_module,Prof Ng Chun
+EE2023,teaches_module,Prof Lawrence Wong
+EE2023,teaches_module,Prof Loh
+EE2023,teaches_module,Prof Loh Ai
+EE2026,teaches_module,Prof Chua
+EE2026,teaches_module,Prof Chua Ding
+EE2026,teaches_module,Prof Massimo
+EE2026,teaches_module,Prof Christopher
+EE2026,teaches_module,Dr Chua
+EE2026,teaches_module,Dr Chua Dingjuan
+EE2026,teaches_module,Dr Alioto
+EE2027,teaches_module,Prof Hong Minghui
+EE2027,teaches_module,Prof Choy
+EE2028,teaches_module,Prof Gu Jing
+EE2028,teaches_module,Prof Rajesh
+EE2028,teaches_module,Prof Henry
+EE2111A,teaches_module,Prof Chua
+EE2111A,teaches_module,Prof Abdullah Al
+EE2111A,teaches_module,Prof Mamun
+EE2111A,teaches_module,Prof Sahoo
+EE2111A,teaches_module,Prof Ashwin
+EE2211,teaches_module,Prof Wang
+EE2211,teaches_module,Prof Vincent
+EE2211,teaches_module,Prof Helen Zhou
+EE2211,teaches_module,Prof Wang Xinchao
+EE3431C,teaches_module,Prof Ang Kah
+EE3431C,teaches_module,Prof Vivian Ng
+EE4032,teaches_module,Prof Marco
+EE4204,teaches_module,Prof Mohan
+EE4204,teaches_module,Prof Mehul Motani
+EE4204,teaches_module,Prof Mehul
+EE4205,teaches_module,Prof Charles
+EE4205,teaches_module,Prof Charles Lim
+EE4407,teaches_module,Prof Aaron Danner
+EE4415,teaches_module,Prof Kelvin
+EE4415,teaches_module,Prof Kelvin Fong
+EE4415,teaches_module,Prof Massimo
+EE4437,teaches_module,Prof Yang
+EE4437,teaches_module,Prof Khoo
+EE5137,teaches_module,Prof Vincent
+EE5502,teaches_module,Drain Induced
+EE5502,teaches_module,Prof Fong
+EE5502,teaches_module,Drain Leakage
+EE5502,teaches_module,Prof Liang
+EE5508,teaches_module,Prof Wu
+EE5508,teaches_module,Prof Teo
+EE5508,teaches_module,Prof Teo Kie
+EG1311,teaches_module,Prof Jason Ku
+EG2401A,teaches_module,Prof Lee
+EG2401A,teaches_module,Prof Lee Tong
+EG2401A,teaches_module,Prof Neoh
+EL1101E,teaches_module,Prof Nala
+EL1101E,teaches_module,Dr Lee
+EL1101E,teaches_module,Prof Starr
+EL2151,teaches_module,Prof Starr
+ESE2102,teaches_module,Prof Olivier
+ESP2111,teaches_module,Prof Karuppiah
+FIN2704,teaches_module,Dr Chen
+FIN2704X,teaches_module,Prof Winston Low
+FIN3701B,teaches_module,Lecturer marks
+FIN3702B,teaches_module,Prof Arko
+FIN3716,teaches_module,Prof Lee
+FST2102B,teaches_module,Dr Loo
+FST2102B,teaches_module,Dr Leong
+GE1101E,teaches_module,Prof Gretchen
+GE1101E,teaches_module,Dr Menusha
+GE1101E,teaches_module,Prof Chang
+GE1101E,teaches_module,Prof Karen Lai
+GE2215,teaches_module,Prof Yan
+GE3248,teaches_module,Prof Eugene
+GE3254,teaches_module,Prof Nawaz
+GE3257,teaches_module,Prof Darek
+GE4214,teaches_module,Prof Hao Tang
+GEA1000,teaches_module,Dr Ng
+GEC1005,teaches_module,Prof Hislop
+GEC1005,teaches_module,Dr Hislop
+GEC1007,teaches_module,Dr Carl
+GEC1017,teaches_module,Dr Yeoh
+GEC1023,teaches_module,Prof Koo
+GEC1031,teaches_module,Prof Brian
+GEC1032,teaches_module,Prof McMorran
+GEC1035,teaches_module,Prof Greg
+GEC1041,teaches_module,Prof Liu
+GEC1041,teaches_module,Prof Chan
+GEC1041,teaches_module,Prof Liu Chen
+GEH1008,teaches_module,Prof Kudaisya
+GEH1008,teaches_module,Prof Gyanesh
+GEH1015,teaches_module,Dr Hislop
+GEH1043,teaches_module,Dr Ch
+GEH1045,teaches_module,Prof Phil
+GEH1049,teaches_module,Professors
+GEH1053,teaches_module,Dr Yeoh
+GEH1056,teaches_module,Dr Tenzin
+GEH1062,teaches_module,Dr Noorman
+GEH1079,teaches_module,Prof Brian
+GEN2004,teaches_module,Prof Gayatri
+GES1002,teaches_module,Lecturer Chan Kok
+GES1002,teaches_module,Dr Connie
+GES1002,teaches_module,Dr  Connie
+GES1003,teaches_module,Prof Menusha De
+GES1004,teaches_module,Prof Nawaz
+GES1004,teaches_module,Prof Dan
+GES1004,teaches_module,Prof Nawaz and
+GES1005,teaches_module,Prof Yung
+GES1005,teaches_module,Prof Kwee
+GES1005,teaches_module,Prof Dean
+GES1005,teaches_module,Prof Kenneth Dean
+GES1006,teaches_module,Prof Jayati
+GES1007,teaches_module,Prof Rai
+GES1007,teaches_module,Dr Rai
+GES1007,teaches_module,Professor
+GES1008,teaches_module,Dr Noorman
+GES1019,teaches_module,Prof Teo Ho
+GES1019,teaches_module,Prof Teo
+GES1019,teaches_module,Prof Lee
+GES1019,teaches_module,Prof Shah Kwok
+GES1019,teaches_module,Prof Shah
+GES1020,teaches_module,Dr Marc
+GES1021,teaches_module,Prof NNK
+GES1021,teaches_module,Dr Ng
+GES1021,teaches_module,Dr Amy
+GES1038,teaches_module,Prof Phua
+GES1041,teaches_module,Dr Chin
+GESS1000,teaches_module,Dr Connie
+GESS1009,teaches_module,Prof Laurence
+GESS1014,teaches_module,Prof Shah
+GESS1014,teaches_module,Prof Shah Kok
+GESS1014,teaches_module,Prof Kuah
+GET1025,teaches_module,Prof Holbo
+GET1028,teaches_module,Prof Lee
+GET1028,teaches_module,Prof Lee Wang
+GET1029,teaches_module,Prof Loy
+GET1029,teaches_module,prof loy
+GET1030,teaches_module,Lecturer Dr
+GET1047,teaches_module,Prof Greg
+GEX1012,teaches_module,Dr Lee
+GEX1015,teaches_module,Prof Song
+GEX1015,teaches_module,Prof Pelczar
+GEX1015,teaches_module,Drowning Child
+GEX1027,teaches_module,Prof Greg
+GL1101E,teaches_module,Prof Kim
+GL2101,teaches_module,Prof Hein
+GL2102,teaches_module,Prof Mattern
+GL2103,teaches_module,Prof Kevin
+HS1501,teaches_module,Prof Yu Chien
+HS1501,teaches_module,Prof Yu
+HS2903,teaches_module,Prof Go
+HS2912,teaches_module,Prof Chng Hui
+HS2915,teaches_module,Prof Linda
+HS2915,teaches_module,Prof George
+HSA1000,teaches_module,Prof Clay
+HSH1000,teaches_module,Prof Loy Hui
+HSH1000,teaches_module,Prof Liu
+HSH1000,teaches_module,Prof Anu
+HSH1000,teaches_module,Prof Loy
+HSH1000,teaches_module,Prof Nguyen
+HSH1000,teaches_module,Prof Loy TA
+HSI1000,teaches_module,Prof Adrian Lee
+HSI1000,teaches_module,Prof Ryan
+HSI1000,teaches_module,Prof Ryan Bettens
+HSI1000,teaches_module,Prof Siva
+HSI1000,teaches_module,Prof Adrian
+HSI2004,teaches_module,Dr Robert
+HSI2005,teaches_module,Dr Lam
+HSI2007,teaches_module,Prof Liu Mei
+HSI2007,teaches_module,Prof Liu
+HSI2010,teaches_module,Prof Cindy Ng
+HSI2010,teaches_module,Prof Cindy
+HSI2011,teaches_module,Prof Valerio
+HSI2011,teaches_module,Prof Yvonne
+HSI2013,teaches_module,Prof Lydia Lam
+HSI2013,teaches_module,Prof Bernard Tan
+HSI2013,teaches_module,Prof Bernard
+HSI2014,teaches_module,Dr Chan
+HSS1000,teaches_module,Dr Ali
+HSS1000,teaches_module,Prof Georgios Georgiou
+HY1101E,teaches_module,Dr Chia
+HY1101E,teaches_module,Dr Yahaya
+HY3236,teaches_module,Prof Kudaisya
+HY3236,teaches_module,Prof Gyanesh Kudaisya
+HY3236,teaches_module,Prof Gyanesh
+IE2100,teaches_module,Prof Cheung
+IE2100,teaches_module,Prof Ng
+IE2100,teaches_module,Dr Haskell
+IE2110,teaches_module,Prof Ng Kien
+IE2110,teaches_module,Prof Adam Ng
+IE2110,teaches_module,Prof Kien Ming
+IFS4101,teaches_module,Lecturer Welly Tantono
+IS1108,teaches_module,Professional Ethics
+IS1108,teaches_module,Lecturer Boon Kee
+IS2101,teaches_module,Professional Impact
+IS2101,teaches_module,Prof Doreen
+IS2218,teaches_module,Dr Vivek
+IS2238,teaches_module,Prof Kim
+IS2238,teaches_module,Prof Chen
+IS3103,teaches_module,Prof Isabel
+IS4103,teaches_module,Prof Tan Wee
+IS4231,teaches_module,Prof Yang Lu
+IS5152,teaches_module,Prof Setiono
+IT1244,teaches_module,Prof Prabhu
+IT1244,teaches_module,Lecturer and Tutor
+IT2002,teaches_module,Prof Lee Soo
+IT2900,teaches_module,Prof Robert Morris
+IT2900,teaches_module,Prof Ben
+IT5004,teaches_module,Prof Lek
+JS1101E,teaches_module,Dr Mcmorran
+LAC3204,teaches_module,Dr Wang
+LAJ2201,teaches_module,Dr Amazaki
+LAK3202,teaches_module,dramas
+LAR1201,teaches_module,Prof Muzzammil
+LAS1201,teaches_module,Prof Adrian
+LAS3202,teaches_module,Prof Sergio
+LAT1201,teaches_module,Prof Rungnapa
+LSM1111,teaches_module,Prof Monteiro
+LSM1301,teaches_module,Prof Seow
+LSM1301,teaches_module,Prof Jaafar
+LSM1301,teaches_module,Prof Zeehan Jaafar
+LSM1303,teaches_module,Prof Siva
+LSM2233,teaches_module,Prof Thilo
+LSM2251,teaches_module,Dr Posa
+LSM2254,teaches_module,prof kumar
+LSM3212,teaches_module,Dr Zakaria
+LSM3223,teaches_module,Professors
+LSM3223,teaches_module,Prof Liu Haiyan
+LSM3223,teaches_module,Prof Lu Jinhua
+LSM3223,teaches_module,Prof Zhang
+LSM3223,teaches_module,Prof Gan
+LSM3223,teaches_module,Prof Liu
+LSM3223,teaches_module,Prof Zhang Yong
+LSM3223,teaches_module,Prof Nicholas
+LSM3223,teaches_module,Prof Gan Yun
+LSM3223,teaches_module,Prof Lu JinHua
+LSM3228,teaches_module,Prof Chu Ling
+LSM3228,teaches_module,Prof Jun Hong
+LSM3228,teaches_module,Prof Chin Wen
+LSM3232,teaches_module,Prof Kelvin Tan
+LSM3232,teaches_module,Prof Sim
+LSM3232,teaches_module,Prof Justin Chu
+LSM3232,teaches_module,Prof Lee
+LSM3232,teaches_module,Prof Sim Tiow
+LSM3232,teaches_module,Prof Hobo
+LSM3232,teaches_module,Prof Kevin
+LSM3244,teaches_module,Drug Developmental
+LSM3246,teaches_module,Prof Matthew
+LSM3254,teaches_module,Prof Todd
+LSM3254,teaches_module,Prof Darren Yeo
+LSM3258,teaches_module,Prof Tan
+LSM3258,teaches_module,Prof Hugh Tan
+LSM4221,teaches_module,Prof Tan Chay
+LSM4221,teaches_module,Prof Edward
+LSM4221,teaches_module,Prof Edward Chow
+LSM4221,teaches_module,Prof Tan
+LSM4221,teaches_module,Prof Chow
+LSM4222,teaches_module,Prof Liu Haiyan
+LSM4251,teaches_module,Prof Xu
+LSM4251,teaches_module,Prof Xu Jian
+LSM4251,teaches_module,Prof Yu Hao
+MA1100,teaches_module,Prof Chin
+MA1100,teaches_module,Prof Chin Chee
+MA1100,teaches_module,Prof Lee Soo
+MA1100,teaches_module,Prof Lee
+MA1100,teaches_module,Lecturer and Tutor
+MA1100,teaches_module,Prof Victor
+MA1100T,teaches_module,Prof Goh
+MA1100T,teaches_module,Prof Chin
+MA1100T,teaches_module,Prof Chin Chee
+MA1100T,teaches_module,Prof CCW
+MA1301,teaches_module,Prof Leung
+MA1301,teaches_module,Dr Ng
+MA1301X,teaches_module,Lecturer Dr Wang
+MA1505,teaches_module,Prof Yap Wen
+MA1505,teaches_module,Dr Yap
+MA1505,teaches_module,Prof Chew Tuan
+MA1508E,teaches_module,Prof Jonathon
+MA1511,teaches_module,Prof Go
+MA1511,teaches_module,Dr Ng
+MA1511,teaches_module,Dr Chew
+MA1511,teaches_module,Prof Tuan Seng
+MA1511,teaches_module,Dr Ng Wee
+MA1512,teaches_module,Prof McInnes
+MA1512,teaches_module,Dr Chew
+MA1512,teaches_module,Prof Bretts
+MA1513,teaches_module,Prof TAN
+MA1513,teaches_module,Prof Victor
+MA1521,teaches_module,Prof Leung
+MA1521,teaches_module,Prof Leung Ha
+MA1521,teaches_module,Prof Wong
+MA1521,teaches_module,Prof Chan
+MA1521,teaches_module,Prof Liu
+MA1521,teaches_module,Professors
+MA1521,teaches_module,Dr Liu
+MA1521,teaches_module,Prof Leung Ka
+MA1521,teaches_module,Prof Leung Pui
+MA1521,teaches_module,Prof Fred Leung
+MA1521,teaches_module,Prof Wang Fei
+MA1522,teaches_module,Prof Tan
+MA1522,teaches_module,Dr Jonathon
+MA1522,teaches_module,Prof Loke
+MA1522,teaches_module,Prof Teo
+MA1522,teaches_module,Prof Jonathon
+MA2001,teaches_module,Prof Wang Fei
+MA2001,teaches_module,Prof Ma
+MA2001,teaches_module,Prof Ma Siu
+MA2001,teaches_module,Prof Wang
+MA2001,teaches_module,Prof Wangfei
+MA2001,teaches_module,Prof Goh Jun
+MA2001,teaches_module,Prof Raghavan Dilip
+MA2001,teaches_module,Prof Dilip
+MA2001,teaches_module,Prof Bao HuanChen
+MA2001,teaches_module,prof tan
+MA2002,teaches_module,Prof Tan
+MA2002,teaches_module,Prof Tan Ban
+MA2002,teaches_module,Prof Li Wei
+MA2002,teaches_module,Prof Jonathon
+MA2002,teaches_module,Draining Tank
+MA2002,teaches_module,Prof Minh
+MA2002,teaches_module,Prof wang fei
+MA2002,teaches_module,Prof Wang Fei
+MA2101,teaches_module,Prof Brett
+MA2101,teaches_module,Prof Zhang
+MA2101,teaches_module,Prof Lee
+MA2101,teaches_module,Prof Lee Soo
+MA2101,teaches_module,Prof Zhang Lei
+MA2101,teaches_module,Prof Yang Yue
+MA2101,teaches_module,Prof Zhang De
+MA2101,teaches_module,Dr Wang
+MA2101S,teaches_module,Prof Zhang
+MA2101S,teaches_module,Prof Zhang Lei
+MA2101S,teaches_module,Prof Tan
+MA2101S,teaches_module,Prof CCW
+MA2101S,teaches_module,Prof Chin
+MA2101S,teaches_module,Lecturer and Tutor
+MA2104,teaches_module,Prof Tan Ser
+MA2104,teaches_module,Prof Tengren
+MA2104,teaches_module,Prof Tan
+MA2104,teaches_module,Prof Zhang
+MA2104,teaches_module,Prof ZhangTengren
+MA2104,teaches_module,Prof Zhang and
+MA2104,teaches_module,prof Zhang
+MA2104,teaches_module,Lecturer  Prof Zhang
+MA2104,teaches_module,Prof Wong
+MA2104,teaches_module,Dr Zhang
+MA2104,teaches_module,Prof Chin
+MA2108,teaches_module,Prof Zhang Lei
+MA2108,teaches_module,Prof Wing Keung
+MA2108,teaches_module,Prof Han
+MA2108S,teaches_module,Prof Denny
+MA2108S,teaches_module,Prof Yu Hui
+MA2108S,teaches_module,Prof Yu
+MA2108S,teaches_module,Prof Chin
+MA2108S,teaches_module,Prof Huiyu
+MA2108S,teaches_module,Prof Han Fei
+MA2108S,teaches_module,Prof Sun
+MA2108S,teaches_module,Lecturer and Tutor
+MA2108S,teaches_module,Prof Xu
+MA2116,teaches_module,Prof Wang Fei
+MA2116,teaches_module,Lecturer Timothy Wertz
+MA2116,teaches_module,Lecturer Wang Fei
+MA2202,teaches_module,Prof Chin
+MA2202,teaches_module,Prof Chin Chee
+MA2202,teaches_module,Prof Loke
+MA2202S,teaches_module,Prof Bao Huanchen
+MA2202S,teaches_module,Prof Bao
+MA2202S,teaches_module,Prof Chin Chee
+MA2202S,teaches_module,Dr Zhang
+MA2213,teaches_module,Prof Cai Zhenning
+MA2213,teaches_module,Prof Cai
+MA2213,teaches_module,Prof Chu Delin
+MA2213,teaches_module,Prof Chu
+MA2214,teaches_module,Dr Ng
+MA2214,teaches_module,Prof Tan
+MA2214,teaches_module,Dr Tan
+MA2214,teaches_module,Prof Tay Tiong
+MA2288,teaches_module,Prof Chin
+MA2288,teaches_module,Prof Chin Chee
+MA2311,teaches_module,Prof Leung
+MA2311,teaches_module,Prof Tan
+MA2311,teaches_module,Prof Tan Ban
+MA3201,teaches_module,Prof Bao Huanchen
+MA3201,teaches_module,Prof Bao
+MA3201,teaches_module,Prof Zhang
+MA3201,teaches_module,Prof Chin
+MA3205,teaches_module,Prof Dilip
+MA3205,teaches_module,Lecturer and Tutor
+MA3205,teaches_module,Prof Yang
+MA3209,teaches_module,Prof Tang
+MA3210,teaches_module,Prof Yu Hui
+MA3211,teaches_module,Prof An
+MA3211,teaches_module,Prof Zhang
+MA3211S,teaches_module,Prof Dinh
+MA3211S,teaches_module,Prof Tien
+MA3220,teaches_module,Dr Wong
+MA3220,teaches_module,Prof Yu
+MA3220,teaches_module,Prof An Xinliang
+MA3233,teaches_module,Prof Huang
+MA3233,teaches_module,Prof Wang
+MA3233,teaches_module,Dr Tan
+MA3236,teaches_module,Dr Lam
+MA3236,teaches_module,Prof Lam
+MA3236,teaches_module,Prof Pang
+MA3236,teaches_module,Prof Zhao
+MA3238,teaches_module,Prof Sun
+MA3238,teaches_module,Prof Wang Wanjie
+MA3238,teaches_module,Prof Rongfeng
+MA3252,teaches_module,Prof Zhao
+MA3252,teaches_module,Prof Pang
+MA3252,teaches_module,Dr Pang
+MA3264,teaches_module,Prof Brett
+MA3265,teaches_module,Prof Chan
+MA3288,teaches_module,Prof Zhang
+MA3288,teaches_module,Prof Zhang Lei
+MA4199,teaches_module,Prof Zhang
+MA4199,teaches_module,Prof Pang and
+MA4199,teaches_module,Prof Pang
+MA4199,teaches_module,Dr Brust
+MA4199,teaches_module,Prof Chu
+MA4203,teaches_module,Prof Tan
+MA4203,teaches_module,Prof Gan
+MA4207,teaches_module,Prof Yang Yue
+MA4207,teaches_module,Prof Stephan
+MA4211,teaches_module,Prof Tang
+MA4221,teaches_module,Dr Zhang
+MA4221,teaches_module,Prof Zhang Junyan
+MA4221,teaches_module,Prof Zhang
+MA4221,teaches_module,Prof Yu
+MA4229,teaches_module,Prof Zhu Cheng
+MA4229,teaches_module,Prof Zhu
+MA4229,teaches_module,Prof Tang
+MA4230,teaches_module,Prof Yang
+MA4230,teaches_module,Prof Chu
+MA4233,teaches_module,Prof Yao
+MA4235,teaches_module,Lecturer and Tutor
+MA4235,teaches_module,Prof Huang
+MA4235,teaches_module,Prof Huang Hao
+MA4235,teaches_module,Prof Zhang Louxin
+MA4235,teaches_module,Prof Zhang
+MA4254,teaches_module,Prof Soh
+MA4254,teaches_module,Prof Soh Yong
+MA4254,teaches_module,Prof Angela
+MA4254,teaches_module,Prof Pang
+MA4254,teaches_module,Prof Sun Defeng
+MA4255,teaches_module,Prof Chu
+MA4261,teaches_module,Prof Ma
+MA4262,teaches_module,Prof Leung Man
+MA4262,teaches_module,Prof Tran
+MA4262,teaches_module,Lecturer and Tutor
+MA4264,teaches_module,Prof Sun Yeneng
+MA4264,teaches_module,Prof Zhao
+MA4264,teaches_module,Prof Pang
+MA4266,teaches_module,Prof Zhang Tengren
+MA4266,teaches_module,Prof Chin
+MA4268,teaches_module,Prof Ji
+MA4270,teaches_module,Prof Soh
+MA4270,teaches_module,Prof Scarlett
+MA4270,teaches_module,Prof Tan
+MA4270,teaches_module,Prof Vincent Tan
+MA4273,teaches_module,Prof Chin
+MA4273,teaches_module,Prof Chin Chee
+MA5202,teaches_module,Prof Chin
+MA5205,teaches_module,Prof Chua
+MA5206,teaches_module,Prof An
+MA5210,teaches_module,Prof Loke
+MA5218,teaches_module,Prof Tan
+MA5218,teaches_module,Prof Bao Huanchen
+MA5218,teaches_module,Prof Bao
+MA5218,teaches_module,Prof Hansen
+MA5218,teaches_module,Prof David Hansen
+MA5219,teaches_module,Prof Tran Chieu
+MA5219,teaches_module,Prof Tran
+MA5232,teaches_module,Prof Ji
+MA5232,teaches_module,Prof Yang
+MA5232,teaches_module,Prof Zhang
+MA5232,teaches_module,Prof Tong
+MA5233,teaches_module,Prof Cai
+MA5243,teaches_module,Prof Zhao
+MA5248,teaches_module,Prof Zhou
+MA5249,teaches_module,Prof Ghosh
+MA6252,teaches_module,Prof Yang
+ME2102,teaches_module,Prof Lee
+ME2102,teaches_module,Prof Seah
+ME2102,teaches_module,Prof Lai
+ME2102,teaches_module,Prof LAI Man
+ME2102,teaches_module,Prof Seahs
+ME2102,teaches_module,Dr Jason
+ME2102,teaches_module,Prof Lai Man
+ME2121,teaches_module,Dr Sng
+ME2135,teaches_module,Prof Teo
+ME2135,teaches_module,Prof Teo Chiang
+ME2135,teaches_module,Prof Low Hong
+ME3243,teaches_module,Prof Prahlad Vadakkepat
+ME3243,teaches_module,Prof Chew
+ME4242,teaches_module,Prof Raye
+ME4242,teaches_module,Prof Raye Yeow
+ME4242,teaches_module,Prof Cecelia
+ME4261,teaches_module,Prof Kumar
+ME4291,teaches_module,Prof Jerry
+ME4291,teaches_module,Prof Ong
+ME5304,teaches_module,Dr Cui
+ME5304,teaches_module,Prof Teo
+ME5306,teaches_module,Prof Chng
+ME5306,teaches_module,Prof Chng Tat
+ME5418,teaches_module,Prof Guillaume
+ME5422,teaches_module,Prof Peter
+ME6501,teaches_module,Prof Sreeram
+MKT3718,teaches_module,Prof Canley
+MLE2001A,teaches_module,Prof Silvija
+MLE2001A,teaches_module,Dr Chamila
+MLE2103A,teaches_module,Dr Kong
+MLE2105,teaches_module,Prof Ben Tee
+MLE2105,teaches_module,Prof Ben
+MLE2105,teaches_module,Prof Colin
+MLE3101A,teaches_module,Prof He Qian
+MLE3102,teaches_module,Prof Blackwood
+MLE3102,teaches_module,Prof Adams
+MLE4210,teaches_module,Prof Adams
+MLE4210,teaches_module,Prof Blackwood
+MLE4222,teaches_module,Drude Model
+MLE5229,teaches_module,Prof Avsar
+NM1101E,teaches_module,Dr Pang
+NM1101E,teaches_module,Prof Natalie
+NM2101,teaches_module,Prof Hong
+NM2101,teaches_module,Dr Taberez
+NM2101,teaches_module,Prof Natalie
+NM2101,teaches_module,Prof Jack
+NM2101,teaches_module,Professionals
+NM2103,teaches_module,Prof Subhayan Mukerjee
+NM2103,teaches_module,Prof Cho Hichang
+NM2104,teaches_module,Prof Li
+NM2104,teaches_module,Prof Li Ke
+NM2207,teaches_module,Prof Lonce
+NM2219,teaches_module,Prof Shaohai
+NM2220,teaches_module,Prof Shan
+NM3230,teaches_module,Prof Sammel
+NM4245,teaches_module,Prof Ozan
+NM4249,teaches_module,Dr Tay
+NM4880H,teaches_module,Dr Maite
+NTW2036,teaches_module,Prof Tiffany
+PC1101,teaches_module,Dr Chan
+PC1101,teaches_module,Prof Phil
+PC1101,teaches_module,Prof Chan
+PC1101,teaches_module,prof chan
+PC1101,teaches_module,Prof Phil Chan
+PC2020,teaches_module,Dr Yeo
+PC2031,teaches_module,Prof Lim
+PC2032,teaches_module,Dr Sharma
+PC2130,teaches_module,Prof Valerio
+PC2130,teaches_module,Prof Wen Wei
+PC2130,teaches_module,Prof Ho Wen
+PC2193,teaches_module,Prof Nikolai
+PC2193,teaches_module,Prof Ariando
+PC3130,teaches_module,Prof Quek Su
+PC3130,teaches_module,Prof Loh
+PC3130,teaches_module,Lecturer Prof Loh
+PC3130,teaches_module,Prof QSY
+PC3130,teaches_module,Prof Loh HQ
+PC3193,teaches_module,Dr Saumitra
+PC3193,teaches_module,Prof Thomas
+PC3193,teaches_module,Prof Tok
+PC3231,teaches_module,Prof Paul Lim
+PC3231,teaches_module,Prof Paul
+PC3231,teaches_module,Prof Lim
+PC3235,teaches_module,Prof Eda Goki
+PC3235,teaches_module,Prof Sow
+PC3235,teaches_module,Prof Kuok
+PC3238,teaches_module,Prof Lim Hock
+PC3274A,teaches_module,Lecturer Kenneth Hong
+PC3288,teaches_module,Prof Ho Wen
+PC4228,teaches_module,Prof Alex
+PC4228,teaches_module,Prof Alex Ling
+PC4230,teaches_module,Prof Gong
+PC4241,teaches_module,Prof Batrouni
+PC4241,teaches_module,Prof Yeo
+PC4241,teaches_module,Prof Georges
+PC5210,teaches_module,Prof Gabriel Lemarie
+PC5210,teaches_module,Prof Gabriel
+PC5221,teaches_module,Driven
+PE2101P,teaches_module,Prof Chow
+PF1101,teaches_module,Prof Florence Ling
+PH2209,teaches_module,Prof Song
+PH2211,teaches_module,Prof Tagore
+PH2211,teaches_module,Prof Tagore TA
+PH2224,teaches_module,Prof Holbo
+PL1101E,teaches_module,Prof Nina
+PL1101E,teaches_module,Dr Powell
+PL2131,teaches_module,Prof Mike
+PL2131,teaches_module,dr tsai
+PL3105,teaches_module,Prof Kaur
+PL3257,teaches_module,Dr Lee
+PL4203,teaches_module,Prof Hon
+PL4233,teaches_module,Prof Al Au
+PL4880P,teaches_module,Prof Paul Reddish
+PLB1201,teaches_module,Prof Susheel
+PLS8001,teaches_module,Prof Au Kin
+PS1101E,teaches_module,Prof Elaine
+PS1101E,teaches_module,Prof Yoshi
+PS1101E,teaches_module,Dr Yoshi
+PS2204,teaches_module,Dr Lepori
+PS2237,teaches_module,Dr Park
+PS2237,teaches_module,Prof Park
+PS2240,teaches_module,Prof Haque
+PS2249,teaches_module,Prof Singh
+PS3237,teaches_module,Prof Dunya
+PS3240,teaches_module,Prof Lee
+PS4229,teaches_module,Prof Luke
+QF1100,teaches_module,Prof Zhang Tengren
+QF1100,teaches_module,Prof Zhang Lei
+QF1100,teaches_module,Prof Zhang
+QF2103,teaches_module,Prof Lam
+QF2104,teaches_module,Prof Li Wei
+QF2104,teaches_module,Dr Liu
+QF2104,teaches_module,Prof Li
+QF3101,teaches_module,Prof Tan
+QF4103,teaches_module,Prof Weber
+RE4711,teaches_module,Prof Wang Xi
+RE4711,teaches_module,Prof Lum Sau
+RE4711,teaches_module,Prof Sing Tien
+RE4807,teaches_module,Prof Zhonglin Li
+SC1101E,teaches_module,Dr Radics
+SC1101E,teaches_module,Dr Lou
+SC1101E,teaches_module,Dr Saroja
+SC2101,teaches_module,Dr Kriti
+SC2101,teaches_module,Dr Senhu
+SC2204,teaches_module,Dr Vincent
+SC2209,teaches_module,Dr Canay
+SC2212,teaches_module,Prof George Radics
+SC2212,teaches_module,Prof Radics
+SC2217,teaches_module,Prof Erb
+SC3101,teaches_module,Prof Chua
+SC3219,teaches_module,Dr Adelyn
+SE1101E,teaches_module,Dr Effendy
+SE1101E,teaches_module,DRAWBACK
+SE2213,teaches_module,Prof Yoshi
+SE3214,teaches_module,Dr Hamzah
+SN1101E,teaches_module,Lecturer Dr
+SN1101E,teaches_module,Dr Jayati
+SN2213,teaches_module,Prof Rajshree
+SN2213,teaches_module,Prof Jetly
+SN2271,teaches_module,Prof Flatt
+SN2271,teaches_module,Prof Emma Flatt
+SN2285,teaches_module,Lecturer Dr
+SN3262,teaches_module,Prof Gyanesh
+SN3262,teaches_module,Prof Kudaisya
+SN3275,teaches_module,Prof Darinee
+SPH2003,teaches_module,Prof Chia Kee
+SPH2003,teaches_module,Prof Jason Yap
+SPH2003,teaches_module,Prof Yvette van
+SPH2003,teaches_module,Prof Chia
+ST1131,teaches_module,Prof Daisy
+ST1131,teaches_module,Prof Wong Yean
+ST1131,teaches_module,Prof Pham Thi
+ST2131,teaches_module,Prof Wang Fei
+ST2131,teaches_module,Prof Gan
+ST2131,teaches_module,Prof Chan Yiu
+ST2131,teaches_module,Lecturer Timothy Wertz
+ST2131,teaches_module,Lecturer Wang Fei
+ST2131,teaches_module,Prof Chan
+ST2131,teaches_module,Dr Gan
+ST2131,teaches_module,Prof Sun
+ST2131,teaches_module,Dr Vik
+ST2131,teaches_module,Dr Lou
+ST2131,teaches_module,Prof Tim Wertz
+ST2132,teaches_module,Prof Daisy
+ST2132,teaches_module,Prof Yap Von
+ST2132,teaches_module,Prof Choi
+ST2132,teaches_module,Prof Gan
+ST2132,teaches_module,Prof Michael
+ST2132,teaches_module,Draws
+ST2132,teaches_module,Professor
+ST2132,teaches_module,Prof Yap
+ST2132,teaches_module,Prof Lim
+ST2132,teaches_module,Dr Daisy
+ST2132,teaches_module,Prof Lim Tiong
+ST2132,teaches_module,Prof Gan Fah
+ST2137,teaches_module,Prof Pham Thi
+ST2137,teaches_module,Prof Daisy
+ST2137,teaches_module,Tutored
+ST2334,teaches_module,Prof Yutao
+ST2334,teaches_module,Prof Yu Tao
+ST3131,teaches_module,Lecturer and Tutor
+ST3131,teaches_module,Dr Chan
+ST3131,teaches_module,Prof Yap Von
+ST3131,teaches_module,Prof Yap
+ST3131,teaches_module,Prof Gan
+ST3131,teaches_module,Prof Gan Fah
+ST3131,teaches_module,Dr Zhang
+ST3131,teaches_module,Prof Zhang
+ST3131,teaches_module,Prof Kuk
+ST3236,teaches_module,Prof Zhou
+ST3236,teaches_module,Prof Sun
+ST3236,teaches_module,Prof Choi
+ST3236,teaches_module,Prof Choi Kwok
+ST3247,teaches_module,Prof Lim Chinghway
+ST3247,teaches_module,Prof Lim
+ST3248,teaches_module,Prof Nott
+ST3248,teaches_module,Prof Sun Baoluo
+ST4231,teaches_module,Prof Li Cheng
+ST4233,teaches_module,Dr Zhang
+ST4233,teaches_module,Dr Wang
+ST4234,teaches_module,Lecturer and Tutor
+ST4248,teaches_module,Prof Chinghway
+ST5201,teaches_module,Prof Choi
+ST5213,teaches_module,Prof Tan
+TIC1002,teaches_module,Prof Wai Kay
+TIC1201,teaches_module,Prof Jithin
+TIC2001,teaches_module,Prof Tan Sun
+TIC2001,teaches_module,Prof Sun Teck
+TIC2003,teaches_module,Prof Ganesh CA
+TIC2301,teaches_module,Prof Sufatrio
+TIC2301,teaches_module,Prof Rio
+TIC2301,teaches_module,Prof Prasanna
+TIC2401,teaches_module,Prof Ravi CA
+TIC2501,teaches_module,Prof Zhou Lifeng
+TIC2601,teaches_module,Prof Wee Kek
+TMA1001,teaches_module,Prof Chew Tuan
+TMA2101,teaches_module,Prof Chew Tuan
+TMA2101,teaches_module,Prof Wang Fei
+TMA2102,teaches_module,Dr Jon
+TMA2102,teaches_module,Prof Jon
+TRA2101,teaches_module,Prof Ng
+TS1101E,teaches_module,Prof Loon
+TS1101E,teaches_module,Dr Loon
+TS1101E,teaches_module,Lecturer and TA
+UTC1702B,teaches_module,Prof Naviyn
+UTC1702D,teaches_module,Prof Elizabeth
+UTC2716,teaches_module,Prof Pang
+UTC2728,teaches_module,Prof Lynette
+UTS2708,teaches_module,Prof Navarun
+UTS2708,teaches_module,Prof Navarun Varma
+UTW1001O,teaches_module,Dr Jinat

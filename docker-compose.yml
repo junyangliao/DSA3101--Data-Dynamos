@@ -1,0 +1,35 @@
+version: "3.8"
+
+
+services:
+  flask-backend:
+    build:
+      context: ./backend/src  
+      dockerfile: DockerFile
+    container_name: flask-backend
+    ports:
+      - "5001:5000"
+    volumes:
+      - ./backend/src:/app 
+    environment:
+      - NEO4J_URI=neo4j+s://67203e25.databases.neo4j.io 
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=KUKTrqvpgw9FLuAam0cCauBnsdQsTC3CW1lCboUWhaA  
+      - OPENAI_API_KEY=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
+      - GOOGLE_API_KEY=AIzaSyACdvWDLdk00vEvtLn_T2H5mX8NAMz-w3M
+    networks:
+      - mynetwork
+
+  react-frontend:
+    build:
+      context: ./frontend  
+      dockerfile: DockerFile
+    container_name: react-frontend
+    ports:
+      - "3000:3000"  
+    depends_on:
+      - flask-backend 
+
+networks:
+  mynetwork:
+    driver: bridge
