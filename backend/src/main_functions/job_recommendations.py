@@ -37,6 +37,12 @@ def clean_skill_name(skill):
     cleaned = re.sub(r'\s*\[[^\]]*\]', '', cleaned)
     return ' '.join(cleaned.split())
 
+def standardize_matric_number(matric_number):
+    """Standardize matric number format to uppercase and remove all whitespaces"""
+    if not matric_number:
+        return None
+    return ''.join(matric_number.split()).upper()
+
 def preprocess_title(title):
     title = re.sub(r'[^\w\s]', '', title.lower())
     return ' '.join(ps.stem(word) for word in title.split())
@@ -53,7 +59,8 @@ def extract_job_title(user_input):
     return response.text.strip() if response else "Unknown"
 
 def get_student_data(matric_number):
-    """Get student's completed modules and their preclusions in one query"""
+    """Get student's completed modules and their preclusions"""
+    matric_number = standardize_matric_number(matric_number)
     query = """
     MATCH (s:Student {matricNumber: $matric_number})-[:COMPLETED]->(m:Module)
     WITH collect(DISTINCT m.moduleCode) as completed_modules
@@ -95,6 +102,7 @@ def can_take_module(module_code, completed_modules):
 def get_completed_modules_by_skill(matric_number, skill):
     """Get completed modules that teach a specific skill"""
     cleaned_skill = clean_skill_name(skill)
+    matric_number = standardize_matric_number(matric_number)
     
     if len(cleaned_skill) == 1:
         query = """
@@ -195,15 +203,26 @@ def get_skills_for_job(job_title):
 def get_job_recommendations(job_description, matric_number=None):
     """Main function to get job recommendations"""
     try:
+        matric_number = standardize_matric_number(matric_number)
         job_title = extract_job_title(job_description)
         logger.info(f"Extracted job title: {job_title}")
 
         if job_title_exists(job_title):
             skills = get_skills_for_job(job_title)
             if skills:
-                skills_str = ", ".join(skills)
+                response_data = {
+                    "success": True,
+                    "job": {
+                        "title": job_title,
+                        "skills": skills
+                    },
+                    "student": {
+                        "matricNumber": matric_number
+                    },
+                    "skillBreakdown": {}
+                }
+
                 completed_modules_by_skill = {}
-                
                 if matric_number:
                     for skill in skills:
                         completed = get_completed_modules_by_skill(matric_number, skill)
@@ -212,42 +231,54 @@ def get_job_recommendations(job_description, matric_number=None):
 
                 modules_by_skill = get_relevant_modules(skills, matric_number)
 
-                output = [f"Job title '{job_title}' found.",
-                         f"Required skills: {skills_str}\n"]
-
-                if matric_number:
-                    output.append(f"Personalized recommendations for student {matric_number}:")
-                
-                output.append("\nSkill breakdown:")
-                
+                # Structure skill breakdown
                 for skill in skills:
-                    output.append(f"\n{skill}:")
-                    
-                    if skill in completed_modules_by_skill:
-                        completed = completed_modules_by_skill[skill]
-                        output.append("You have already completed:")
-                        for code, title, skill_list in completed:
-                            skills_str = ", ".join(skill_list)
-                            output.append(f"- {code}: {title} ({skills_str})")
-                        
-                        if skill in modules_by_skill:
-                            output.append("\nFor further learning, you can consider:")
-                    
-                    if skill in modules_by_skill:
-                        if skill not in completed_modules_by_skill:
-                            output.append("Recommended modules:")
-                        for code, title, module_skills in modules_by_skill[skill]:
-                            skills_str = ", ".join(module_skills)
-                            output.append(f"- {code}: {title} ({skills_str})")
-                    elif skill not in completed_modules_by_skill:
-                        output.append("No additional modules found for this skill")
+                    skill_data = {
+                        "name": skill,
+                        "completed": [],
+                        "recommended": []
+                    }
 
-                return "\n".join(output)
+                    # Add completed modules
+                    if skill in completed_modules_by_skill:
+                        skill_data["completed"] = [
+                            {
+                                "code": code,
+                                "title": title,
+                                "skills": skill_list
+                            }
+                            for code, title, skill_list in completed_modules_by_skill[skill]
+                        ]
+
+                    # Add recommended modules
+                    if skill in modules_by_skill:
+                        skill_data["recommended"] = [
+                            {
+                                "code": code,
+                                "title": title,
+                                "skills": module_skills
+                            }
+                            for code, title, module_skills in modules_by_skill[skill]
+                        ]
+
+                    response_data["skillBreakdown"][skill] = skill_data
+
+                return response_data
+
             else:
-                return f"Job title '{job_title}' found, but no skills are associated with it."
+                return {
+                    "success": False,
+                    "error": f"Job title '{job_title}' found, but no skills are associated with it."
+                }
         else:
-            return f"Job title '{job_title}' not found."
-            
+            return {
+                "success": False,
+                "error": f"Job title '{job_title}' not found."
+            }
+
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}", exc_info=True)
-        return f"An error occurred: {str(e)}"
+        return {
+            "success": False,
+            "error": f"An error occurred: {str(e)}"
+        }
