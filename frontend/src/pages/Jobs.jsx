@@ -1,6 +1,112 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Paper } from '@mui/material';
+import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Paper, Chip, List, ListItem, ListItemText, Alert } from '@mui/material';
+
+const RecommendationResults = ({ data }) => {
+  if (!data) return null;
+
+  // Add scroll handler function
+  const scrollToSkill = (skillName) => {
+    const element = document.getElementById(`skill-${skillName.replace(/\s+/g, '-')}`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  return (
+    <Paper elevation={3} sx={{ mt: 3, p: 3 }}>
+      {data.success ? (
+        <>
+          <Typography variant="h5" gutterBottom>
+            Job: {data.job.title}
+          </Typography>
+
+          <Box sx={{ my: 2 }}>
+            <Typography variant="h6" gutterBottom>
+              Required Skills:
+            </Typography>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+              {data.job.skills.map((skill) => (
+                <Chip 
+                  key={skill} 
+                  label={skill} 
+                  color="primary"
+                  onClick={() => scrollToSkill(skill)}
+                  sx={{ cursor: 'pointer' }}
+                />
+              ))}
+            </Box>
+          </Box>
+
+          {data.student.matricNumber && (
+            <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+              Recommendations for: {data.student.matricNumber}
+            </Typography>
+          )}
+
+          <Divider sx={{ my: 3 }} />
+
+          {Object.entries(data.skillBreakdown).map(([skill, breakdown]) => (
+            <Paper 
+              key={skill} 
+              id={`skill-${skill.replace(/\s+/g, '-')}`}
+              sx={{ mb: 2, p: 2, backgroundColor: '#f5f5f5' }}
+            >
+              <Typography variant="h6" color="primary" gutterBottom>
+                {skill}
+              </Typography>
+
+              {breakdown.completed.length > 0 && (
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="subtitle1" color="success.main">
+                    Completed Modules:
+                  </Typography>
+                  <List dense>
+                    {breakdown.completed.map((module) => (
+                      <ListItem key={module.code}>
+                        <ListItemText
+                          primary={`${module.code}: ${module.title}`}
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
+                </Box>
+              )}
+
+              {breakdown.recommended.length > 0 && (
+                <Box>
+                  <Typography variant="subtitle1" color="info.main">
+                    {breakdown.completed.length > 0 
+                      ? 'For further learning:' 
+                      : 'Recommended Modules:'}
+                  </Typography>
+                  <List dense>
+                    {breakdown.recommended.map((module) => (
+                      <ListItem key={module.code}>
+                        <ListItemText
+                          primary={`${module.code}: ${module.title}`}
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
+                </Box>
+              )}
+
+              {breakdown.recommended.length === 0 && 
+               breakdown.completed.length === 0 && (
+                <Alert severity="info">
+                  No modules found for this skill
+                </Alert>
+              )}
+            </Paper>
+          ))}
+        </>
+      ) : (
+        <Alert severity="error">{data.error}</Alert>
+      )}
+    </Paper>
+  );
+};
 
 const JobVisualizer = () => {
   const [jobTitle, setJobTitle] = useState('');
@@ -292,18 +398,7 @@ const JobVisualizer = () => {
         </form>
 
         {recommendations && (
-          <Paper 
-            elevation={1} 
-            style={{ 
-              marginTop: '20px', 
-              padding: '20px',
-              whiteSpace: 'pre-wrap',
-              fontFamily: 'monospace',
-              backgroundColor: '#f5f5f5'
-            }}
-          >
-            {recommendations}
-          </Paper>
+          <RecommendationResults data={recommendations} />
         )}
       </Paper>
       
