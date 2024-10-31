@@ -37,6 +37,12 @@ def clean_skill_name(skill):
     cleaned = re.sub(r'\s*\[[^\]]*\]', '', cleaned)
     return ' '.join(cleaned.split())
 
+def standardize_matric_number(matric_number):
+    """Standardize matric number format to uppercase and remove all whitespaces"""
+    if not matric_number:
+        return None
+    return ''.join(matric_number.split()).upper()
+
 def preprocess_title(title):
     title = re.sub(r'[^\w\s]', '', title.lower())
     return ' '.join(ps.stem(word) for word in title.split())
@@ -53,7 +59,8 @@ def extract_job_title(user_input):
     return response.text.strip() if response else "Unknown"
 
 def get_student_data(matric_number):
-    """Get student's completed modules and their preclusions in one query"""
+    """Get student's completed modules and their preclusions"""
+    matric_number = standardize_matric_number(matric_number)
     query = """
     MATCH (s:Student {matricNumber: $matric_number})-[:COMPLETED]->(m:Module)
     WITH collect(DISTINCT m.moduleCode) as completed_modules
@@ -95,6 +102,7 @@ def can_take_module(module_code, completed_modules):
 def get_completed_modules_by_skill(matric_number, skill):
     """Get completed modules that teach a specific skill"""
     cleaned_skill = clean_skill_name(skill)
+    matric_number = standardize_matric_number(matric_number)
     
     if len(cleaned_skill) == 1:
         query = """
@@ -195,6 +203,7 @@ def get_skills_for_job(job_title):
 def get_job_recommendations(job_description, matric_number=None):
     """Main function to get job recommendations"""
     try:
+        matric_number = standardize_matric_number(matric_number)
         job_title = extract_job_title(job_description)
         logger.info(f"Extracted job title: {job_title}")
 
