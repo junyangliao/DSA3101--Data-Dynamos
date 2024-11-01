@@ -136,7 +136,6 @@ const JobVisualizer = () => {
     
 
     try {
-
       const response = await axios.post('http://localhost:5001/upload-jobs-csv', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',

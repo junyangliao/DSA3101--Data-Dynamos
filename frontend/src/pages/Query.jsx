@@ -99,7 +99,7 @@ const QueryProcessor = () => {
       <Paper elevation={3} style={{ padding: '20px', marginBottom: '20px' }}>
         <form onSubmit={handleQuerySubmit}>
           <TextField
-            label="Input Prompt"
+            label="Input Prompt (*Case sensitive) "
             variant="outlined"
             value={query}
             onChange={(e) => setQuery(e.target.value)}

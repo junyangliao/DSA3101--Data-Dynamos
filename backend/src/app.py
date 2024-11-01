@@ -208,7 +208,8 @@ def visualize_module():
         OPTIONAL MATCH (m)-[:MUST_NOT_HAVE_TAKEN_ONE_OF]->(preclu:PreclusionGroup)
         OPTIONAL MATCH (m)-[:MUST_HAVE_TAKEN_ONE_OF]->(prereq:PrerequisiteGroup)
         OPTIONAL MATCH (m)-[:OFFERED_IN]->(s:Semester)
-        RETURN m, d, f, preclu, prereq, s;
+        OPTIONAL MATCH (m)-[:TAUGHT_BY]->(st:Staff)
+        RETURN m, d, f, preclu, prereq, s, st;
         """
         data = session.run(query, module_code=module_code).data()
 
@@ -257,6 +258,7 @@ def visualize_module():
             preclusion_group = record.get('preclu')
             prereq_group = record.get('prereq')
             semester = record.get('s')
+            prof = record.get('st')
 
             # Add module node
             module_code = module['moduleCode']
@@ -290,6 +292,11 @@ def visualize_module():
                 sem_label = f"Semester {sem_number}"
                 net.add_node(sem_label, label=sem_label, color='purple')
                 net.add_edge(module_code, sem_label, label='OFFERED_IN', length=300, font={'size': 14})
+            
+            if prof:
+                prof_name = prof['employeeName']
+                net.add_node(prof_name, label=f"Professor: {prof_name}", color='darkgreen')
+                net.add_edge(module_code, prof_name, label='TAUGHT_BY', length=300, font={'size': 14})
 
     # Display the graph
     html_filename = f"{module_code}_graph.html"
@@ -392,16 +399,16 @@ def visualize_student():
 
 @app.route('/visualize-staff', methods=['POST'])
 def visualize_staff():
-    employee_id = request.get_json().get('employee_id')
+    employee_name = request.get_json().get('employee_name')
     with driver.session() as session:
         query = """
-        MATCH (st:Staff {employeeId: $employee_id})
+        MATCH (st:Staff {employeeName: $employee_name})
         OPTIONAL MATCH (st)-[:EMPLOYED_UNDER]->(d:Department)
         OPTIONAL MATCH (d:Department)-[:PART_OF]->(f:Faculty)
         OPTIONAL MATCH (m:Module)-[:TAUGHT_BY]->(st)
         RETURN st,d,f,m
         """
-        data = session.run(query, employee_id=employee_id).data()
+        data = session.run(query, employee_name=employee_name).data()
 
         # Initialize the network graph visualization
         net = Network(notebook=True, cdn_resources='in_line')
