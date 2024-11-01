@@ -109,13 +109,9 @@ const RecommendationResults = ({ data }) => {
 };
 
 const JobVisualizer = () => {
-  const [jobTitle, setJobTitle] = useState('');
   const [error, setError] = useState(null);
-  const [iframeUrl, setIframeUrl] = useState('');
   const [open, setOpen] = useState(false);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
-  const [progress, setProgress] = useState(0);          
-  const [message, setMessage] = useState('');
   const [jobDescription, setJobDescription] = useState('');
   const [matricNumber, setMatricNumber] = useState('');
   const [recommendations, setRecommendations] = useState(null);
@@ -129,7 +125,6 @@ const JobVisualizer = () => {
     }
   };
 
-  // Handle CSV upload
   const handleUpload = async (selectedFile) => {
     if (!selectedFile) {
       setError("Please select a file first.");
@@ -141,17 +136,10 @@ const JobVisualizer = () => {
     
 
     try {
-      setProgress(0);
-      setMessage('');
 
       const response = await axios.post('http://localhost:5001/upload-jobs-csv', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-        },
-        onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setProgress(percentCompleted)
-          console.log(`File upload progress: ${percentCompleted}%`);
         }
       });
 
@@ -204,18 +192,6 @@ const JobVisualizer = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5001/visualize-job', { job_title: jobTitle });
-  
-      const { file_url } = response.data;
-      setIframeUrl(`http://localhost:5001${file_url}`);
-    } catch (err) {
-      setError('Failed to load Job visualization');
-    }
-  };
-
   const handleRecommendationSubmit = async (e) => {
     e.preventDefault();
     setLoadingRecommendations(true);
@@ -235,13 +211,14 @@ const JobVisualizer = () => {
 
   return (
     <div style={{ paddingLeft: '20px', paddingRight: '20px' }}>
+      {error && <Alert severity="error" onClose={() => setError(null)}>{error}</Alert>}
       <Box
         display="flex"
         justifyContent="space-between" 
         alignItems="center"
       >
         <Typography variant="h4" gutterBottom style={{ paddingTop: '10px' }}>
-          Job Info 
+          Job Recommendations
         </Typography>
 
         <Box
@@ -284,23 +261,6 @@ const JobVisualizer = () => {
         </Box>
       </Box>
 
-      {progress > 0 && (
-        <Typography variant="body2" style={{ marginTop: '10px' }}>
-          Upload Progress: {progress}%
-        </Typography>
-      )}
-
-      {message && (
-        <Typography variant="body2" style={{ marginTop: '10px', color: 'green' }}>
-          {message}
-        </Typography>
-      )}
-      {error && (
-        <Typography variant="body2" style={{ marginTop: '10px', color: 'red' }}>
-          {error}
-        </Typography>
-      )}
-
       <Dialog open={open} onClose={handleClose}>
       <DialogTitle>{isDeleteMode ? 'Delete Job' : 'Create New Job'}</DialogTitle>
         <DialogContent>
@@ -338,31 +298,6 @@ const JobVisualizer = () => {
           </Button>
         </DialogActions>
       </Dialog>
-
-      <form onSubmit={handleSubmit}>
-        <TextField
-          label="Job Title"
-          variant="outlined"
-          value={jobTitle}
-          onChange={(e) => setJobTitle(e.target.value)}
-          placeholder="Enter Job Title"
-          required
-          fullWidth
-          style={{ marginBottom: '16px' }} // Add some spacing
-        />
-
-        <Button type="submit" variant="contained" color="primary">
-          Submit
-        </Button>
-      </form>
-
-      {/* Add Divider between existing content and recommendations section */}
-      <Divider style={{ margin: '40px 0' }} />
-
-      {/* Job Recommendations section */}
-      <Typography variant="h4" gutterBottom>
-        Job Recommendations
-      </Typography>
 
       <Paper elevation={3} style={{ padding: '20px', marginBottom: '20px' }}>
         <form onSubmit={handleRecommendationSubmit}>
@@ -402,15 +337,6 @@ const JobVisualizer = () => {
         )}
       </Paper>
       
-      {iframeUrl && (
-        <iframe
-          src={iframeUrl}
-          title="Job Visualization"
-          width="100%"
-          height="750px"
-          frameBorder="0"
-        />
-      )}
     </div>
   );
 };

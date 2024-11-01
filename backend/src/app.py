@@ -484,18 +484,9 @@ def process_query():
         return jsonify({'error': 'Query is required'}), 400
     
     try:
-        cypher_query, result = evaluate_prompt(query)
-        if isinstance(result,list):
-            serialized_result = result
-        elif isinstance(result[0],list):
-            serialized_result = result
-        else:
-            serialized_result = [serialize_neo4j_value(record) for record in result][0]['properties']
+        result = evaluate_prompt(query)
         
-        return jsonify({
-            'cypher_query': cypher_query,
-            'result': serialized_result
-        }), 201
+        return jsonify(result), 201
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
