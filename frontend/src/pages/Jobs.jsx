@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Paper, Chip, List, ListItem, ListItemText, Alert } from '@mui/material';
+import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Paper, Chip, List, ListItem, ListItemText, Alert, Skeleton } from '@mui/material';
 
 const RecommendationResults = ({ data }) => {
   if (!data) return null;
@@ -107,6 +107,33 @@ const RecommendationResults = ({ data }) => {
     </Paper>
   );
 };
+
+const LoadingSkeleton = () => (
+  <Paper elevation={3} sx={{ mt: 3, p: 3 }}>
+    <Skeleton variant="text" width={300} height={40} sx={{ mb: 2 }} />
+    
+    <Typography variant="h6" gutterBottom>
+      Required Skills:
+    </Typography>
+    <Box sx={{ display: 'flex', gap: 1, mb: 3 }}>
+      {[1, 2, 3, 4, 5].map((i) => (
+        <Skeleton key={i} variant="rounded" width={100} height={32} />
+      ))}
+    </Box>
+    
+    {[1, 2, 3].map((section) => (
+      <Paper key={section} sx={{ mb: 2, p: 2, backgroundColor: '#f5f5f5' }}>
+        <Skeleton variant="text" width={150} height={32} sx={{ mb: 2 }} />
+        
+        {[1, 2].map((module) => (
+          <Box key={module} sx={{ mb: 1 }}>
+            <Skeleton variant="text" width="90%" height={24} />
+          </Box>
+        ))}
+      </Paper>
+    ))}
+  </Paper>
+);
 
 const JobVisualizer = () => {
   const [error, setError] = useState(null);
@@ -331,9 +358,12 @@ const JobVisualizer = () => {
           </Button>
         </form>
 
-        {recommendations && (
+        {loadingRecommendations ? (
+          <LoadingSkeleton />
+        ) : recommendations ? (
           <RecommendationResults data={recommendations} />
-        )}
+        ) : null}
+
       </Paper>
       
     </div>
