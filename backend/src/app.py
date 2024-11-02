@@ -6,7 +6,7 @@ from main_functions.modules import create_module, create_modules, delete_module
 from main_functions.job_skills import create_job_and_skills, create_jobs_and_skills, delete_job
 from main_functions.staffs import create_staffs, delete_staff
 from main_functions.job_recommendations import get_job_recommendations
-from utils import evaluate_prompt, serialize_neo4j_value
+from utils import evaluate_prompt, capitalize_name
 from pyvis.network import Network
 import pandas as pd
 import os
@@ -157,49 +157,33 @@ def delete_job_node():
 
     return jsonify({'message': f"Job with Job Title {job_title} deleted successfully"}), 201
 
-# Function to create graph showing the staff distribution by department
-@app.route('/staff-distribution', methods=['GET'])
-def staff_distribution():
-    with driver.session() as session:
-        print("Received a request at /staff-distribution")  # Debug log
-        query = """
-        MATCH (d:Department)<-[:EMPLOYED_UNDER]-(s:Staff)
-        RETURN d.name AS department, COUNT(s) AS staff_count
-        """
-        results = session.run(query,timeout = 120).data()
-        print(f"Results: {results}")  # Debug log
-
-    return jsonify(results)
-
 @app.route('/student-distribution-faculty', methods=['GET'])
 def student_faculty_distribution():
     with driver.session() as session:
-        print("Received a request at /staff-distribution-faculty")  # Debug log
         query = """
         MATCH (f:Faculty)<-[:STUDYING_UNDER]-(s:Student)
         RETURN f.name AS faculty, COUNT(s) AS student_count
         """
-        results = session.run(query,timeout = 120).data()
-    print(f"Results: {results}")  # Debug log
+        results = session.run(query,timeout = 120).data() 
 
     return jsonify(results)
 
 @app.route('/student-distribution-major', methods=['GET'])
 def student_major_distribution():
     with driver.session() as session:
-        print("Received a request at /staff-distribution-major")  # Debug log
         query = """
         MATCH (m:Major)<-[:MAJOR_IN]-(s:Student)
         RETURN m.name AS major, COUNT(s) AS student_count
         """
         results = session.run(query,timeout = 120).data()
-    print(f"Results: {results}")  # Debug log
+    print(f"Results: {results}")
 
     return jsonify(results)
 
 @app.route('/visualize-module', methods=['POST'])
 def visualize_module():
-    module_code = request.get_json().get('module_code')
+    user_input = request.get_json().get('module_code')
+    module_code = user_input.upper()
     with driver.session() as session:
         query = """
         MATCH (m:Module {moduleCode: $module_code})
@@ -216,7 +200,7 @@ def visualize_module():
         print(f"Data fetched for module_code '{module_code}':", data)
 
         # Initialize the network graph visualization
-        net = Network(notebook=True, cdn_resources='in_line')
+        net = Network(cdn_resources='in_line')
 
         # Update physics settings to improve readability
         net.toggle_physics(True)  # Enable physics
@@ -262,7 +246,13 @@ def visualize_module():
 
             # Add module node
             module_code = module['moduleCode']
-            net.add_node(module_code, label=f"Module: {module_code}", color='lightblue')
+            module_data = {
+                'moduleCode': module.get('moduleCode',''),
+                'title': module.get('title', ''),
+                'moduleCredit': module.get('moduleCredit', ''),
+                'description': module.get('description', '')
+            }
+            net.add_node(module_code, label=f"Module: {module_code}", color='lightblue', data=module_data )
 
             # Add department and faculty
             if department:
@@ -300,12 +290,99 @@ def visualize_module():
 
     # Display the graph
     html_filename = f"{module_code}_graph.html"
-    net.show(html_filename)
+    net.write_html(html_filename)
+    with open(html_filename, "a") as f:
+        f.write("""
+        <style>
+        #nodeModal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            right: 0;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background-color: white;
+            box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            overflow-y: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px 0 0 5px; 
+        }
+        #modalContent {
+            max-width: 100%;
+        }
+        #closeModal {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #555;
+        }
+        #overlay {
+            display: none;
+            position: fixed;
+            z-index: 0;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        #modalTitle {
+        margin-left: 10px; 
+        padding-left: 10px;
+        }
+        </style>
+
+        <div id="overlay"></div>
+        <div id="nodeModal">
+            <span id="closeModal">&times;</span>
+            <div id="modalContent">
+                <h2 id="modalTitle">Node Details</h2>
+                <p id="modalData"></p>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+        document.getElementById("closeModal").onclick = function() {
+            document.getElementById("nodeModal").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+
+        network.on("click", function(params) {
+            if (params.nodes.length > 0) {
+                var nodeId = params.nodes[0];
+                var node = network.body.data.nodes.get(nodeId);
+
+                if (node.label.startsWith("Module:")) {
+                    var moduleData = node.data || {};
+                    var title = moduleData.title || "No Title";
+                    var moduleCode = moduleData.moduleCode || "No Module Code";
+                    var moduleCredit = moduleData.moduleCredit || "N/A";
+                    var description = moduleData.description || "No Description available.";
+
+                    document.getElementById("modalTitle").innerText = node.label;
+                    document.getElementById("modalData").innerHTML = `
+                        <strong>Module Code:</strong> ${moduleCode} <br>
+                        <strong>Module Credit:</strong> ${moduleCredit} <br>
+                        <strong>Description:</strong> ${description}
+                    `;
+                    document.getElementById("nodeModal").style.display = "flex";
+                }
+            }
+        });
+        </script>
+        """)
+
     return {"file_url": f"/visualizations/{html_filename}"}
 
 @app.route('/visualize-student', methods=['POST'])
 def visualize_student():
-    matric_number = request.get_json().get('matric_number')
+    user_input = request.get_json().get('matric_number')
+    matric_number = user_input.upper()
     with driver.session() as session:
         query = """
         MATCH (s:Student {matricNumber: $matric_number})
@@ -314,7 +391,7 @@ def visualize_student():
         OPTIONAL MATCH (s)-[:MAJOR_IN]->(m:Major)
         OPTIONAL MATCH (s)-[:SECOND_MAJOR_IN]->(sm:secondMajor)
         OPTIONAL MATCH (s)-[:COMPLETED]->(mod:Module)
-        RETURN s, d, f, m, sm, mod;
+        RETURN s, d, f, m, sm, COLLECT(mod) AS completedModules;
         """
         data = session.run(query, matric_number=matric_number).data()
 
@@ -361,10 +438,17 @@ def visualize_student():
             faculty = record.get('f')
             major = record.get('m')
             second_major = record.get('sm')
-            module = record.get('mod')
+            completed_modules = record.get('completedModules', [])
 
             matric_number = student['matricNumber']
-            net.add_node(matric_number, label=f"Student: {matric_number}", color='lightblue')
+            student_data = {
+                'studentName': student.get('studentName',''),
+                'matricNumber': student.get('matricNumber', ''),
+                'grades': student.get('grades', ''),
+                'nric': student.get('nric', ''),
+                'completedModules': [module['moduleCode'] for module in completed_modules]
+            }
+            net.add_node(matric_number, label=f"Student: {matric_number}", color='lightblue', data=student_data)
 
             if faculty:
                 fac_name = faculty['name']
@@ -386,20 +470,104 @@ def visualize_student():
                 net.add_node(second_major, label=f"Second Major: {second_major}", color='yellow')
                 net.add_edge(matric_number, second_major, label='SECOND_MAJOR_IN', length=300, font={'size': 14})
 
-            if module:
-                module_code = module['moduleCode']
-                net.add_node(module_code, label=f"Module: {module_code}", color='lightblue')
-                net.add_edge(matric_number, module_code, label='COMPLETED', length=300, font={'size': 14})
-                net.add_edge(module_code, dept_name, label='BELONGS_TO', length=300, font={'size': 14})
-
     # Display the graph
     html_filename = f"{matric_number}_graph.html"
-    net.show(html_filename)
+    net.write_html(html_filename)
+    with open(html_filename, "a") as f:
+        f.write("""
+        <style>
+        #nodeModal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            right: 0;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background-color: white;
+            box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            overflow-y: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px 0 0 5px; 
+        }
+        #modalContent {
+            max-width: 100%;
+        }
+        #closeModal {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #555;
+        }
+        #overlay {
+            display: none;
+            position: fixed;
+            z-index: 0;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        #modalTitle {
+        margin-left: 10px; 
+        padding-left: 10px;
+        }
+        </style>
+
+        <div id="overlay"></div>
+        <div id="nodeModal">
+            <span id="closeModal">&times;</span>
+            <div id="modalContent">
+                <h2 id="modalTitle">Node Details</h2>
+                <p id="modalData"></p>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+        document.getElementById("closeModal").onclick = function() {
+            document.getElementById("nodeModal").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+
+        network.on("click", function(params) {
+            if (params.nodes.length > 0) {
+                var nodeId = params.nodes[0];
+                var node = network.body.data.nodes.get(nodeId);
+
+                if (node.label.startsWith("Student:")) {
+                    var studentData = node.data || {};
+                    var title = studentData.title || "No Title";
+                    var studentName = studentData.studentName || "No Student Found";
+                    var matricNumber = studentData.matricNumber || "N/A";
+                    var grades = studentData.grades || "N/A";
+                    var nric = studentData.nric || "N/A";
+                    var completedModules = studentData.completedModules.join(', ') || "N/A";
+
+                    document.getElementById("modalTitle").innerText = node.label;
+                    document.getElementById("modalData").innerHTML = `
+                        <strong>Student Name:</strong> ${studentName} <br>
+                        <strong>Matric Number:</strong> ${matricNumber} <br>
+                        <strong>Grades:</strong> ${grades} <br>
+                        <strong>NRIC:</strong> ${nric} <br>
+                        <strong>Modules Completed:</strong> ${completedModules}
+                    `;
+                    document.getElementById("nodeModal").style.display = "flex";
+                }
+            }
+        });
+        </script>
+        """)
     return {"file_url": f"/visualizations/{html_filename}"}
 
 @app.route('/visualize-staff', methods=['POST'])
 def visualize_staff():
-    employee_name = request.get_json().get('employee_name')
+    user_input = request.get_json().get('employee_name')
+    employee_name = capitalize_name(user_input)
     with driver.session() as session:
         query = """
         MATCH (st:Staff {employeeName: $employee_name})
@@ -454,7 +622,14 @@ def visualize_staff():
             module = record.get('m')
 
             employee_name = staff['employeeName']
-            net.add_node(employee_name, label=f"Employee Name: {employee_name}", color='lightblue')
+            employee_data = {
+                'employeeName': staff.get('employeeName',''),
+                'employeeId': staff.get('employeeId', ''),
+                'joinDate': staff.get('joinDate', ''),
+                'nric': staff.get('nric', ''),
+                'birthDate': staff.get('birthDate', '')
+            }
+            net.add_node(employee_name, label=f"Employee Name: {employee_name}", color='lightblue', data=employee_data)
 
             if department:
                 dept_name = department['name']
@@ -473,7 +648,95 @@ def visualize_staff():
 
     # Display the graph
     html_filename = f"{employee_name}_graph.html"
-    net.show(html_filename)
+    net.write_html(html_filename)
+    with open(html_filename, "a") as f:
+        f.write("""
+        <style>
+        #nodeModal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            right: 0;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background-color: white;
+            box-shadow: -2px 0px 5px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            overflow-y: auto;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px 0 0 5px; 
+        }
+        #modalContent {
+            max-width: 100%;
+        }
+        #closeModal {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #555;
+        }
+        #overlay {
+            display: none;
+            position: fixed;
+            z-index: 0;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        #modalTitle {
+        margin-left: 10px; 
+        padding-left: 10px;
+        }
+        </style>
+
+        <div id="overlay"></div>
+        <div id="nodeModal">
+            <span id="closeModal">&times;</span>
+            <div id="modalContent">
+                <h2 id="modalTitle">Node Details</h2>
+                <p id="modalData"></p>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+        document.getElementById("closeModal").onclick = function() {
+            document.getElementById("nodeModal").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+
+        network.on("click", function(params) {
+            if (params.nodes.length > 0) {
+                var nodeId = params.nodes[0];
+                var node = network.body.data.nodes.get(nodeId);
+
+                if (node.label.startsWith("Employee Name:")) {
+                    var staffData = node.data || {};
+                    var employeeName = staffData.employeeName || "No Staff Found";
+                    var employeeId = staffData.employeeId || "N/A";
+                    var joinDate = staffData.joinDate || "N/A";
+                    var nric = staffData.nric || "N/A";
+                    var birthDate = staffData.birthDate || "N/A";
+
+                    document.getElementById("modalTitle").innerText = node.label;
+                    document.getElementById("modalData").innerHTML = `
+                        <strong>Staff Name:</strong> ${employeeName} <br>
+                        <strong>Staff ID:</strong> ${employeeId} <br>
+                        <strong>Date Joined:</strong> ${joinDate} <br>
+                        <strong>NRIC:</strong> ${nric} <br>
+                        <strong>Date of Birth:</strong> ${birthDate}
+                    `;
+                    document.getElementById("nodeModal").style.display = "flex";
+                }
+            }
+        });
+        </script>
+        """)
     return {"file_url": f"/visualizations/{html_filename}"}
 
 @app.route('/visualizations/<path:filename>')

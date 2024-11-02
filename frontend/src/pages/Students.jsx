@@ -280,7 +280,7 @@ const StudentVisualizer = () => {
           variant="outlined"
           value={matricNumber}
           onChange={(e) => setMatricNumber(e.target.value)}
-          placeholder="Enter Student Matric Number"
+          placeholder="e.g., A0255150H"
           required
           fullWidth
           style={{ marginBottom: '16px' }} // Add some spacing

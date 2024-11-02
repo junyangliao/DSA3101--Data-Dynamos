@@ -24,6 +24,9 @@ def format_relationship(rel):
     rel_type = rel.__class__.__name__  
     return f"-[:{rel_type}]->"
 
+def capitalize_name(full_name):
+    return ' '.join(part.capitalize() for part in full_name.split())
+
 def create_entity(tx, row):
     entity_columns = row.filter(regex='entities').index 
     representative_entities = ontology['representative_entities']

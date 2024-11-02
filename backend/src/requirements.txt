@@ -9,3 +9,4 @@ openai
 google-generativeai
 nltk
 python-dotenv
+Jinja2
