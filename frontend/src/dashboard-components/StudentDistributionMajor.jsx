@@ -61,7 +61,7 @@ const StudentDistributionMajor = () => {
 
     return (
         <div className="chart">
-            <h2>Student Distribution by Major</h2>
+            <h2 style={{ paddingLeft: "20px" }}>Student Distribution by Major</h2>
             <Bar data={chartData} />
         </div>
     );

@@ -61,7 +61,7 @@ const StudentDistributionFaculty = () => {
 
     return (
         <div className="chart">
-            <h2>Student Distribution by Faculty</h2>
+            <h2 style={{ paddingLeft: "20px" }}>Student Distribution by Faculty</h2>
             <Bar data={chartData} />
         </div>
     );

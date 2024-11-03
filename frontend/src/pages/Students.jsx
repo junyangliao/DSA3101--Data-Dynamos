@@ -83,7 +83,7 @@ const StudentVisualizer = () => {
 
   const handleCreateStudent = async () => {
     try {
-      await axios.post('http://localhost:5001/student', studentData);
+      await axios.post('http://localhost:5001/create-student', studentData);
       console.log('Student created successfully');
       setOpen(false); 
     } catch (error) {
