@@ -34,7 +34,7 @@ def create_new_student():
 
     return jsonify({'message': f"Student with Matric Number {matric_number} created successfully"}), 201
 
-# Function to create a new student individually
+# Function to create a new module individually
 @app.route('/create-module', methods=['POST'])
 def create_new_module():
     module_data = request.json
@@ -48,7 +48,7 @@ def create_new_module():
 
     return jsonify({'message': f"Module with module code {module_code} created successfully"}), 201
 
-# Function to create a new student individually
+# Function to create a new staff individually
 @app.route('/create-staff', methods=['POST'])
 def create_new_staff():
     staff_data = request.json
@@ -62,7 +62,7 @@ def create_new_staff():
 
     return jsonify({'message': f"Staff with name {staff_name} created successfully"}), 201
 
-# Function to create a new student individually
+# Function to create a new job individually
 @app.route('/create-job', methods=['POST'])
 def create_new_job():
     job_data = request.json
@@ -71,9 +71,10 @@ def create_new_job():
         return jsonify({'message': f"No Job Data Found"}),400
     
     create_jobs_and_skills(job_data)
-    
+
     return jsonify({'message': 'Job created successfully'}), 201
 
+# Function to upload student data as a csv
 @app.route('/upload-student-csv', methods=['POST'])
 def upload_student_csv():
     if 'file' not in request.files:
@@ -90,7 +91,8 @@ def upload_student_csv():
         return jsonify({'message': 'CSV data integrated successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-    
+
+# Function to upload modules data as a csv
 @app.route('/upload-modules-csv', methods=['POST'])
 def upload_modules_csv():
     if 'file' not in request.files:
@@ -107,7 +109,8 @@ def upload_modules_csv():
         return jsonify({'message': 'CSV data integrated successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-    
+
+# Function to upload jobs data as a csv
 @app.route('/upload-jobs-csv', methods=['POST'])
 def upload_jobs_csv():
     if 'file' not in request.files:
@@ -124,7 +127,8 @@ def upload_jobs_csv():
         return jsonify({'message': 'CSV data integrated successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-    
+
+# Function to upload staffs data as a csv
 @app.route('/upload-staffs-csv', methods=['POST'])
 def upload_staffs_csv():
     if 'file' not in request.files:
@@ -142,6 +146,7 @@ def upload_staffs_csv():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# Function to delete individual module 
 @app.route('/delete-module', methods=['POST'])
 def delete_module_node():
     data = request.json
@@ -154,6 +159,7 @@ def delete_module_node():
 
     return jsonify({'message': f"Module with Module Code {module_code} deleted successfully"}), 201
 
+# Function to delete individual student
 @app.route('/delete-student', methods=['POST'])
 def delete_student_node():
     data = request.json
@@ -166,6 +172,7 @@ def delete_student_node():
 
     return jsonify({'message': f"Student with Matric Number {matric_number} deleted successfully"}), 201
 
+# Function to delete individual staff 
 @app.route('/delete-staff', methods=['POST'])
 def delete_staff_node():
     data = request.json
@@ -178,6 +185,7 @@ def delete_staff_node():
 
     return jsonify({'message': f"Employee with ID {employee_id} deleted successfully"}), 201
 
+# Function to delete individual job
 @app.route('/delete-job', methods=['POST'])
 def delete_job_node():
     data = request.json
@@ -190,6 +198,7 @@ def delete_job_node():
 
     return jsonify({'message': f"Job with Job Title {job_title} deleted successfully"}), 201
 
+# Function to create dashboard component for student distribution among faculties
 @app.route('/student-distribution-faculty', methods=['GET'])
 def student_faculty_distribution():
     with driver.session() as session:
@@ -201,6 +210,7 @@ def student_faculty_distribution():
 
     return jsonify(results)
 
+# Function to create dashboard component for student distribution among majors
 @app.route('/student-distribution-major', methods=['GET'])
 def student_major_distribution():
     with driver.session() as session:
@@ -213,6 +223,7 @@ def student_major_distribution():
 
     return jsonify(results)
 
+# Function to create module visualization on modules page
 @app.route('/visualize-module', methods=['POST'])
 def visualize_module():
     user_input = request.get_json().get('module_code')
@@ -412,6 +423,7 @@ def visualize_module():
 
     return {"file_url": f"/visualizations/{html_filename}"}
 
+# Function to create student visualization on students page
 @app.route('/visualize-student', methods=['POST'])
 def visualize_student():
     user_input = request.get_json().get('matric_number')
@@ -597,6 +609,7 @@ def visualize_student():
         """)
     return {"file_url": f"/visualizations/{html_filename}"}
 
+# Function to create staff visualization on staff page
 @app.route('/visualize-staff', methods=['POST'])
 def visualize_staff():
     user_input = request.get_json().get('employee_name')
@@ -772,6 +785,7 @@ def visualize_staff():
         """)
     return {"file_url": f"/visualizations/{html_filename}"}
 
+# Function to serve visualization on webpage
 @app.route('/visualizations/<path:filename>')
 def serve_visualization(filename):
     file_path = os.path.join(os.getcwd(), filename)
@@ -779,6 +793,7 @@ def serve_visualization(filename):
     os.remove(file_path)
     return response
 
+# Function for prompt answer generation for query bot 
 @app.route('/process_query', methods=['POST'])
 def process_query():
     query = request.get_json().get('query')
@@ -794,6 +809,7 @@ def process_query():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+# Function for testing connection to neo4j
 @app.route('/test-neo4j', methods=['GET'])
 def test_neo4j():
     with driver.session() as session:
@@ -803,6 +819,7 @@ def test_neo4j():
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
+# Function for recommending jobs in jobs page
 @app.route('/api/job-recommendations', methods=['POST'])
 def job_recommendations():
     data = request.get_json()
