@@ -73,7 +73,7 @@ const ModuleVisualizer = () => {
 
   const handleCreateModule = async () => {
     try {
-      await axios.post('http://localhost:5001/module', moduleData);
+      await axios.post('http://localhost:5001/create-module', moduleData);
       console.log('Module created successfully');
       setOpen(false); 
     } catch (error) {

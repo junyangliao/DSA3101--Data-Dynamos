@@ -200,7 +200,7 @@ const JobVisualizer = () => {
 
   const handleCreateJob = async () => {
     try {
-      await axios.post('http://localhost:5001/job', jobData);
+      await axios.post('http://localhost:5001/create-job', jobData);
       console.log('Job created successfully');
       setOpen(false); 
     } catch (error) {

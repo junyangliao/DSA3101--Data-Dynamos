@@ -81,7 +81,7 @@ const StaffVisualizer = () => {
 
   const handleCreateStaff = async () => {
     try {
-      await axios.post('http://localhost:5001/staff', staffData);
+      await axios.post('http://localhost:5001/create-staff', staffData);
       console.log('Staff created successfully');
       setOpen(false); 
     } catch (error) {

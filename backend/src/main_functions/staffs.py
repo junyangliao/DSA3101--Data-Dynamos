@@ -31,6 +31,18 @@ def create_staff_node_and_relationships(tx, employee_name, employee_id, nric, bi
         MERGE (m)-[:TAUGHT_BY]->(st)
     """, employee_id=employee_id, module_code=modules_taught)
 
+def create_staff(data):
+    with driver.session() as session:
+        employee_name = data.get('employee name')
+        employee_id = data.get('employee id')
+        nric = data.get('nric')
+        birth_date = data.get('date of birth')
+        join_date = data.get('date of joining')
+        department = data.get('department')
+        modules_taught = data.get('modules_taught')
+
+        session.execute_write(create_staff_node_and_relationships, employee_name, employee_id, nric, birth_date, join_date, department, modules_taught)
+
 def create_staffs(data):
     with driver.session() as session:
         for _, row in data.iterrows():

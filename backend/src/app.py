@@ -3,8 +3,8 @@ from flask_cors import CORS
 from neo4j import GraphDatabase
 from main_functions.students import create_student, create_students, delete_student
 from main_functions.modules import create_module, create_modules, delete_module
-from main_functions.job_skills import create_job_and_skills, create_jobs_and_skills, delete_job
-from main_functions.staffs import create_staffs, delete_staff
+from main_functions.job_skills import create_jobs_and_skills, delete_job
+from main_functions.staffs import create_staff, create_staffs, delete_staff
 from main_functions.job_recommendations import get_job_recommendations
 from utils import evaluate_prompt, capitalize_name
 from pyvis.network import Network
@@ -21,24 +21,57 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 driver = GraphDatabase.driver(neo4j_uri, auth=(neo4j_user, neo4j_password),max_connection_pool_size=10)
 
 # Function to create a new student individually
-@app.route('/student', methods=['POST'])
+@app.route('/create-student', methods=['POST'])
 def create_new_student():
     student_data = request.json
+
+    if not student_data:
+        return jsonify({'message': f"No Student Data Found"}),400
+    
+    matric_number = student_data.get('matric_number')
+
     create_student(student_data)
-    return jsonify({'message': 'Student created successfully'}), 201
+
+    return jsonify({'message': f"Student with Matric Number {matric_number} created successfully"}), 201
 
 # Function to create a new student individually
-@app.route('/module', methods=['POST'])
+@app.route('/create-module', methods=['POST'])
 def create_new_module():
     module_data = request.json
+
+    if not module_data:
+        return jsonify({'message': f"No Module Data Found"}),400
+    
+    module_code = module_data.get('module_code')
+    
     create_module(module_data)
-    return jsonify({'message': 'Module created successfully'}), 201
+
+    return jsonify({'message': f"Module with module code {module_code} created successfully"}), 201
 
 # Function to create a new student individually
-@app.route('/job', methods=['POST'])
+@app.route('/create-staff', methods=['POST'])
+def create_new_staff():
+    staff_data = request.json
+
+    if not staff_data:
+        return jsonify({'message': f"No Staff Data Found"}),400
+    
+    staff_name = staff_data.get('employee_name')
+    
+    create_staff(staff_data)
+
+    return jsonify({'message': f"Staff with name {staff_name} created successfully"}), 201
+
+# Function to create a new student individually
+@app.route('/create-job', methods=['POST'])
 def create_new_job():
     job_data = request.json
-    create_job_and_skills(job_data)
+
+    if not job_data:
+        return jsonify({'message': f"No Job Data Found"}),400
+    
+    create_jobs_and_skills(job_data)
+    
     return jsonify({'message': 'Job created successfully'}), 201
 
 @app.route('/upload-student-csv', methods=['POST'])
