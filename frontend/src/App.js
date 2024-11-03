@@ -48,6 +48,8 @@ function App() {
         anchor="left"
         open={isDrawerOpen}
         variant="permanent"
+        onMouseEnter={() => setIsDrawerOpen(true)}
+        onMouseLeave={() => setIsDrawerOpen(false)}
         sx={{
           display: shouldShowDrawer ? 'block' : 'none',
           width: isDrawerOpen ? 180 : 60, // Drawer width when opened/closed
@@ -63,11 +65,11 @@ function App() {
       >
         <div className="drawer-content">
           <List>
-            <ListItem button onClick={toggleDrawer} className="drawer-toggle-btn" aria-label="Toggle drawer">
+            <ListItem className="drawer-toggle-btn" aria-label="Toggle drawer">
               <ListItemIcon className="MuiListItemIcon-root">
                 <MenuIcon />
               </ListItemIcon>
-              {isDrawerOpen && <ListItemText primary="Close Menu" className="drawer-list-item-text" />}
+              {isDrawerOpen && <ListItemText primary="Menu" className="drawer-list-item-text" />}
             </ListItem>
 
             <ListItem button onClick={() => { navigate('/Dashboard'); }} className="drawer-list-item">

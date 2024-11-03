@@ -115,6 +115,7 @@ const Login = () => {
             fullWidth
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            onKeyDown={handleKeyDown}
             error={!!usernameError}
             helperText={usernameError}
             sx={{ mb: 2 }}
