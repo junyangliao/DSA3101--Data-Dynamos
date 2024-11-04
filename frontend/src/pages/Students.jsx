@@ -83,7 +83,7 @@ const StudentVisualizer = () => {
 
   const handleCreateStudent = async () => {
     try {
-      await axios.post('http://localhost:5001/student', studentData);
+      await axios.post('http://localhost:5001/create-student', studentData);
       console.log('Student created successfully');
       setOpen(false); 
     } catch (error) {
@@ -280,7 +280,7 @@ const StudentVisualizer = () => {
           variant="outlined"
           value={matricNumber}
           onChange={(e) => setMatricNumber(e.target.value)}
-          placeholder="Enter Student Matric Number"
+          placeholder="e.g., A0255150H"
           required
           fullWidth
           style={{ marginBottom: '16px' }} // Add some spacing

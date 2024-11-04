@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle, CircularProgress } from '@mui/material';
 
 const ModuleVisualizer = () => {
   const [moduleCode, setModuleCode] = useState('');
@@ -9,7 +9,25 @@ const ModuleVisualizer = () => {
   const [open, setOpen] = useState(false);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [progress, setProgress] = useState(0);          
-  const [message, setMessage] = useState('');           
+  const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  
+  useEffect(() => {
+    fetchVisualization('CS1010S');
+  }, []);
+
+  const fetchVisualization = async (code) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post('http://localhost:5001/visualize-module', { module_code: code });
+      const { file_url } = response.data;
+      setIframeUrl(`http://localhost:5001${file_url}`);
+    } catch (err) {
+      setError('Failed to load module visualization');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -19,7 +37,6 @@ const ModuleVisualizer = () => {
     }
   };
 
-  // Handle CSV upload
   const handleUpload = async (selectedFile) => {
     if (!selectedFile) {
       setError("Please select a file first.");
@@ -73,7 +90,7 @@ const ModuleVisualizer = () => {
 
   const handleCreateModule = async () => {
     try {
-      await axios.post('http://localhost:5001/module', moduleData);
+      await axios.post('http://localhost:5001/create-module', moduleData);
       console.log('Module created successfully');
       setOpen(false); 
     } catch (error) {
@@ -92,16 +109,9 @@ const ModuleVisualizer = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      // Make sure to point the request to the Flask backend on port 5000
-      const response = await axios.post('http://localhost:5001/visualize-module', { module_code: moduleCode });
-  
-      // Create a URL from the blob response
-      const { file_url } = response.data;
-      setIframeUrl(`http://localhost:5001${file_url}`);  // Set the iframe URL
-    } catch (err) {
-      setError('Failed to load module visualization');
+    if (e) e.preventDefault();
+    if (moduleCode) {
+      fetchVisualization(moduleCode);
     }
   };
 
@@ -263,7 +273,6 @@ const ModuleVisualizer = () => {
         </DialogActions>
       </Dialog>
 
-      {/* Form with Material UI TextField and Button */}
       <form onSubmit={handleSubmit}>
         <TextField
           label="Module Code Here"
@@ -271,7 +280,6 @@ const ModuleVisualizer = () => {
           value={moduleCode}
           onChange={(e) => setModuleCode(e.target.value)}
           placeholder="Enter Module Code"
-          required
           fullWidth
           style={{ marginBottom: '16px' }} // Add some spacing
         />
@@ -281,7 +289,12 @@ const ModuleVisualizer = () => {
         </Button>
       </form>
       
-      {iframeUrl && (
+      {isLoading ? (
+        <Box display="flex" justifyContent="center" alignItems="center" height="500px">
+          <CircularProgress />  
+          <Typography variant="body1" style={{ marginLeft: '10px' }}>Loading visualization...</Typography>
+        </Box>
+      ) : iframeUrl ? (
         <iframe
           src={iframeUrl}
           title="Module Visualization"
@@ -289,7 +302,11 @@ const ModuleVisualizer = () => {
           height="750px"
           frameBorder="0"
         />
-      )}
+      ) : error ? (
+        <Typography variant="body2" color="error" style={{ marginTop: '10px' }}>
+          {error}
+        </Typography>
+      ) : null}
     </div>
   );
 };

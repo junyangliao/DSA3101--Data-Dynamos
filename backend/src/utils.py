@@ -24,6 +24,9 @@ def format_relationship(rel):
     rel_type = rel.__class__.__name__  
     return f"-[:{rel_type}]->"
 
+def capitalize_name(full_name):
+    return ' '.join(part.capitalize() for part in full_name.split())
+
 def create_entity(tx, row):
     entity_columns = row.filter(regex='entities').index 
     representative_entities = ontology['representative_entities']
@@ -101,9 +104,7 @@ def batch_create_entities_and_relationships(driver, df):
 
 def serialize_neo4j_value(value):
     if isinstance(value, Node):
-        return {
-            'properties': dict(value)
-        }
+        return dict(value)
     elif isinstance(value, Relationship):
         return {
             'id': value.id,
@@ -132,6 +133,7 @@ def generate_cypher_query(tx,prompt):
         model=model,
         temperature=0.2,
         response_format={
+            
             "type": "json_object"
         },
         messages=[
@@ -146,13 +148,14 @@ def generate_cypher_query(tx,prompt):
         ]
     )
 
-    cypher_query = ast.literal_eval(completion.choices[0].message.content)['query']
+    content = json.loads(completion.choices[0].message.content)
+    cypher_query = content['query']
 
     result = tx.run(cypher_query).value()
     serialized_result = serialize_neo4j_value(result)
-    return cypher_query, serialized_result
+    return serialized_result
 
 def evaluate_prompt(prompt):
     with driver.session() as session:
-      cypher_query, result = session.execute_read(generate_cypher_query,prompt)
-    return cypher_query,result
+      result = session.execute_read(generate_cypher_query,prompt)
+    return result

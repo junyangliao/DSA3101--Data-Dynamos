@@ -3,7 +3,7 @@ import axios from 'axios';
 import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 
 const StaffVisualizer = () => {
-  const [employeeId, setEmployeeId] = useState('');
+  const [employeeName, setEmployeeName] = useState('');
   const [error, setError] = useState(null);
   const [iframeUrl, setIframeUrl] = useState('');
   const [open, setOpen] = useState(false);
@@ -81,7 +81,7 @@ const StaffVisualizer = () => {
 
   const handleCreateStaff = async () => {
     try {
-      await axios.post('http://localhost:5001/staff', staffData);
+      await axios.post('http://localhost:5001/create-staff', staffData);
       console.log('Staff created successfully');
       setOpen(false); 
     } catch (error) {
@@ -102,7 +102,7 @@ const StaffVisualizer = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5001/visualize-staff', { employee_id: employeeId });
+      const response = await axios.post('http://localhost:5001/visualize-staff', { employee_name: employeeName });
   
       const { file_url } = response.data;
       setIframeUrl(`http://localhost:5001${file_url}`);
@@ -259,11 +259,11 @@ const StaffVisualizer = () => {
 
       <form onSubmit={handleSubmit}>
         <TextField
-          label="Staff Employee ID"
+          label="Staff Employee Name (*Case sensitive)"
           variant="outlined"
-          value={employeeId}
-          onChange={(e) => setEmployeeId(e.target.value)}
-          placeholder="Enter Staff Employee ID"
+          value={employeeName}
+          onChange={(e) => setEmployeeName(e.target.value)}
+          placeholder="Enter Staff Employee Name"
           required
           fullWidth
           style={{ marginBottom: '16px' }} // Add some spacing

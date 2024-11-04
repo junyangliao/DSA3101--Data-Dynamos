@@ -1,9 +1,12 @@
 Flask==3.0.2
-Flask-Cors == 4.0.0
+Flask-Cors == 4.0.2
 pandas
 requests
 neo4j
 py2neo
 pyvis
-pandas
 openai
+google-generativeai
+nltk
+python-dotenv
+Jinja2
