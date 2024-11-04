@@ -23,17 +23,16 @@ const StudentDistributionMajor = () => {
                 // Check that the arrays are populated
                 console.log("Majors: ", majors);
                 console.log("Student Counts: ", studentCounts);
-
+               
                 // Set chart data if the response is valid
                 setChartData({
                     labels: majors,
                     datasets: [
-                        {
-                            label: 'Student Count by Major',
+                        {label: '',
                             data: studentCounts,
-                            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1,
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)', // Blue color with 60% opacity
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
                         }
                     ]
                 });
@@ -60,11 +59,188 @@ const StudentDistributionMajor = () => {
     }
 
     return (
-        <div className="chart">
-            <h2>Student Distribution by Major</h2>
-            <Bar data={chartData} />
+        <div style={{className:"chart-container",
+            maxWidth: '1000px', // Adjust to control the size of each chart
+            width: '100%', // Adjust the width as needed
+            margin: '0 auto', // Center the chart horizontally
+            padding: '15px',
+            border: '1px solid #ddd',
+            borderRadius: '8px',
+            backgroundColor: '#fff',
+            boxShadow: '0 0 10px rgba(0,0,0,0.1)'}}>
+            <h2 style={{ textAlign: 'center', color: '#333', fontFamily: 'Arial, sans-serif' }}>Student Distribution by Major</h2>
+            <Bar 
+    data={chartData} 
+    options={{
+        scales: {
+            x: {
+                display: false, // Hides the X-axis labels
+                grid: { display: false } // Optionally hide the X-axis grid lines
+            },
+            y: {
+                title: {
+                    display: true,
+                    text: 'Student Count',
+                    color: '#666',
+                    font: { family: 'Arial', size: 12 }
+                },
+                min: 0,
+                max: 500,
+                ticks: { color: '#444' },
+                grid: { color: 'rgba(200, 200, 200, 0.3)' } // Subtle grid lines
+            }
+        },
+        plugins: {
+            legend: {
+                display: false // Hides the legend if not needed
+            },
+            tooltip: {
+                enabled: true, // Ensures tooltips are enabled
+                callbacks: {
+                    title: (tooltipItems) => {
+                        // Customize the tooltip title to show the X-axis label (major)
+                        return tooltipItems[0].label;
+                    },
+                    label: (tooltipItem) => {
+                        // Customize the tooltip label to show student count
+                        return `Student Count: ${tooltipItem.raw}`;
+                    }
+                }
+            }
+        }
+    }
+}/>
         </div>
     );
-};
-
+}
 export default StudentDistributionMajor;
+// import React, { useEffect, useState } from 'react';
+// import { Bar } from 'react-chartjs-2';
+// import axios from 'axios';
+// import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+
+// // Register necessary components for Chart.js
+// ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+// const StudentDistributionMajor = () => {
+//     const [chartData, setChartData] = useState(null);
+//     const [loading, setLoading] = useState(true);
+//     const [error, setError] = useState(null);
+
+//     useEffect(() => {
+//         axios.get('http://localhost:5001/student-distribution-major')
+//             .then(response => {
+//                 const majors = response.data.map(item => item.major);
+//                 const studentCounts = response.data.map(item => item.student_count);
+
+//                 setChartData({
+//                     labels: majors,
+//                     datasets: [
+//                         {
+//                             label: 'Student Count by Major',
+//                             data: studentCounts,
+//                             backgroundColor: 'rgba(75, 192, 192, 0.6)',
+//                             borderColor: 'rgba(75, 192, 192, 1)',
+//                             borderWidth: 1,
+//                             maxBarThickness: 10 // Controls the max width of bars
+//                         }
+//                     ]
+//                 });
+//                 setLoading(false);
+//             })
+//             .catch(error => {
+//                 console.error("Error fetching data: ", error);
+//                 setError("Failed to load data.");
+//                 setLoading(false);
+//             });
+//     }, []);
+
+//     if (loading) return <div>Loading...</div>;
+//     if (error) return <div>{error}</div>;
+
+//     return (
+//         <div  className="chart-container"
+//         style={{
+//             maxWidth: '1000px', // Adjust to control the size of each chart
+//             width: '100%', // Adjust the width as needed
+//             margin: '0 auto', // Center the chart horizontally
+//             padding: '15px',
+//             border: '1px solid #ddd',
+//             borderRadius: '8px',
+//             backgroundColor: '#fff',
+//             boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+//         }}>
+//             <h2 style={{ textAlign: 'center', color: '#333', fontFamily: 'Arial, sans-serif' }}>Student Distribution by Major</h2>
+//             <Bar
+//                 data={chartData}
+//                 options={{
+//                     responsive: true, // Enable responsiveness
+//                     maintainAspectRatio: false, // Allow chart to adjust with container
+//                     aspectRatio: 1.5, // Adjust aspect ratio for better layout
+//                     layout: {
+//                         padding: { top: 20, bottom: 20 }
+//                     },
+//                     scales: {
+//                         x: {
+//                             title: {
+//                                 display: true,
+//                                 text: 'Majors',
+//                                 color: '#666',
+//                                 font: {
+//                                     family: 'Arial',
+//                                     size: 12
+//                                 }
+//                             },
+//                             ticks: {
+//                                 color: '#444',
+//                                 autoSkip: false,
+//                                 maxRotation: 45,
+//                                 minRotation: 45
+//                             },
+//                             grid: { display: false } // Hide x-axis grid lines for a cleaner look
+//                         },
+//                         y: {
+//                             title: {
+//                                 display: true,
+//                                 text: 'Student Count',
+//                                 color: '#666',
+//                                 font: {
+//                                     family: 'Arial',
+//                                     size: 12
+//                                 }
+//                             },
+//                             ticks: { color: '#444' },
+//                             grid: {
+//                                 color: 'rgba(200, 200, 200, 0.3)' // Subtle y-axis grid lines
+//                             }
+//                         }
+//                     },
+//                     plugins: {
+//                         legend: {
+//                             display: true,
+//                             labels: {
+//                                 color: '#333',
+//                                 font: {
+//                                     family: 'Arial',
+//                                     size: 12
+//                                 }
+//                             }
+//                         },
+//                         title: {
+//                             display: true,
+//                             text: 'Student Distribution by Majors',
+//                             color: '#222',
+//                             font: {
+//                                 family: 'Arial',
+//                                 size: 16,
+//                                 weight: 'bold'
+//                             }
+//                         }
+//                     }
+//                 }}
+//             />
+//         </div>
+//     );
+// };
+
+// export default StudentDistributionMajor;
