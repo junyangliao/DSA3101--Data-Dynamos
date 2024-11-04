@@ -12,7 +12,9 @@ The entire application stack runs on docker, so make sure you have Docker instal
 3. Navigate to project directory
 4. ```docker-compose up --build ```
 
-Once all containers are running the frontend app should now be accessible on ```http://localhost:3000/ ```. 
+Once all containers are running the frontend app should now be accessible on ```http://localhost:3000/ ```.
+
+To find out more about how to operate the application, you can check out our user guide. *insert url here*
 
 ## Log-in Credentials
 - Username: data dynamos
@@ -32,9 +34,11 @@ Once all containers are running the frontend app should now be accessible on ```
 │    │    │    ├── job_skills.py
 │    │    │    ├── modules.py
 │    │    │    ├── students.py
-│    │    │    └── staffs.py
+│    │    │    ├── staffs.py
+│    │    │    └── job_recommendations.py
 │    │    ├── DockerFile
 │    │    ├── app.py
+│    │    ├── ontology_config.json
 │    │    ├── requirements.txt
 │    │    └── utils.py
 │    └── test.py
@@ -47,15 +51,17 @@ Once all containers are running the frontend app should now be accessible on ```
 │    │    │    ├── Login.jsx
 │    │    │    ├── Modules.jsx
 │    │    │    ├── Students.jsx
+│    │    │    ├── Staffs.jsx
+│    │    │    └── Query.jsx
 │    │    ├── App.css
 │    │    ├── App.js
 │    │    ├── App.test.js
 │    │    ├── Home.js
 │    │    ├── Modal.js
 │    │    ├── /dashboard-componenets
+│    │    │    ├── background.jpg 
 │    │    │    ├── StudentDistributionFaculty.jsx
-│    │    │    ├── StudentDistributionMajor.jsx
-│    │    │    ├── StaffDistribution.jsx
+│    │    │    └── StudentDistributionMajor.jsx
 │    │    ├── index.css
 │    │    └── index.js
 │    ├── public

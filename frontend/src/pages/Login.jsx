@@ -27,14 +27,12 @@ const Login = () => {
       setPasswordError('');
     }
 
-    if (username === 'datadynamos' && password === 'DSA3101isdabest') {
-      navigate('/', { replace: true });
+    if (username === 'data dynamos' && password === 'DSA3101isdabest') {
+      navigate('/dashboard', { replace: true });
     } else {
       setUsernameError('Invalid username');
       setPasswordError('Invalid credentials');
     }
-
-    navigate("/dashboard")
   };
 
   const handleKeyDown = (event) => {

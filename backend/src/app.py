@@ -410,7 +410,7 @@ def visualize_module():
 
                     document.getElementById("modalTitle").innerText = node.label;
                     document.getElementById("modalData").innerHTML = `
-                        <strong>Module Code:</strong> ${moduleCode} <br>
+                        <strong>Title:</strong> ${title} <br>
                         <strong>Module Credit:</strong> ${moduleCredit} <br>
                         <strong>Description:</strong> ${description}
                     `;

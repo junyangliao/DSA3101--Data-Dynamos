@@ -26,10 +26,6 @@ function App() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const toggleDrawer = () => {
-    setIsDrawerOpen(!isDrawerOpen);
-  };
-
   const shouldShowDrawer = location.pathname !== '/';
 
   // Close drawer when the route changes
