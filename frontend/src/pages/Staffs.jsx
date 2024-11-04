@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle, CircularProgress } from '@mui/material';
 
 const StaffVisualizer = () => {
   const [employeeName, setEmployeeName] = useState('');
@@ -10,6 +10,24 @@ const StaffVisualizer = () => {
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [progress, setProgress] = useState(0);          
   const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    fetchVisualization('Kathryn Cordova');
+  }, []);
+
+  const fetchVisualization = async (employeeName) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post('http://localhost:5001/visualize-staff', { employee_name: employeeName });
+      const { file_url } = response.data;
+      setIframeUrl(`http://localhost:5001${file_url}`);
+    } catch (err) {
+      setError('Failed to load staff visualization');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -100,14 +118,9 @@ const StaffVisualizer = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5001/visualize-staff', { employee_name: employeeName });
-  
-      const { file_url } = response.data;
-      setIframeUrl(`http://localhost:5001${file_url}`);
-    } catch (err) {
-      setError('Failed to load staff visualization');
+    if (e) e.preventDefault();
+    if (employeeName) {
+      fetchVisualization(employeeName);
     }
   };
 
@@ -274,7 +287,12 @@ const StaffVisualizer = () => {
         </Button>
       </form>
       
-      {iframeUrl && (
+      {isLoading ? (
+        <Box display="flex" justifyContent="center" alignItems="center" height="500px">
+          <CircularProgress />  
+          <Typography variant="body1" style={{ marginLeft: '10px' }}>Loading visualization...</Typography>
+        </Box>
+      ) : iframeUrl ? (
         <iframe
           src={iframeUrl}
           title="Staff Visualization"
@@ -282,7 +300,11 @@ const StaffVisualizer = () => {
           height="750px"
           frameBorder="0"
         />
-      )}
+      ) : error ? (
+        <Typography variant="body2" color="error" style={{ marginTop: '10px' }}>
+          {error}
+        </Typography>
+      ) : null}
     </div>
   );
 };
