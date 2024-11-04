@@ -37,6 +37,12 @@ const Login = () => {
     navigate("/dashboard")
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleLogin();
+    }
+  }
+
   return (
     <Box
       sx={{
@@ -109,6 +115,7 @@ const Login = () => {
             fullWidth
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            onKeyDown={handleKeyDown}
             error={!!usernameError}
             helperText={usernameError}
             sx={{ mb: 2 }}
@@ -120,6 +127,7 @@ const Login = () => {
             fullWidth
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={handleKeyDown}
             error={!!passwordError}
             helperText={passwordError}
             sx={{ mb: 3 }}
