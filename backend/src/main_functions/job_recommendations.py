@@ -7,7 +7,7 @@ import google.generativeai as genai
 from nltk.stem import PorterStemmer
 from neo4j import GraphDatabase
 
-from .relavancy_scorer import RelevancyScorer
+from .relevancy_scorer import RelevancyScorer
 scorer = RelevancyScorer()
 
 logging.getLogger("neo4j").setLevel(logging.ERROR)
@@ -131,21 +131,23 @@ def get_relevant_modules(skills, matric_number=None):
     modules_by_skill = {}
     
     with db.get_session() as session:
+        excluded_modules = []
+        completed_modules = []
+        if matric_number:
+            completed_modules, excluded_modules = get_student_data(matric_number)
+
         for skill in skills:
             cleaned_skill = clean_skill_name(skill)
             
-            # Different queries for single-letter skills vs regular skills
+            # Different queries for single letter skills vs regular skills
             if len(cleaned_skill) == 1:
                 query = """
                 MATCH (s:Skill)
                 WHERE toLower(trim(s.name)) = toLower(trim($skill))
                 MATCH (m:Module)-[:SKILL_TAUGHT]->(s)
                 WHERE NOT m.moduleCode IN $excluded_modules
-                RETURN DISTINCT
-                    m.moduleCode AS code,
-                    m.title AS title,
-                    m.description AS description,
-                    collect(s.name) AS skills
+                RETURN DISTINCT m.moduleCode AS code, m.title AS title,
+                       m.description AS description, collect(s.name) AS skills
                 """
             else:
                 query = """
@@ -153,43 +155,41 @@ def get_relevant_modules(skills, matric_number=None):
                 WHERE toLower(trim(s.name)) CONTAINS toLower(trim($skill))
                 MATCH (m:Module)-[:SKILL_TAUGHT]->(s)
                 WHERE NOT m.moduleCode IN $excluded_modules
-                RETURN DISTINCT
-                    m.moduleCode AS code,
-                    m.title AS title,
-                    m.description AS description,
-                    collect(s.name) AS skills
+                RETURN DISTINCT m.moduleCode AS code, m.title AS title,
+                       m.description AS description, collect(s.name) AS skills
                 """
+
+            result = session.run(query, skill=cleaned_skill, excluded_modules=excluded_modules)
             
-            excluded_modules = []
-            completed_modules = []
-            if matric_number:
-                completed_modules, excluded_modules = get_student_data(matric_number)
-            
-            result = session.run(query, 
-                               skill=cleaned_skill, 
-                               excluded_modules=excluded_modules)
-            modules = []
+            valid_modules = []
+            skill_desc_pairs = []
             
             for record in result:
-                code = record["code"]
-                if not matric_number or can_take_module(code, completed_modules):
-                    relevance_score = scorer.calculate_relevance_score(
-                        skill,
-                        record['description'] or ''
-                    )
-                    
-                    modules.append({
-                        'code': code,
-                        'title': record['title'],
-                        'skills': record['skills'],
-                        'relevance_score': relevance_score
+                if not matric_number or can_take_module(record["code"], completed_modules):
+                    valid_modules.append({
+                        'code': record["code"],
+                        'title': record["title"],
+                        'skills': record["skills"],
+                        'description': record["description"] or ''
                     })
+                    skill_desc_pairs.append((skill, record["description"] or ''))
             
-            # Sort by relevance score and get top 5
-            modules.sort(key=lambda x: x['relevance_score'], reverse=True)
-            if modules:
+            if valid_modules:
+                relevance_scores = scorer.calculate_batch_relevance_scores(skill_desc_pairs)
+                
+                modules = []
+                for module, score in zip(valid_modules, relevance_scores):
+                    modules.append({
+                        'code': module['code'],
+                        'title': module['title'],
+                        'skills': module['skills'],
+                        'relevance_score': score
+                    })
+                
+                # Sort by relevance score and get top 5
+                modules.sort(key=lambda x: x['relevance_score'], reverse=True)
                 modules_by_skill[skill] = modules[:5]
-    
+
     return modules_by_skill
 
 def job_title_exists(job_title):
