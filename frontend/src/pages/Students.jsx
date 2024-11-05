@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle, CircularProgress } from '@mui/material';
 
@@ -11,10 +11,6 @@ const StudentVisualizer = () => {
   const [progress, setProgress] = useState(0);          
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    fetchVisualization('A0216920B');
-  }, []);
 
   const fetchVisualization = async (matricNumber) => {
     setIsLoading(true);
@@ -314,6 +310,7 @@ const StudentVisualizer = () => {
           width="100%"
           height="750px"
           frameBorder="0"
+          loading="lazy"
         />
       ) : error ? (
         <Typography variant="body2" color="error" style={{ marginTop: '10px' }}>

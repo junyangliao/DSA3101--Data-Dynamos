@@ -10,6 +10,7 @@ from utils import evaluate_prompt, capitalize_name
 from pyvis.network import Network
 import pandas as pd
 import os
+from threading import Timer
 
 app = Flask(__name__)
 CORS(app)
@@ -443,8 +444,8 @@ def visualize_student():
         # Initialize the network graph visualization
         net = Network(notebook=True, cdn_resources='in_line')
 
-                # Update physics settings to improve readability
-        net.toggle_physics(True)  # Enable physics
+
+        net.toggle_physics(True)  
 
         # Modify the physics options to make the graph more readable
         net.set_options("""
@@ -479,7 +480,6 @@ def visualize_student():
         # Add nodes and edges to the visualization
         for record in data:
             student = record['s']
-            department = record.get('d')
             faculty = record.get('f')
             major = record.get('m')
             second_major = record.get('sm')
@@ -499,11 +499,6 @@ def visualize_student():
                 fac_name = faculty['name']
                 net.add_node(fac_name, label=f"Faculty: {fac_name}", color='lightcoral')
                 net.add_edge(matric_number, fac_name, label='STUDYING_UNDER', length=300, font={'size': 14})
-
-                if department:
-                    dept_name = department['name']
-                    net.add_node(dept_name, label=f"Department: {dept_name}", color='lightgreen')
-                    net.add_edge(dept_name, fac_name, label='PART_OF', length=300, font={'size': 14})
 
             if major:
                 major_name = major['name']

@@ -301,6 +301,7 @@ const ModuleVisualizer = () => {
           width="100%"
           height="750px"
           frameBorder="0"
+          loading="lazy"
         />
       ) : error ? (
         <Typography variant="body2" color="error" style={{ marginTop: '10px' }}>
