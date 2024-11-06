@@ -12,3 +12,4 @@ python-dotenv
 Jinja2
 sentence-transformers
 numpy
+SPARQLWrapper

@@ -6,6 +6,7 @@ from functools import lru_cache
 import google.generativeai as genai
 from nltk.stem import PorterStemmer
 from neo4j import GraphDatabase
+from SPARQLWrapper import SPARQLWrapper, JSON
 
 from .relevancy_scorer import RelevancyScorer
 scorer = RelevancyScorer()
@@ -286,3 +287,35 @@ def get_job_recommendations(job_description, matric_number=None):
             "success": False,
             "error": f"An error occurred: {str(e)}"
         }
+    
+def get_job_description_from_wikidata(job_description):
+    """
+    Queries Wikidata to get a description for a given job title.
+    
+    Parameters:
+    job_title (str): The job title to query
+    
+    Returns:
+    str: A description of the job from Wikidata, or an error message if not found
+    """
+    sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
+    query = f"""
+    SELECT ?description WHERE {{
+      ?job wdt:P31 wd:Q28640;  # Instance of profession or occupation
+           rdfs:label "{job_description}"@en;
+           schema:description ?description.
+      FILTER (lang(?description) = "en")
+    }}
+    LIMIT 1
+    """
+    
+    try:
+        sparql.setQuery(query)
+        sparql.setReturnFormat(JSON)
+        results = sparql.query().convert()
+        
+        if results["results"]["bindings"]:
+            return results["results"]["bindings"][0]["description"]["value"]
+        return "No description available for this job title."
+    except Exception as e:
+        return "Error retrieving job description."
