@@ -5,7 +5,7 @@ from main_functions.students import create_student, create_students, delete_stud
 from main_functions.modules import create_module, create_modules, delete_module
 from main_functions.job_skills import create_jobs_and_skills, delete_job
 from main_functions.staffs import create_staff, create_staffs, delete_staff
-from main_functions.job_recommendations import get_job_recommendations
+from main_functions.job_recommendations import get_job_recommendations, get_job_description_from_wikidata
 from utils import evaluate_prompt, capitalize_name
 from pyvis.network import Network
 import pandas as pd
@@ -826,7 +826,13 @@ def job_recommendations():
     
     try:
         recommendations = get_job_recommendations(job_description, matric_number)
-        return jsonify({'recommendations': recommendations}), 200
+
+        description = get_job_description_from_wikidata(job_description)
+
+        return jsonify({'recommendations': recommendations,
+                        'description': description,
+                        'success' : True
+                        }), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

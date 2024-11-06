@@ -3,7 +3,7 @@ import axios from 'axios';
 import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Paper, Chip, List, ListItem, ListItemText, Alert, Skeleton } from '@mui/material';
 
 const RecommendationResults = ({ data }) => {
-  if (!data) return null;
+  if (!data || !data.success) return null;
 
   // Add scroll handler function
   const scrollToSkill = (skillName) => {
@@ -19,6 +19,10 @@ const RecommendationResults = ({ data }) => {
         <>
           <Typography variant="h5" gutterBottom>
             Job: {data.job.title}
+          </Typography>
+
+          <Typography variant="body1" gutterBottom>
+            Description: {data.description}
           </Typography>
 
           <Box sx={{ my: 2 }}>
@@ -227,7 +231,7 @@ const JobVisualizer = () => {
         jobDescription,
         matricNumber: matricNumber || undefined
       });
-      setRecommendations(response.data.recommendations);
+      setRecommendations(response.data);
     } catch (err) {
       setError('Failed to get job recommendations: ' + err.message);
     } finally {
