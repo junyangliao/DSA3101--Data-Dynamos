@@ -3,7 +3,9 @@ import axios from 'axios';
 import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Paper, Chip, List, ListItem, ListItemText, Alert, Skeleton } from '@mui/material';
 
 const RecommendationResults = ({ data }) => {
-  if (!data || !data.success) return null;
+  if (!data || !data.recommendations || !data.recommendations.success) return null;
+
+  const recommendationsData = data.recommendations;
 
   // Add scroll handler function
   const scrollToSkill = (skillName) => {
@@ -18,7 +20,7 @@ const RecommendationResults = ({ data }) => {
       {data.success ? (
         <>
           <Typography variant="h5" gutterBottom>
-            Job: {data.job.title}
+            Job: {recommendationsData.job.title}
           </Typography>
 
           <Typography variant="body1" gutterBottom>
@@ -30,7 +32,7 @@ const RecommendationResults = ({ data }) => {
               Required Skills:
             </Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-              {data.job.skills.map((skill) => (
+              {recommendationsData.job.skills.map((skill) => (
                 <Chip 
                   key={skill} 
                   label={skill} 
@@ -42,15 +44,15 @@ const RecommendationResults = ({ data }) => {
             </Box>
           </Box>
 
-          {data.student.matricNumber && (
+          {recommendationsData.student.matricNumber && (
             <Typography variant="subtitle1" color="text.secondary" gutterBottom>
-              Recommendations for: {data.student.matricNumber}
+              Recommendations for: {recommendationsData.student.matricNumber}
             </Typography>
           )}
 
           <Divider sx={{ my: 3 }} />
 
-          {Object.entries(data.skillBreakdown).map(([skill, breakdown]) => (
+          {Object.entries(recommendationsData.skillBreakdown).map(([skill, breakdown]) => (
             <Paper 
               key={skill} 
               id={`skill-${skill.replace(/\s+/g, '-')}`}
@@ -106,7 +108,7 @@ const RecommendationResults = ({ data }) => {
           ))}
         </>
       ) : (
-        <Alert severity="error">{data.error}</Alert>
+        <Alert severity="error">{recommendationsData.error}</Alert>
       )}
     </Paper>
   );
