@@ -2,7 +2,8 @@ import pandas as pd
 import ast 
 import re
 import spacy
-import os 
+from spacy.matcher import PhraseMatcher
+
 
 # Load your spaCy model
 nlp = spacy.load('en_core_web_sm')
@@ -12,9 +13,8 @@ def extract_entities_rs(csv_file_path):
     # Predefined entity columns and their corresponding new column names for entity extraction 
     target_cols = ['Student_Name', 'Faculties', 'Degree', 'Major', 'Module', 'module_code', 'moduleCode', 'Skills', 'Staff', 
                    'Modules_Completed', 'department', 'faculty', 'prerequisite', 'preclusion', 'Employee Name', 
-                   'Department', 'Modules Taught', 'Title', 'Job Title', 'Tech Skills', 'university', 
-                   'school', 'degree', 'description', 'message'] 
-
+                   'Department', 'Modules Taught', 'Title', 'Job Title', 'Tech Skills', 'university',
+                   'school', 'degree', 'description', 'message']
 
     new_entity_cols = {
         'Student_Name': ('student_entities', 'STUDENT'),
@@ -39,7 +39,7 @@ def extract_entities_rs(csv_file_path):
         'school': ('faculty_entities', 'FACULTY'),
         'Title': ('job_entities', 'JOB'),
         'Job Title': ('job_entities', 'JOB'),
-        'university': ('university_entities', 'UNIVERSITY')
+        'university': ('university_entities', 'UNIVERSITY'),
     }
 
     # Relationship mappings
@@ -50,9 +50,11 @@ def extract_entities_rs(csv_file_path):
         ('module_entities', 'department_entities'): {"from_type": "MODULE", "to_type": "DEPARTMENT", "relationship_type": "BELONGS_TO"},
         ('module_entities', 'prerequisite_entities', 'MUST_HAVE_TAKEN_ONE_OF'): {"from_type": "MODULE", "to_type": "DEPARTMENT", "relationship_type": "MUST_HAVE_TAKEN_ONE_OF"},
         ('module_entities', 'preclusion_entities', 'MUST_NOT_HAVE_TAKEN_ONE_OF'): {"from_type": "MODULE", "to_type": "DEPARTMENT", "relationship_type": "MUST_NOT_HAVE_TAKEN_ONE_OF"},
+
         ('module_entities', 'prerequisite_entities', 'INCLUDED_AS_PREREQUISITE'): {"from_type": "MODULE", "to_type": "DEPARTMENT", "relationship_type": "INCLUDED_AS_PREREQUISITE"},
         ('module_entities', 'preclusion_entities', 'INCLUDED_AS_PRECLUSION'): {"from_type": "MODULE", "to_type": "DEPARTMENT", "relationship_type": "INCLUDED_AS_PRECLUSION"},
         ('module_entities', 'semester_entities', 'OFFERED_IN'): {"from_type": "MODULE", "to_type": "SEMESTER", "relationship_type": "OFFERED_IN"},
+        #SEMESTER (can be excluded as this is exception for module info?)
         ('module_entities', 'staff_entities'): {"from_type": "MODULE", "to_type": "STAFF", "relationship_type": "TAUGHT_BY"},
         ('staff_entities', 'department_entities'): {"from_type": "STAFF", "to_type": "DEPARTMENT", "relationship_type": "EMPLOYED_UNDER"},
         ('department_entities', 'faculty_entities'): {"from_type": "DEPARTMENT", "to_type": "FACULTY", "relationship_type": "PART_OF"},
@@ -73,13 +75,11 @@ def extract_entities_rs(csv_file_path):
                 return ast.literal_eval(x)  # Convert to dictionary
             # Handle already existing list 
             elif isinstance(x, list):
-                # return [str(item).strip() for item in flatten_list(x)]  
                 return [(str(item).strip(), entity_type) for item in flatten_list(x)]
             # Handle list strings
             elif isinstance(x, str) and x.startswith('[') and x.endswith(']'):
                 try:
                     parsed_list = ast.literal_eval(x)  # Convert string representation of list to actual list
-                    # return [str(item).strip() for item in flatten_list(parsed_list)]
                     return [(str(item).strip(), entity_type) for item in flatten_list(parsed_list)]
                 except (ValueError, SyntaxError):
                     # return [x.strip()] 
@@ -130,25 +130,21 @@ def extract_entities_rs(csv_file_path):
 
             # remove 'Microsoft ' substring before skills
             unique_skills = [re.sub(r'Microsoft\s', '', skill) for skill in unique_skills]
+        
+        # Initialize the matcher with the nlp vocabulary
+        matcher = PhraseMatcher(nlp.vocab)
+        patterns = [nlp(skill) for skill in unique_skills]  # Assuming unique_skills is defined globally
+        matcher.add("SKILLS", patterns)
 
-        # Function to extract skills
-        def extract_skills(text):
+
+        # Function to extract skills using PhraseMatcher
+        def extract_skills_using_phrasematcher(text, matcher):
             if not isinstance(text, str):
-                return []  # Return an empty list if the input is not a valid string
-            
+                return []  # Return empty list if not a valid string
             doc = nlp(text)
-            skills = [] 
-
-            # extract skill entities
-            for skill in unique_skills:
-                # create a regex pattern with word boundaries around the job title
-                pattern = r"\b" + re.escape(skill) + r"\b"
-    
-                # search for the job title in the text (case-insensitive)
-                if re.search(pattern, text, re.IGNORECASE):
-                    skills.append(skill)
-
-            return skills
+            matches = matcher(doc)
+            skills = [doc[start:end].text for match_id, start, end in matches]
+            return list(set(skills))  # Remove duplicates
 
         # Function to extract staff names
         def extract_staff_names(text):
@@ -186,10 +182,10 @@ def extract_entities_rs(csv_file_path):
 
                 # If the column is description or message, we apply special extraction
                 if col in ['description']:
-                    df['skill_entities'] = df[col].apply(lambda text: [(skill, 'SKILL') for skill in extract_skills(text)])
+                    df['skill_entities'] = df[col].apply(lambda text: [(skill, 'SKILL') for skill in extract_skills_using_phrasematcher(text, matcher)])
 
                 elif col in ['description', 'message']:
-                    df['skill_entities'] = df[col].apply(lambda text: [(skill, 'SKILL') for skill in extract_skills(text)])
+                    df['skill_entities'] = df[col].apply(lambda text: [(skill, 'SKILL') for skill in extract_skills_using_phrasematcher(text, matcher)])
                     df['staff_entities'] = df[col].apply(lambda text: [(staff, 'STAFF') for staff in extract_staff_names(text)])
 
                 else:
@@ -267,8 +263,8 @@ def extract_entities_rs(csv_file_path):
 
 
 # Extract from existing cleaned datasets 
-csv_file_path = '../../backend/data/00 - mock_student_data.csv'
-# csv_file_path = '../../backend/data/01 - mock_module_info.csv'
+# csv_file_path = '../../backend/data/00 - mock_student_data.csv'
+csv_file_path = '../../backend/data/01 - mock_module_info.csv'
 # csv_file_path = '../../backend/data/02 - mock_department_list.csv'
 # csv_file_path = '../../backend/data/03 - mock_staff_info.csv'
 # csv_file_path = '../../backend/data/04 - mock_module_reviews.csv'

@@ -90,7 +90,20 @@ const RecommendationResults = ({ data }) => {
                     {breakdown.recommended.map((module) => (
                       <ListItem key={module.code}>
                         <ListItemText
-                          primary={`${module.code}: ${module.title}`}
+                          primary={
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                              <Typography>{`${module.code}: ${module.title}`}</Typography>
+                              <Typography 
+                                sx={{ 
+                                  ml: 1,
+                                  color: 'text.secondary',
+                                  fontSize: '0.9em'
+                                }}
+                              >
+                                ({Math.round(module.relevance_score * 100)}%)
+                              </Typography>
+                            </Box>
+                          }
                         />
                       </ListItem>
                     ))}
