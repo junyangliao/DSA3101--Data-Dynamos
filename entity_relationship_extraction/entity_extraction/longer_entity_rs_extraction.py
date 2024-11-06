@@ -12,7 +12,7 @@ def extract_entities_rs(csv_file_path):
     # Predefined entity columns and their corresponding new column names for entity extraction 
     target_cols = ['Student_Name', 'Faculties', 'Degree', 'Major', 'Module', 'module_code', 'moduleCode', 'Skills', 'Staff', 
                    'Modules_Completed', 'department', 'faculty', 'prerequisite', 'preclusion', 'Employee Name', 
-                   'Department', 'Modules Taught', 'Title', 'Job Title', 'Tech Skills', 'university', 
+                   'Department', 'Modules Taught', 'Title', 'Job Title', 'Tech Skill', 'university', 
                    'school', 'degree', 'description', 'message'] 
 
 
@@ -29,7 +29,7 @@ def extract_entities_rs(csv_file_path):
         'prerequisite': ('prerequisite_entities', 'PREREQUISITEGROUP'),
         'preclusion': ('preclusion_entities', 'PRECLUSIONGROUP'),
         'Skills': ('skill_entities', 'SKILL'),
-        'Tech Skills': ('skill_entities', 'SKILL'),
+        'Tech Skill': ('skill_entities', 'SKILL'),
         'Staff': ('staff_entities', 'STAFF'),
         'Employee Name': ('staff_entities', 'STAFF'),
         'department': ('department_entities', 'DEPARTMENT'), 
@@ -267,17 +267,17 @@ def extract_entities_rs(csv_file_path):
 
 
 # Extract from existing cleaned datasets 
-csv_file_path = '../../backend/data/00 - mock_student_data.csv'
+# csv_file_path = '../../backend/data/00 - mock_student_data.csv'
 # csv_file_path = '../../backend/data/01 - mock_module_info.csv'
 # csv_file_path = '../../backend/data/02 - mock_department_list.csv'
 # csv_file_path = '../../backend/data/03 - mock_staff_info.csv'
 # csv_file_path = '../../backend/data/04 - mock_module_reviews.csv'
 # csv_file_path = '../../backend/data/05 - mock_venue_info.csv'
 # csv_file_path = '../../backend/data/06 - nus_undergraduate_programmes.csv'
-# csv_file_path = '../../backend/data/07 - Jobs abd relevant skillset (linkedin).csv'
+# csv_file_path = '../../backend/data/07 - Jobs and relevant skillset (linkedin).csv'
 # csv_file_path = '../../backend/data/08 - jobs_and_tech (ONET).csv'
 # csv_file_path = '../../backend/data/09 - jobs_and_skills (ONET).csv'
-# csv_file_path = '../../backend/data/10 - Graduate Employment Survey.csv'
+csv_file_path = '../../backend/data/10 - Graduate Employment Survey.csv'
 
 # Extract Entities and Relationships
 df = extract_entities_rs(csv_file_path)
