@@ -23,9 +23,25 @@ const RecommendationResults = ({ data }) => {
             Job: {recommendationsData.job.title}
           </Typography>
 
-          <Typography variant="body1" gutterBottom>
-            Description: {data.description}
-          </Typography>
+          <Box sx={{ my: 2 }}>
+            <Typography variant="h6" gutterBottom>
+              Related Jobs in Career Path:
+            </Typography>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+              {data.related_jobs && data.related_jobs.length > 0 ? (
+                data.related_jobs.map((relatedJob, index) => (
+                  <Chip 
+                    key={index} 
+                    label={relatedJob} 
+                    color="secondary"
+                    sx={{ cursor: 'pointer' }}
+                  />
+                ))
+              ) : (
+                <Typography>No related jobs available.</Typography>
+              )}
+            </Box>
+          </Box>
 
           <Box sx={{ my: 2 }}>
             <Typography variant="h6" gutterBottom>

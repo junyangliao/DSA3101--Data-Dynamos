@@ -288,34 +288,79 @@ def get_job_recommendations(job_description, matric_number=None):
             "error": f"An error occurred: {str(e)}"
         }
     
-def get_job_description_from_wikidata(job_description):
+def get_related_jobs_from_wikidata(job_title):
     """
-    Queries Wikidata to get a description for a given job title.
+    Queries Wikidata to get related jobs for a given job title's career path, ranked by relevance.
     
     Parameters:
     job_title (str): The job title to query
     
     Returns:
-    str: A description of the job from Wikidata, or an error message if not found
+    list: A list of related job titles in the same career path, ranked by relevance
     """
     sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
-    query = f"""
-    SELECT ?description WHERE {{
-      ?job wdt:P31 wd:Q28640;  # Instance of profession or occupation
-           rdfs:label "{job_description}"@en;
-           schema:description ?description.
-      FILTER (lang(?description) = "en")
-    }}
-    LIMIT 1
-    """
     
+    # Query templates for different relationship types, including filter for professions/occupations
+    query_templates = {
+        "subclass": """
+            SELECT ?relatedJobLabel WHERE {{
+              ?job wdt:P31 wd:Q28640;
+                   rdfs:label "{job_title}"@en.
+              ?relatedJob wdt:P279 ?job;  # Subclass
+                         wdt:P31/wdt:P279* wd:Q28640;  # Ensure it's a profession
+                         rdfs:label ?relatedJobLabel.
+              FILTER (lang(?relatedJobLabel) = "en")
+            }}
+            LIMIT 10
+        """,
+        "part_of": """
+            SELECT ?relatedJobLabel WHERE {{
+              ?job wdt:P31 wd:Q28640;
+                   rdfs:label "{job_title}"@en.
+              ?relatedJob wdt:P361 ?job;  # Part of
+                         wdt:P31/wdt:P279* wd:Q28640;  # Ensure it's a profession
+                         rdfs:label ?relatedJobLabel.
+              FILTER (lang(?relatedJobLabel) = "en")
+            }}
+            LIMIT 10
+        """,
+        "occupation": """
+            SELECT ?relatedJobLabel WHERE {{
+              ?job wdt:P31 wd:Q28640;
+                   rdfs:label "{job_title}"@en.
+              ?relatedJob wdt:P106 ?job;  # Occupation
+                         wdt:P31/wdt:P279* wd:Q28640;  # Ensure it's a profession
+                         rdfs:label ?relatedJobLabel.
+              FILTER (lang(?relatedJobLabel) = "en")
+            }}
+            LIMIT 10
+        """
+    }
+    
+    # Dictionary to store related jobs with relevance scores
+    related_jobs = {}
+
     try:
-        sparql.setQuery(query)
-        sparql.setReturnFormat(JSON)
-        results = sparql.query().convert()
+        for relation, query_template in query_templates.items():
+            sparql.setQuery(query_template.format(job_title=job_title))
+            sparql.setReturnFormat(JSON)
+            results = sparql.query().convert()
+            
+            # Assign relevance score based on relation type
+            score = 3 if relation == "subclass" else 2 if relation == "part_of" else 1
+            
+            # Collect related jobs with scores
+            for result in results["results"]["bindings"]:
+                job_label = result["relatedJobLabel"]["value"]
+                if job_label in related_jobs:
+                    related_jobs[job_label] = max(related_jobs[job_label], score)
+                else:
+                    related_jobs[job_label] = score
         
-        if results["results"]["bindings"]:
-            return results["results"]["bindings"][0]["description"]["value"]
-        return "No description available for this job title."
+        # Sort jobs by relevance score (higher is more relevant)
+        sorted_related_jobs = sorted(related_jobs.keys(), key=lambda x: related_jobs[x], reverse=True)
+        return sorted_related_jobs or ["No related jobs found."]
+    
     except Exception as e:
-        return "Error retrieving job description."
+        print(f"Error querying Wikidata for related jobs: {e}")
+        return ["Error retrieving related jobs."]
