@@ -9,7 +9,7 @@ import Students from './pages/Students';
 import Jobs from './pages/Jobs';
 import Query from './pages/Query';
 import Staffs from './pages/Staffs';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Drawer, List, ListItem, ListItemIcon, ListItemText, Dialog, DialogActions, DialogTitle, Button } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'; // Menu icon for toggle
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import SchoolIcon from '@mui/icons-material/School';
@@ -23,18 +23,23 @@ Modal.setAppElement('#root');  // Accessibility setting for modals
 
 function App() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
   const shouldShowDrawer = location.pathname !== '/';
+
+  const openLogoutDialog = () => setIsLogoutDialogOpen(true);
+  const closeLogoutDialog = () => setIsLogoutDialogOpen(false);
 
   // Close drawer when the route changes
   useEffect(() => {
     setIsDrawerOpen(false);
   }, [location]);
 
-  const handleLogout = () => {
-    navigate('/'); // Redirect to login page
+  const confirmLogout = () => {
+      closeLogoutDialog();
+      navigate('/'); // Redirect to login page
   };
 
   return (
@@ -114,7 +119,7 @@ function App() {
           <div style={{ flexGrow: 1 }} />
           
           <List>
-            <ListItem button onClick={handleLogout} className="drawer-list-item">
+            <ListItem button onClick={openLogoutDialog} className="drawer-list-item">
               <ListItemIcon className="MuiListItemIcon-root">
                 <LogoutIcon />
               </ListItemIcon>
@@ -124,6 +129,23 @@ function App() {
         </div>
       </Drawer>
     )}
+    <Dialog
+        open={isLogoutDialogOpen}
+        onClose={closeLogoutDialog}
+        aria-labelledby="logout-dialog-title"
+        aria-describedby="logout-dialog-description"
+      >
+        <DialogTitle id="logout-dialog-title">Are you sure you want to logout?</DialogTitle>
+        <DialogActions>
+          <Button onClick={closeLogoutDialog} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={confirmLogout} color="primary" autoFocus>
+            Logout
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <div className={`login-content ${isDrawerOpen && shouldShowDrawer ? 'shifted' : ''}`}>
         <Routes>
           <Route path="/" element={<Login />} />
@@ -151,6 +173,3 @@ const AppWrapper = () => (
 );
 
 export default AppWrapper;
-
-
-
