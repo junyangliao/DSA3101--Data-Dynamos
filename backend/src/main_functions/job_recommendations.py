@@ -127,7 +127,7 @@ def get_completed_modules_by_skill(matric_number, skill):
                 [clean_skill_name(s) for s in record["skills"]])
                for record in result]
 
-def get_relevant_modules(skills, matric_number=None):
+def get_relevant_modules(skills, matric_number=None, exclude_advanced=False):
     """Get relevant modules for given skills with relevancy scores"""
     modules_by_skill = {}
     
@@ -147,8 +147,6 @@ def get_relevant_modules(skills, matric_number=None):
                 WHERE toLower(trim(s.name)) = toLower(trim($skill))
                 MATCH (m:Module)-[:SKILL_TAUGHT]->(s)
                 WHERE NOT m.moduleCode IN $excluded_modules
-                RETURN DISTINCT m.moduleCode AS code, m.title AS title,
-                       m.description AS description, collect(s.name) AS skills
                 """
             else:
                 query = """
@@ -156,9 +154,15 @@ def get_relevant_modules(skills, matric_number=None):
                 WHERE toLower(trim(s.name)) CONTAINS toLower(trim($skill))
                 MATCH (m:Module)-[:SKILL_TAUGHT]->(s)
                 WHERE NOT m.moduleCode IN $excluded_modules
-                RETURN DISTINCT m.moduleCode AS code, m.title AS title,
-                       m.description AS description, collect(s.name) AS skills
                 """
+
+            if exclude_advanced:
+                query += """ AND NOT m.moduleCode =~ '.*[56]\\d{3}.*'"""
+
+            query += """
+            RETURN DISTINCT m.moduleCode AS code, m.title AS title, 
+                   m.description AS description, collect(s.name) AS skills
+            """
 
             result = session.run(query, skill=cleaned_skill, excluded_modules=excluded_modules)
             
@@ -212,7 +216,7 @@ def get_skills_for_job(job_title):
         result = session.run(query, job_title=job_title)
         return [clean_skill_name(record["skill"]) for record in result]
 
-def get_job_recommendations(job_description, matric_number=None):
+def get_job_recommendations(job_description, matric_number=None, exclude_advanced=False):
     """Main function to get job recommendations"""
     try:
         matric_number = standardize_matric_number(matric_number)
@@ -241,7 +245,7 @@ def get_job_recommendations(job_description, matric_number=None):
                         if completed:
                             completed_modules_by_skill[skill] = completed
 
-                modules_by_skill = get_relevant_modules(skills, matric_number)
+                modules_by_skill = get_relevant_modules(skills, matric_number, exclude_advanced)
 
                 # Structure skill breakdown
                 for skill in skills:

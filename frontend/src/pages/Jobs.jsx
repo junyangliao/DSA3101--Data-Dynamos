@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Paper, Chip, List, ListItem, ListItemText, Alert, Skeleton } from '@mui/material';
+import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Paper, Chip, List, ListItem, ListItemText, Alert, Skeleton, FormControlLabel, Switch } from '@mui/material';
 
 const RecommendationResults = ({ data }) => {
   if (!data || !data.recommendations || !data.recommendations.success) return null;
@@ -178,6 +178,7 @@ const JobVisualizer = () => {
   const [matricNumber, setMatricNumber] = useState('');
   const [recommendations, setRecommendations] = useState(null);
   const [loadingRecommendations, setLoadingRecommendations] = useState(false);
+  const [includeAdvanced, setIncludeAdvanced] = useState(false);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -260,7 +261,8 @@ const JobVisualizer = () => {
     try {
       const response = await axios.post('http://localhost:5001/api/job-recommendations', {
         jobDescription,
-        matricNumber: matricNumber || undefined
+        matricNumber: matricNumber || undefined,
+        excludeAdvanced: !includeAdvanced
       });
       setRecommendations(response.data);
     } catch (err) {
@@ -381,6 +383,18 @@ const JobVisualizer = () => {
             placeholder="e.g., A0255150H"
             fullWidth
             style={{ marginBottom: '16px' }}
+          />
+          
+          <FormControlLabel
+            control={
+                <Switch
+                    checked={includeAdvanced}
+                    onChange={(e) => setIncludeAdvanced(e.target.checked)}
+                    color="primary"
+                />
+            }
+            label="Include 5000/6000 Level Modules"
+            style={{ marginBottom: '16px', display: 'block' }}
           />
 
           <Button 
