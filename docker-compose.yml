@@ -1,6 +1,5 @@
 version: "3.8"
 
-
 services:
   flask-backend:
     build:
@@ -11,6 +10,7 @@ services:
       - "5001:5000"
     volumes:
       - ./backend/src:/app 
+      - ./backend/data:/app/data  
     environment:
       - NEO4J_URI=neo4j+s://67203e25.databases.neo4j.io 
       - NEO4J_USER=neo4j

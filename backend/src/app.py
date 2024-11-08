@@ -6,8 +6,9 @@ from main_functions.modules import create_module, create_modules, delete_module
 from main_functions.job_skills import create_jobs_and_skills, delete_job
 from main_functions.staffs import create_staff, create_staffs, delete_staff
 from main_functions.job_recommendations import get_job_recommendations, get_related_jobs_from_wikidata
-from utils import evaluate_prompt, capitalize_name
+from utils import evaluate_prompt, capitalize_name, batch_create_entities_and_relationships
 from pyvis.network import Network
+from entity_relationship_extraction.extraction_functions import extract_entities_rs
 import pandas as pd
 import os
 from threading import Timer
@@ -20,6 +21,9 @@ neo4j_user = os.getenv("NEO4J_USER")
 neo4j_password = os.getenv("NEO4J_PASSWORD")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 driver = GraphDatabase.driver(neo4j_uri, auth=(neo4j_user, neo4j_password),max_connection_pool_size=10)
+
+skills_csv_file_path = '/app/data/07 - Jobs and relevant skillset (linkedin).csv'
+df_skills = pd.read_csv(skills_csv_file_path)
 
 # Function to create a new student individually
 @app.route('/create-student', methods=['POST'])
@@ -81,14 +85,17 @@ def upload_student_csv():
     if 'file' not in request.files:
         return jsonify({'error': 'No file provided'}), 400
     
+
     file = request.files['file']
     
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
 
     try:
-        df = pd.read_csv(file)
-        create_students(df)
+        tmp_df = pd.read_csv(file)
+        df = extract_entities_rs(tmp_df,df_skills)
+        batch_create_entities_and_relationships(driver,df)
+        # create_students(df)
         return jsonify({'message': 'CSV data integrated successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -105,8 +112,10 @@ def upload_modules_csv():
         return jsonify({'error': 'No selected file'}), 400
 
     try:
-        df = pd.read_csv(file)
-        create_modules(df)
+        tmp_df = pd.read_csv(file)
+        df = extract_entities_rs(tmp_df,df_skills)
+        batch_create_entities_and_relationships(driver,df)
+        # create_modules(df)
         return jsonify({'message': 'CSV data integrated successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -123,8 +132,11 @@ def upload_jobs_csv():
         return jsonify({'error': 'No selected file'}), 400
 
     try:
-        df = pd.read_csv(file)
-        create_jobs_and_skills(df)
+        tmp_df = pd.read_csv(file)
+        df = extract_entities_rs(tmp_df,df_skills)
+        df.to_csv("test3.csv", index=False)
+        # batch_create_entities_and_relationships(driver,df)
+        # create_jobs_and_skills(df)
         return jsonify({'message': 'CSV data integrated successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -141,8 +153,10 @@ def upload_staffs_csv():
         return jsonify({'error': 'No selected file'}), 400
 
     try:
-        df = pd.read_csv(file)
-        create_staffs(df)
+        tmp_df = pd.read_csv(file)
+        df = extract_entities_rs(tmp_df,df_skills)
+        batch_create_entities_and_relationships(driver,df)
+        # create_staffs(df)
         return jsonify({'message': 'CSV data integrated successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500

@@ -3,7 +3,7 @@ import pandas as pd
 import ast
 from neo4j import GraphDatabase
 from pyvis.network import Network   
-from utils import format_node,format_relationship
+from utils import batch_create_entities_and_relationships
 
 neo4j_uri = os.getenv("NEO4J_URI")
 neo4j_user = os.getenv("NEO4J_USER")

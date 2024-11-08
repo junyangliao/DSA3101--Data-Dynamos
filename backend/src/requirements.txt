@@ -3,12 +3,10 @@ Flask-Cors == 4.0.2
 pandas
 requests
 neo4j
-py2neo
 pyvis
 openai
 google-generativeai
 nltk
-python-dotenv
 Jinja2
 sentence-transformers
 numpy

@@ -29,8 +29,8 @@
             "unique":["name"]
         },
         "Staff": {
-            "attributes":["employeeName","employeeId","NRIC","dob","doj"],
-            "unique":["employeeId"]
+            "attributes":["Employee_Name","Employee_ID","NRIC","DOB","DOJ"],
+            "unique":["Employee_Name"]
         },
         "Job": {
             "attributes":["jobTitle"],
@@ -52,7 +52,7 @@
         },
         "STUDYING_UNDER": {
             "from": "Student",
-            "to": "Major"
+            "to": "Faculty"
         },
         "MAJOR_IN": {
             "from": "Student",
@@ -72,7 +72,7 @@
         },
         "EMPLOYED_UNDER": {
             "from": "Staff",
-            "to": "Faculty"
+            "to": "Department"
         },
         "TAUGHT_BY": {
             "from": "Module",
@@ -106,5 +106,10 @@
             "from": "Module",
             "to": "PreclusionGroup"
         }
-    }
+    },
+    "representative_entities": [
+        "Module",
+        "Student",
+        "Staff"
+    ]
 }

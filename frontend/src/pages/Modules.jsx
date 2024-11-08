@@ -19,10 +19,13 @@ const ModuleVisualizer = () => {
   const fetchVisualization = async (code) => {
     setIsLoading(true);
     try {
+      console.log(`Fetching visualization for ${code}`);
       const response = await axios.post('http://localhost:5001/visualize-module', { module_code: code });
       const { file_url } = response.data;
       setIframeUrl(`http://localhost:5001${file_url}`);
+      console.log(`Iframe URL set to: http://localhost:5001${file_url}`);
     } catch (err) {
+      console.error("Error loading module visualization:", err);
       setError('Failed to load module visualization');
     } finally {
       setIsLoading(false);

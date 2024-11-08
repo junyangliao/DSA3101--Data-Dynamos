@@ -1,7 +1,6 @@
 import os
 import pandas as pd
 from neo4j import GraphDatabase
-from py2neo import Graph
 from utils import format_node,format_relationship
 
 neo4j_uri = os.getenv("NEO4J_URI")
