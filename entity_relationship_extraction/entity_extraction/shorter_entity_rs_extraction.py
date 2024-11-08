@@ -29,7 +29,7 @@ def extract_entities_rs(csv_file_path):
         'prerequisite': ('prerequisite_entities', 'PREREQUISITEGROUP'),
         'preclusion': ('preclusion_entities', 'PRECLUSIONGROUP'),
         'Skills': ('skill_entities', 'SKILL'),
-        'Tech Skills': ('skill_entities', 'SKILL'),
+        'Tech Skill': ('skill_entities', 'SKILL'),
         'Staff': ('staff_entities', 'STAFF'),
         'Employee Name': ('staff_entities', 'STAFF'),
         'department': ('department_entities', 'DEPARTMENT'), 
@@ -253,10 +253,13 @@ def extract_entities_rs(csv_file_path):
 
     # Combine all relationship columns into one
     relationship_columns = [col for col in df.columns if '_relationship' in col]
-    df['relationships'] = df[relationship_columns].apply(lambda row: [item for sublist in row if isinstance(sublist, list) for item in sublist], axis=1)
-
-    # Drop the individual relationship columns if no longer needed
-    df = df.drop(columns=relationship_columns)
+    if relationship_columns:
+        df['relationships'] = df[relationship_columns].apply(lambda row: [item for sublist in row if isinstance(sublist, list) for item in sublist], axis=1)
+        # Drop the individual relationship columns if no longer needed
+        df = df.drop(columns=relationship_columns)
+    else: 
+        # Set to a list of empty lists for each row
+        df['relationships'] = [[] for _ in range(len(df))]  
 
     # Step 3: Output final df
     return df
@@ -270,7 +273,7 @@ csv_file_path = '../../backend/data/01 - mock_module_info.csv'
 # csv_file_path = '../../backend/data/04 - mock_module_reviews.csv'
 # csv_file_path = '../../backend/data/05 - mock_venue_info.csv'
 # csv_file_path = '../../backend/data/06 - nus_undergraduate_programmes.csv'
-# csv_file_path = '../../backend/data/07 - Jobs abd relevant skillset (linkedin).csv'
+# csv_file_path = '../../backend/data/07 - Jobs and relevant skillset (linkedin).csv'
 # csv_file_path = '../../backend/data/08 - jobs_and_tech (ONET).csv'
 # csv_file_path = '../../backend/data/09 - jobs_and_skills (ONET).csv'
 # csv_file_path = '../../backend/data/10 - Graduate Employment Survey.csv'

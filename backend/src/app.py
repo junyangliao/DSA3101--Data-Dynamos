@@ -834,12 +834,13 @@ def job_recommendations():
     data = request.get_json()
     job_description = data.get('jobDescription')
     matric_number = data.get('matricNumber')
+    exclude_advanced = data.get('excludeAdvanced', False)
     
     if not job_description:
         return jsonify({'error': 'Job description is required'}), 400
     
     try:
-        recommendations = get_job_recommendations(job_description, matric_number)
+        recommendations = get_job_recommendations(job_description, matric_number, exclude_advanced)
 
         related_jobs = get_related_jobs_from_wikidata(job_description)
 

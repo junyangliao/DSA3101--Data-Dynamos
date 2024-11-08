@@ -3,6 +3,8 @@ import ast
 import re
 import spacy
 import os 
+from fuzzywuzzy import fuzz, process
+
 
 # Load your spaCy model
 nlp = spacy.load('en_core_web_sm')
@@ -12,9 +14,8 @@ def extract_entities_rs(csv_file_path):
     # Predefined entity columns and their corresponding new column names for entity extraction 
     target_cols = ['Student_Name', 'Faculties', 'Degree', 'Major', 'Module', 'module_code', 'moduleCode', 'Skills', 'Staff', 
                    'Modules_Completed', 'department', 'faculty', 'prerequisite', 'preclusion', 'Employee Name', 
-                   'Department', 'Modules Taught', 'Title', 'Job Title', 'Tech Skill', 'university', 
+                   'Department', 'Modules Taught', 'Title', 'Job Title', 'Tech Skills', 'university',
                    'school', 'degree', 'description', 'message'] 
-
 
     new_entity_cols = {
         'Student_Name': ('student_entities', 'STUDENT'),
@@ -79,10 +80,8 @@ def extract_entities_rs(csv_file_path):
             elif isinstance(x, str) and x.startswith('[') and x.endswith(']'):
                 try:
                     parsed_list = ast.literal_eval(x)  # Convert string representation of list to actual list
-                    # return [str(item).strip() for item in flatten_list(parsed_list)]
                     return [(str(item).strip(), entity_type) for item in flatten_list(parsed_list)]
                 except (ValueError, SyntaxError):
-                    # return [x.strip()] 
                     return [(x.strip(), entity_type)]
                 
             # Handle comma-separated strings
@@ -131,24 +130,28 @@ def extract_entities_rs(csv_file_path):
             # remove 'Microsoft ' substring before skills
             unique_skills = [re.sub(r'Microsoft\s', '', skill) for skill in unique_skills]
 
-        # Function to extract skills
-        def extract_skills(text):
+        # Function to extract skills 
+        def extract_skills(text, threshold=80):
             if not isinstance(text, str):
-                return []  # Return an empty list if the input is not a valid string
+                return []
             
-            doc = nlp(text)
-            skills = [] 
+            skills = []
 
             # extract skill entities
             for skill in unique_skills:
-                # create a regex pattern with word boundaries around the job title
+                # create a regex pattern with word boundaries around the skills 
                 pattern = r"\b" + re.escape(skill) + r"\b"
-    
-                # search for the job title in the text (case-insensitive)
+
+                # search for the skills in the text (case-insensitive)
                 if re.search(pattern, text, re.IGNORECASE):
                     skills.append(skill)
 
-            return skills
+            # Fuzzy match for entity resolution if no exact matches found
+            if not skills:
+                potential_matches = process.extract(text, unique_skills, limit=5, scorer=fuzz.ratio)
+                skills = [match[0] for match in potential_matches if match[1] >= threshold]
+            
+            return list(set(skills))  # Remove duplicates
 
         # Function to extract staff names
         def extract_staff_names(text):
@@ -257,10 +260,13 @@ def extract_entities_rs(csv_file_path):
 
     # Combine all relationship columns into one
     relationship_columns = [col for col in df.columns if '_relationship' in col]
-    df['relationships'] = df[relationship_columns].apply(lambda row: [item for sublist in row if isinstance(sublist, list) for item in sublist], axis=1)
-
-    # Drop the individual relationship columns if no longer needed
-    df = df.drop(columns=relationship_columns)
+    if relationship_columns:
+        df['relationships'] = df[relationship_columns].apply(lambda row: [item for sublist in row if isinstance(sublist, list) for item in sublist], axis=1)
+        # Drop the individual relationship columns if no longer needed
+        df = df.drop(columns=relationship_columns)
+    else: 
+        # Set to a list of empty lists for each row
+        df['relationships'] = [[] for _ in range(len(df))]  
 
     # Step 3: Output final df
     return df
@@ -268,7 +274,7 @@ def extract_entities_rs(csv_file_path):
 
 # Extract from existing cleaned datasets 
 # csv_file_path = '../../backend/data/00 - mock_student_data.csv'
-# csv_file_path = '../../backend/data/01 - mock_module_info.csv'
+csv_file_path = '../../backend/data/01 - mock_module_info.csv'
 # csv_file_path = '../../backend/data/02 - mock_department_list.csv'
 # csv_file_path = '../../backend/data/03 - mock_staff_info.csv'
 # csv_file_path = '../../backend/data/04 - mock_module_reviews.csv'
@@ -277,7 +283,7 @@ def extract_entities_rs(csv_file_path):
 # csv_file_path = '../../backend/data/07 - Jobs and relevant skillset (linkedin).csv'
 # csv_file_path = '../../backend/data/08 - jobs_and_tech (ONET).csv'
 # csv_file_path = '../../backend/data/09 - jobs_and_skills (ONET).csv'
-csv_file_path = '../../backend/data/10 - Graduate Employment Survey.csv'
+# csv_file_path = '../../backend/data/10 - Graduate Employment Survey.csv'
 
 # Extract Entities and Relationships
 df = extract_entities_rs(csv_file_path)
