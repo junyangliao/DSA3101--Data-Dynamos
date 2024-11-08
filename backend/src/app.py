@@ -818,16 +818,6 @@ def process_query():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-# Function for testing connection to neo4j
-@app.route('/test-neo4j', methods=['GET'])
-def test_neo4j():
-    with driver.session() as session:
-        try:
-            session.run("MATCH (n) RETURN n LIMIT 1")
-            return jsonify({"status": "Neo4j connection successful!"})
-        except Exception as e:
-            return jsonify({"error": str(e)}), 500
-
 # Function for recommending jobs in jobs page
 @app.route('/api/job-recommendations', methods=['POST'])
 def job_recommendations():

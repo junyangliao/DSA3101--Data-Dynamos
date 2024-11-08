@@ -1,0 +1,115 @@
+{   
+    "entities": {
+        "Module": {
+            "attributes": ["moduleCode", "title", "description", "moduleCredit"],
+            "unique": ["moduleCode"]
+        },
+        "Department": {
+            "attributes": ["name"],
+            "unique": ["name"]
+        },
+        "Faculty": {
+            "attributes": ["name"],
+            "unique": ["name"]
+        },
+        "Student": {
+            "attributes": ["studentName","matricNumber","NRIC","Year","Faculties","Major","Second Major","Grades"],
+            "unique": ["matricNumber"]
+        },
+        "Semester": {
+            "attributes":["number"],
+            "unique":["number"]
+        },
+        "Skill": {
+            "attributes":["name"],
+            "unique":["name"]
+        },
+        "Major": {
+            "attributes":["name"],
+            "unique":["name"]
+        },
+        "Staff": {
+            "attributes":["employeeName","employeeId","NRIC","DOB","DOJ"],
+            "unique":["employeeName"]
+        },
+        "Job": {
+            "attributes":["jobTitle"],
+            "unique":["jobTitle"]
+        },
+        "PreclusionGroup": {
+            "attributes":["name"],
+            "unique":["name"]
+        },
+        "PrerequisiteGroup": {
+            "attributes":["name"],
+            "unique":["name"]
+        }
+    },
+    "relationships": {
+        "BELONGS_TO": {
+            "from": "Module",
+            "to": "Department"
+        },
+        "STUDYING_UNDER": {
+            "from": "Student",
+            "to": "Faculty"
+        },
+        "MAJOR_IN": {
+            "from": "Student",
+            "to": "Major"
+        },
+        "SECOND_MAJOR_IN": {
+            "from": "Student",
+            "to": "Major"
+        },
+        "COMPLETED": {
+            "from": "Student",
+            "to": "Module"
+        },
+        "OFFERED_IN": {
+            "from": "Module",
+            "to": "Semester"
+        },
+        "EMPLOYED_UNDER": {
+            "from": "Staff",
+            "to": "Department"
+        },
+        "TAUGHT_BY": {
+            "from": "Module",
+            "to": "Staff"
+        },
+        "PART_OF": {
+            "from": "Department",
+            "to": "Faculty"
+        },
+        "REQUIRES": {
+            "from": "Job",
+            "to": "Skill"
+        },
+        "SKILL_TAUGHT": {
+            "from": "Module",
+            "to": "Skill"
+        },
+        "INCLUDED_AS_PRECLUSION": {
+            "from": "Module",
+            "to": "PreclusionGroup"
+        },
+        "INCLUDED_AS_PREREQUISITE": {
+            "from": "Module",
+            "to": "PrerequisiteGroup"
+        },
+        "MUST_HAVE_TAKEN_ONE_OF": {
+            "from": "Module",
+            "to": "PrerequisiteGroup"
+        },
+        "MUST_NOT_HAVE_TAKEN_ONE_OF": {
+            "from": "Module",
+            "to": "PreclusionGroup"
+        }
+    },
+    "representative_entities": [
+        "Module",
+        "Student",
+        "Staff"
+    ]
+}

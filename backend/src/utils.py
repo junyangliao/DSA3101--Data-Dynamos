@@ -181,7 +181,7 @@ def serialize_neo4j_value(value):
 
 def generate_cypher_query(tx,prompt):
     client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY", openai_api_key))
-    json_file_path = os.path.join(os.path.dirname(__file__), 'ontology_config_test.json')
+    json_file_path = os.path.join(os.path.dirname(__file__), 'ontology_query_config.json')
     with open(json_file_path, 'r') as file:
         onotology_data = json.load(file)
         ontology = json.dumps(onotology_data)
