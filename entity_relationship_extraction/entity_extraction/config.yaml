@@ -1,0 +1,202 @@
+# Entity configuration
+target_cols:
+  - Student_Name
+  - Faculties
+  - Degree
+  - Major
+  - Module
+  - module_code
+  - moduleCode
+  - Skills
+  - Staff
+  - Modules_Completed
+  - department
+  - faculty
+  - prerequisite
+  - preclusion
+  - Employee Name
+  - Department
+  - Modules Taught
+  - Title
+  - Job Title
+  - Tech Skill
+  - university
+  - school
+  - degree
+  - description
+  - message
+
+entity_mappings:
+  Student_Name:
+    new_col: student_entities
+    type: STUDENT
+  Degree:
+    new_col: degree_entities
+    type: DEGREE
+  degree:
+    new_col: degree_entities
+    type: DEGREE
+  Major:
+    new_col: major_entities
+    type: MAJOR
+  Module:
+    new_col: module_entities
+    type: MODULE
+  Modules_Completed:
+    new_col: module_entities
+    type: MODULE
+  module_code:
+    new_col: module_entities
+    type: MODULE
+  moduleCode:
+    new_col: module_entities
+    type: MODULE
+  Modules Taught:
+    new_col: module_entities
+    type: MODULE
+  prerequisite:
+    new_col: prerequisite_entities
+    type: PREREQUISITEGROUP
+  preclusion:
+    new_col: preclusion_entities
+    type: PRECLUSIONGROUP
+  Skills:
+    new_col: skill_entities
+    type: SKILL
+  Tech Skill:
+    new_col: skill_entities
+    type: SKILL
+  Staff:
+    new_col: staff_entities
+    type: STAFF
+  Employee Name:
+    new_col: staff_entities
+    type: STAFF
+  department:
+    new_col: department_entities
+    type: DEPARTMENT
+  Department:
+    new_col: department_entities
+    type: DEPARTMENT
+  Faculties:
+    new_col: faculty_entities
+    type: FACULTY
+  faculty:
+    new_col: faculty_entities
+    type: FACULTY
+  school:
+    new_col: faculty_entities
+    type: FACULTY
+  Title:
+    new_col: job_entities
+    type: JOB
+  Job Title:
+    new_col: job_entities
+    type: JOB
+  university:
+    new_col: university_entities
+    type: UNIVERSITY
+
+relationship_mappings:
+  student_faculty:
+    from_col: student_entities
+    to_col: faculty_entities
+    from_type: STUDENT
+    to_type: FACULTY
+    relationship_type: STUDYING_UNDER
+  student_major:
+    from_col: student_entities
+    to_col: major_entities
+    from_type: STUDENT
+    to_type: MAJOR
+    relationship_type: MAJOR_IN
+  student_module:
+    from_col: student_entities
+    to_col: module_entities
+    from_type: STUDENT
+    to_type: MODULE
+    relationship_type: COMPLETED
+  module_department:
+    from_col: module_entities
+    to_col: department_entities
+    from_type: MODULE
+    to_type: DEPARTMENT
+    relationship_type: BELONGS_TO
+  module_prerequisite:
+    from_col: module_entities
+    to_col: prerequisite_entities
+    from_type: MODULE
+    to_type: DEPARTMENT
+    relationship_type: MUST_HAVE_TAKEN_ONE_OF
+  module_preclusion:
+    from_col: module_entities
+    to_col: preclusion_entities
+    from_type: MODULE
+    to_type: DEPARTMENT
+    relationship_type: MUST_NOT_HAVE_TAKEN_ONE_OF
+  module_prerequisite_included:
+    from_col: module_entities
+    to_col: prerequisite_entities
+    from_type: MODULE
+    to_type: DEPARTMENT
+    relationship_type: INCLUDED_AS_PREREQUISITE
+  module_preclusion_included:
+    from_col: module_entities
+    to_col: preclusion_entities
+    from_type: MODULE
+    to_type: DEPARTMENT
+    relationship_type: INCLUDED_AS_PRECLUSION
+  module_semester:
+    from_col: module_entities
+    to_col: semester_entities
+    from_type: MODULE
+    to_type: SEMESTER
+    relationship_type: OFFERED_IN
+  module_staff:
+    from_col: module_entities
+    to_col: staff_entities
+    from_type: MODULE
+    to_type: STAFF
+    relationship_type: TAUGHT_BY
+  staff_department:
+    from_col: staff_entities
+    to_col: department_entities
+    from_type: STAFF
+    to_type: DEPARTMENT
+    relationship_type: EMPLOYED_UNDER
+  department_faculty:
+    from_col: department_entities
+    to_col: faculty_entities
+    from_type: DEPARTMENT
+    to_type: FACULTY
+    relationship_type: PART_OF
+  job_faculty:
+    from_col: job_entities
+    to_col: faculty_entities
+    from_type: DEPARTMENT
+    to_type: FACULTY
+    relationship_type: PART_OF
+  major_degree:
+    from_col: major_entities
+    to_col: degree_entities
+    from_type: MAJOR
+    to_type: DEGREE
+    relationship_type: IS_UNDER
+  job_skill:
+    from_col: job_entities
+    to_col: skill_entities
+    from_type: JOB
+    to_type: SKILL
+    relationship_type: REQUIRES
+  module_skill:
+    from_col: module_entities
+    to_col: skill_entities
+    from_type: MODULE
+    to_type: SKILL
+    relationship_type: SKILL_TAUGHT
+  university_degree:
+    from_col: university_entities
+    to_col: degree_entities
+    from_type: UNIVERSTITY
+    to_type: DEGREE
+    relationship_type: OFFERS
