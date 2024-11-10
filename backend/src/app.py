@@ -1,10 +1,10 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from neo4j import GraphDatabase
-from main_functions.students import create_student, create_students, delete_student
-from main_functions.modules import create_module, create_modules, delete_module
+from main_functions.students import create_student, delete_student
+from main_functions.modules import create_module, delete_module
 from main_functions.job_skills import create_jobs_and_skills, delete_job
-from main_functions.staffs import create_staff, create_staffs, delete_staff
+from main_functions.staffs import create_staff, delete_staff
 from main_functions.job_recommendations import get_job_recommendations, get_related_jobs_from_wikidata
 from utils import evaluate_prompt, capitalize_name, batch_create_entities_and_relationships
 from pyvis.network import Network
@@ -80,29 +80,28 @@ def create_new_job():
     return jsonify({'message': 'Job created successfully'}), 201
 
 # Function to upload student data as a csv
-@app.route('/upload-student-csv', methods=['POST'])
-def upload_student_csv():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file provided'}), 400
+# @app.route('/upload-student-csv', methods=['POST'])
+# def upload_student_csv():
+#     if 'file' not in request.files:
+#         return jsonify({'error': 'No file provided'}), 400
     
 
-    file = request.files['file']
+#     file = request.files['file']
     
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
+#     if file.filename == '':
+#         return jsonify({'error': 'No selected file'}), 400
 
-    try:
-        tmp_df = pd.read_csv(file)
-        df = extract_entities_rs(tmp_df,df_skills)
-        batch_create_entities_and_relationships(driver,df)
-        # create_students(df)
-        return jsonify({'message': 'CSV data integrated successfully'}), 201
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+#     try:
+#         tmp_df = pd.read_csv(file)
+#         df = extract_entities_rs(tmp_df,df_skills)
+#         batch_create_entities_and_relationships(driver,df)
+#         return jsonify({'message': 'CSV data integrated successfully'}), 201
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
 
 # Function to upload modules data as a csv
-@app.route('/upload-modules-csv', methods=['POST'])
-def upload_modules_csv():
+@app.route('/upload-csv', methods=['POST'])
+def upload_csv():
     if 'file' not in request.files:
         return jsonify({'error': 'No file provided'}), 400
     
@@ -115,51 +114,49 @@ def upload_modules_csv():
         tmp_df = pd.read_csv(file)
         df = extract_entities_rs(tmp_df,df_skills)
         batch_create_entities_and_relationships(driver,df)
-        # create_modules(df)
         return jsonify({'message': 'CSV data integrated successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 # Function to upload jobs data as a csv
-@app.route('/upload-jobs-csv', methods=['POST'])
-def upload_jobs_csv():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file provided'}), 400
+# @app.route('/upload-jobs-csv', methods=['POST'])
+# def upload_jobs_csv():
+#     if 'file' not in request.files:
+#         return jsonify({'error': 'No file provided'}), 400
     
-    file = request.files['file']
+#     file = request.files['file']
     
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
+#     if file.filename == '':
+#         return jsonify({'error': 'No selected file'}), 400
 
-    try:
-        tmp_df = pd.read_csv(file)
-        df = extract_entities_rs(tmp_df,df_skills)
-        df.to_csv("test3.csv", index=False)
-        # batch_create_entities_and_relationships(driver,df)
-        # create_jobs_and_skills(df)
-        return jsonify({'message': 'CSV data integrated successfully'}), 201
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+#     try:
+#         tmp_df = pd.read_csv(file)
+#         df = extract_entities_rs(tmp_df,df_skills)
+#         batch_create_entities_and_relationships(driver,df)
+#         # create_jobs_and_skills(df)
+#         return jsonify({'message': 'CSV data integrated successfully'}), 201
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
 
 # Function to upload staffs data as a csv
-@app.route('/upload-staffs-csv', methods=['POST'])
-def upload_staffs_csv():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file provided'}), 400
+# @app.route('/upload-staffs-csv', methods=['POST'])
+# def upload_staffs_csv():
+#     if 'file' not in request.files:
+#         return jsonify({'error': 'No file provided'}), 400
     
-    file = request.files['file']
+#     file = request.files['file']
     
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
+#     if file.filename == '':
+#         return jsonify({'error': 'No selected file'}), 400
 
-    try:
-        tmp_df = pd.read_csv(file)
-        df = extract_entities_rs(tmp_df,df_skills)
-        batch_create_entities_and_relationships(driver,df)
-        # create_staffs(df)
-        return jsonify({'message': 'CSV data integrated successfully'}), 201
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+#     try:
+#         tmp_df = pd.read_csv(file)
+#         df = extract_entities_rs(tmp_df,df_skills)
+#         batch_create_entities_and_relationships(driver,df)
+#         # create_staffs(df)
+#         return jsonify({'message': 'CSV data integrated successfully'}), 201
+#     except Exception as e:
+#         return jsonify({'error': str(e)}), 500
 
 # Function to delete individual module 
 @app.route('/delete-module', methods=['POST'])

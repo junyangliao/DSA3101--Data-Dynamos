@@ -77,9 +77,16 @@ const QueryProcessor = () => {
   
     // If the response format is unexpected, show a generic message
     return (
-      <Typography variant="h6" color="error" sx={{ mt: 2 }}>
-        Unsupported response format
-      </Typography>
+      <Paper elevation={3} sx={{ mt: 3, p: 3 }}>
+        <Typography variant="h6" color="textSecondary">
+          Response (Unsupported Format):
+        </Typography>
+        <Box sx={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+          <Typography variant="body2">
+            {JSON.stringify(response, null, 2)}
+          </Typography>
+        </Box>
+      </Paper>
     );
   };
   

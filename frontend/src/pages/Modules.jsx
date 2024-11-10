@@ -53,7 +53,7 @@ const ModuleVisualizer = () => {
       setProgress(0);
       setMessage('');
 
-      const response = await axios.post('http://localhost:5001/upload-modules-csv', formData, {
+      const response = await axios.post('http://localhost:5001/upload-csv', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

@@ -13,7 +13,7 @@
             "unique": ["name"]
         },
         "Student": {
-            "attributes": ["Student_Name","Matric_Number","NRIC","Year","Faculties","Major","Second Major","Grades"],
+            "attributes": ["Student_Name","Matric_Number","NRIC","Year","Faculties","Major","Second_Major","Grades"],
             "unique": ["Matric_Number"]
         },
         "Semester": {
@@ -33,8 +33,8 @@
             "unique":["Employee_Name"]
         },
         "Job": {
-            "attributes":["jobTitle"],
-            "unique":["jobTitle"]
+            "attributes":["name"],
+            "unique":["name"]
         },
         "PreclusionGroup": {
             "attributes":["name"],
@@ -43,6 +43,14 @@
         "PrerequisiteGroup": {
             "attributes":["name"],
             "unique":["name"]
+        },
+        "University": {
+            "attributes":["name"],
+            "unique":["name"]
+        },
+        "Degree": {
+            "attributes":["degree","year","university","employment_rate_overall","basic_monthly_mean","basic_monthly_median","gross_monthly_mean","gross_monthly_median","gross_mthly_25_percentile","gross_mthly_75_percentile"],
+            "unique":["degree"]
         }
     },
     "relationships": {
@@ -60,11 +68,13 @@
         },
         "SECOND_MAJOR_IN": {
             "from": "Student",
-            "to": "Major"
+            "to": "Major",
+            "optional": true
         },
         "COMPLETED": {
             "from": "Student",
-            "to": "Module"
+            "to": "Module",
+            "optional": true
         },
         "OFFERED_IN": {
             "from": "Module",
@@ -76,7 +86,8 @@
         },
         "TAUGHT_BY": {
             "from": "Module",
-            "to": "Staff"
+            "to": "Staff",
+            "optional": true
         },
         "PART_OF": {
             "from": "Department",
@@ -84,32 +95,43 @@
         },
         "REQUIRES": {
             "from": "Job",
-            "to": "Skill"
+            "to": "Skill",
+            "optional": true
         },
         "SKILL_TAUGHT": {
             "from": "Module",
-            "to": "Skill"
+            "to": "Skill",
+            "optional": true
         },
         "INCLUDED_AS_PRECLUSION": {
             "from": "Module",
-            "to": "PreclusionGroup"
+            "to": "PreclusionGroup",
+            "optional": true
         },
         "INCLUDED_AS_PREREQUISITE": {
             "from": "Module",
-            "to": "PrerequisiteGroup"
+            "to": "PrerequisiteGroup",
+            "optional": true
         },
         "MUST_HAVE_TAKEN_ONE_OF": {
             "from": "Module",
-            "to": "PrerequisiteGroup"
+            "to": "PrerequisiteGroup",
+            "optional": true
         },
         "MUST_NOT_HAVE_TAKEN_ONE_OF": {
             "from": "Module",
-            "to": "PreclusionGroup"
+            "to": "PreclusionGroup",
+            "optional": true
+        },
+        "OFFERS": {
+            "from": "University",
+            "to": "Degree"
         }
     },
     "representative_entities": [
         "Module",
         "Student",
-        "Staff"
+        "Staff",
+        "Degree"
     ]
 }

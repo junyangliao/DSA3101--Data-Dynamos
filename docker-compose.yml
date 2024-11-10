@@ -11,6 +11,7 @@ services:
     volumes:
       - ./backend/src:/app 
       - ./backend/data:/app/data  
+      - ./entity_relationship_extraction:/app/entity_extraction
     environment:
       - NEO4J_URI=neo4j+s://67203e25.databases.neo4j.io 
       - NEO4J_USER=neo4j

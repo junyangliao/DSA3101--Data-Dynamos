@@ -31,7 +31,7 @@ def create_entity(tx, row, ontology):
     entity_columns = row.filter(regex='entities').index
     representative_entities = ontology['representative_entities']
     for entity_column in entity_columns:
-        for entity in ast.literal_eval(row[entity_column]):
+        for entity in row[entity_column]:
             entity_type = entity[1]
             config = ontology["entities"].get(entity_type)
             if not config:
@@ -147,8 +147,8 @@ def batch_create_entities_and_relationships(driver, df):
         for index, row in df.iterrows():
             session.execute_write(create_entity, row, ontology)
 
-            if pd.notna(row['relationships']):
-              relationships = ast.literal_eval(row['relationships'])
+            if row['relationships']:
+              relationships = row['relationships']
               for relationship in relationships:
                   session.execute_write(
                       create_relationship,
@@ -160,7 +160,7 @@ def batch_create_entities_and_relationships(driver, df):
                       ontology
               )
                   
-            if 'prerequisite' in index:
+            if 'prerequisite' in df.columns:
               session.execute_write(module_helper, row)
 
 def serialize_neo4j_value(value):
@@ -188,7 +188,6 @@ def generate_cypher_query(tx,prompt):
     system_prompt = f"""
     this is how my neo4j database ontology looks like: {ontology}.
     keep in mind these rules : Mixing label expression symbols ('|', '&', '!', and '%') with colon (':') between labels is not allowed. Please only use one set of symbols. This expression could be expressed as :PrerequisiteGroup|(pg&PreclusionGroup)
-    Please give more descriptive replies, such as if the results gives a list of modules codes, then we will include the module details and everything about the modules in the list.
     """
     model="gpt-4-1106-preview"
     completion = client.chat.completions.create(

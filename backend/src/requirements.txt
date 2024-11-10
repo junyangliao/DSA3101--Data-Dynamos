@@ -11,3 +11,4 @@ Jinja2
 sentence-transformers
 numpy
 SPARQLWrapper
+fuzzywuzzy
