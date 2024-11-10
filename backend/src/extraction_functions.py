@@ -344,14 +344,17 @@ def extract_staff_names(text):
     return [] 
 
 # Process chunk function moved outside
-def process_chunk(chunk_data):
-    chunk, unique_skills, col, new_entity_col, entity_type = chunk_data
+def process_chunk(args):
+    chunk, unique_skills, col, new_entity_col, entity_type = args
     
     if col in ['description']:
-        chunk['skill_entities'] = chunk[col].apply(lambda text: [(skill, 'Skill') for skill in extract_skills(text, unique_skills)])
+        chunk['skill_entities'] = chunk[col].apply(
+            lambda text: [(skill, 'SKILL') for skill in extract_skills(text, unique_skills)])
     elif col in ['description', 'message']:
-        chunk['skill_entities'] = chunk[col].apply(lambda text: [(skill, 'Skill') for skill in extract_skills(text, unique_skills)])
-        chunk['staff_entities'] = chunk[col].apply(lambda text: [(staff, 'Staff') for staff in extract_staff_names(text)])
+        chunk['skill_entities'] = chunk[col].apply(
+            lambda text: [(skill, 'SKILL') for skill in extract_skills(text, unique_skills)])
+        chunk['staff_entities'] = chunk[col].apply(
+            lambda text: [(staff, 'STAFF') for staff in extract_staff_names(text)])
     else:
         chunk[new_entity_col] = chunk[col].apply(lambda x: parse_entity(x, entity_type))
     
@@ -436,10 +439,10 @@ def extract_entities_rs(csv_file_path):
     
     for col in target_cols:
         if col in df.columns:
-            new_entity_col, entity_type = new_entity_cols.get(col, (col, 'Unknown'))
+            new_entity_col, entity_type = new_entity_cols.get(col, (col, 'UNKNOWN'))
             chunks = [df[i:i + chunk_size] for i in range(0, len(df), chunk_size)]
             
-            # Prepare data for parallel processing
+            # Prepare data for parallel processing with unique_skills
             chunk_data = [(chunk, unique_skills, col, new_entity_col, entity_type) for chunk in chunks]
             
             # Process chunks in parallel
@@ -448,6 +451,11 @@ def extract_entities_rs(csv_file_path):
             
             # Combine processed chunks
             df = pd.concat(processed_chunks, axis=0)
+    
+    # Extract semester entities
+    semester_cols = ['semester_01', 'semester_02', 'semester_03', 'semester_04']
+    if all(col in df.columns for col in semester_cols):
+        df['semester_entities'] = df.apply(lambda row: [(col, 'SEMESTER') for col in semester_cols if row[col] == 1], axis=1)
 
     # Extract relationships based on predefined mappings
     for rel_key, rel_info in relationship_mappings.items():

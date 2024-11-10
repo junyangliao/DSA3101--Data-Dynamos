@@ -50,7 +50,7 @@ def flatten_list(nested_list):
     return flat_list
 
 # Function to extract skills 
-def extract_skills(text, threshold=80):
+def extract_skills(text, unique_skills, threshold=80):
     if not isinstance(text, str):
         return []
     
@@ -95,14 +95,17 @@ def extract_staff_names(text):
     return [] 
 
 # Process chunk function moved outside
-def process_chunk(chunk_data):
-    chunk, unique_skills, col, new_entity_col, entity_type = chunk_data
+def process_chunk(args):
+    chunk, unique_skills, col, new_entity_col, entity_type = args
     
     if col in ['description']:
-        chunk['skill_entities'] = chunk[col].apply(lambda text: [(skill, 'SKILL') for skill in extract_skills(text, unique_skills)])
+        chunk['skill_entities'] = chunk[col].apply(
+            lambda text: [(skill, 'SKILL') for skill in extract_skills(text, unique_skills)])
     elif col in ['description', 'message']:
-        chunk['skill_entities'] = chunk[col].apply(lambda text: [(skill, 'SKILL') for skill in extract_skills(text, unique_skills)])
-        chunk['staff_entities'] = chunk[col].apply(lambda text: [(staff, 'STAFF') for staff in extract_staff_names(text)])
+        chunk['skill_entities'] = chunk[col].apply(
+            lambda text: [(skill, 'SKILL') for skill in extract_skills(text, unique_skills)])
+        chunk['staff_entities'] = chunk[col].apply(
+            lambda text: [(staff, 'STAFF') for staff in extract_staff_names(text)])
     else:
         chunk[new_entity_col] = chunk[col].apply(lambda x: parse_entity(x, entity_type))
     
@@ -190,7 +193,7 @@ def extract_entities_rs(csv_file_path):
             new_entity_col, entity_type = new_entity_cols.get(col, (col, 'UNKNOWN'))
             chunks = [df[i:i + chunk_size] for i in range(0, len(df), chunk_size)]
             
-            # Prepare data for parallel processing
+            # Prepare data for parallel processing with unique_skills
             chunk_data = [(chunk, unique_skills, col, new_entity_col, entity_type) for chunk in chunks]
             
             # Process chunks in parallel
@@ -231,3 +234,32 @@ def extract_entities_rs(csv_file_path):
         df['relationships'] = [[] for _ in range(len(df))]  
 
     return df
+
+# Main execution
+if __name__ == '__main__':
+    # Extract from existing cleaned datasets 
+    csv_file_path = '../../backend/data/00 - mock_student_data.csv'
+    # csv_file_path = '../../backend/data/01 - mock_module_info.csv'
+    # csv_file_path = '../../backend/data/02 - mock_department_list.csv'
+    # csv_file_path = '../../backend/data/03 - mock_staff_info.csv'
+    # csv_file_path = '../../backend/data/04 - mock_module_reviews.csv'
+    # csv_file_path = '../../backend/data/05 - mock_venue_info.csv'
+    # csv_file_path = '../../backend/data/06 - nus_undergraduate_programmes.csv'
+    # csv_file_path = '../../backend/data/07 - Jobs and relevant skillset (linkedin).csv'
+    # csv_file_path = '../../backend/data/08 - jobs_and_tech (ONET).csv'
+    # csv_file_path = '../../backend/data/09 - jobs_and_skills (ONET).csv'
+    # csv_file_path = '../../backend/data/10 - Graduate Employment Survey.csv'
+    
+    # Extract Entities and Relationships
+    df = extract_entities_rs(csv_file_path)
+    # Define the path for the 'extracted_csv_output' folder, which is beside the .py file's folder
+    output_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../entity_extraction/extracted_csv_output')
+    # Save results
+    base_name, ext = os.path.splitext(os.path.basename(csv_file_path))
+    new_file_name = f"{base_name}_extracted{ext}"
+    new_file_path = os.path.join(output_dir, new_file_name)
+    df.to_csv(new_file_path, index=False)
+    
+    # Print a success message with the new file name
+    print(f"Data saved to: {new_file_name}")
+    print(df.head())
