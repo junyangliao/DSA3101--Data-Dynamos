@@ -70,7 +70,7 @@ def get_student_data(matric_number):
     WITH collect(DISTINCT m.moduleCode) as completed_modules
     OPTIONAL MATCH (m:Module)
     WHERE m.moduleCode IN completed_modules
-    OPTIONAL MATCH (m)-[:MUST_NOT_HAVE_TAKEN_ONE_OF]->(pg:PreclusionGroup)-[:INCLUDED_AS_PRECLUSION]->(precluded:Module)
+    OPTIONAL MATCH (m)-[:INCLUDED_AS_PRECLUSION]->(pg:PreclusionGroup)<-[:INCLUDED_AS_PRECLUSION]-(precluded:Module)
     RETURN completed_modules, collect(DISTINCT precluded.moduleCode) as precluded_modules
     """
     with db.get_session() as session:
