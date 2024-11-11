@@ -232,8 +232,8 @@ def extract_entities_rs(csv_file_path):
 # Main execution
 if __name__ == '__main__':
     # Extract from existing cleaned datasets 
-    csv_file_path = '../../backend/data/00 - mock_student_data.csv'
-    # csv_file_path = '../../backend/data/01 - mock_module_info.csv'
+    # csv_file_path = '../../backend/data/00 - mock_student_data.csv'
+    csv_file_path = '../../backend/data/01 - mock_module_info.csv'
     # csv_file_path = '../../backend/data/02 - mock_department_list.csv'
     # csv_file_path = '../../backend/data/03 - mock_staff_info.csv'
     # csv_file_path = '../../backend/data/04 - mock_module_reviews.csv'

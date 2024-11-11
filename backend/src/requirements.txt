@@ -12,3 +12,4 @@ sentence-transformers
 numpy
 SPARQLWrapper
 fuzzywuzzy
+python-Levenshtein

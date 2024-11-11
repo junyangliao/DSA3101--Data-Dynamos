@@ -110,13 +110,13 @@ def get_completed_modules_by_skill(matric_number, skill):
     
     if len(cleaned_skill) == 1:
         query = """
-        MATCH (s:Student {matricNumber: $matric_number})-[:COMPLETED]->(m:Module)-[:SKILL_TAUGHT]->(sk:Skill)
+        MATCH (s:Student {Matric_Number: $matric_number})-[:COMPLETED]->(m:Module)-[:SKILL_TAUGHT]->(sk:Skill)
         WHERE toLower(trim(sk.name)) = toLower(trim($skill))
         RETURN DISTINCT m.moduleCode as code, m.title as title, collect(sk.name) as skills
         """
     else:
         query = """
-        MATCH (s:Student {matricNumber: $matric_number})-[:COMPLETED]->(m:Module)-[:SKILL_TAUGHT]->(sk:Skill)
+        MATCH (s:Student {Matric_Number: $matric_number})-[:COMPLETED]->(m:Module)-[:SKILL_TAUGHT]->(sk:Skill)
         WHERE toLower(trim(sk.name)) CONTAINS toLower(trim($skill))
         RETURN DISTINCT m.moduleCode as code, m.title as title, collect(sk.name) as skills
         """
@@ -200,7 +200,7 @@ def get_relevant_modules(skills, matric_number=None, exclude_advanced=False):
 def job_title_exists(job_title):
     query = """
     MATCH (j:Job)
-    WHERE trim(toLower(j.jobTitle)) = trim(toLower($job_title))
+    WHERE trim(toLower(j.name)) = trim(toLower($job_title))
     RETURN j
     """
     with db.get_session() as session:
@@ -209,7 +209,7 @@ def job_title_exists(job_title):
 
 def get_skills_for_job(job_title):
     query = """
-    MATCH (j:Job {jobTitle: $job_title})-[:REQUIRES]->(s:Skill)
+    MATCH (j:Job {name: $job_title})-[:REQUIRES]->(s:Skill)
     RETURN s.name AS skill
     """
     with db.get_session() as session:
@@ -233,7 +233,7 @@ def get_job_recommendations(job_description, matric_number=None, exclude_advance
                         "skills": skills
                     },
                     "student": {
-                        "matricNumber": matric_number
+                        "Matric_Number": matric_number
                     },
                     "skillBreakdown": {}
                 }

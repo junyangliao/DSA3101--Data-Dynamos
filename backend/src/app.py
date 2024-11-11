@@ -89,9 +89,9 @@ def upload_csv():
 
     try:
         tmp_df = pd.read_csv(file)
-        # df = extract_entities_rs(tmp_df)
-        tmp_df.to_csv("test.csv",index = False)
-        batch_create_entities_and_relationships(driver,tmp_df)
+        df = extract_entities_rs(tmp_df)
+        # tmp_df.to_csv("test.csv",index = False)
+        batch_create_entities_and_relationships(driver,df)
         return jsonify({'message': 'CSV data integrated successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -562,7 +562,7 @@ def visualize_staff():
     employee_name = capitalize_name(user_input)
     with driver.session() as session:
         query = """
-        MATCH (st:Staff {employeeName: $employee_name})
+        MATCH (st:Staff {Employee_Name: $employee_name})
         OPTIONAL MATCH (st)-[:EMPLOYED_UNDER]->(d:Department)
         OPTIONAL MATCH (d:Department)-[:PART_OF]->(f:Faculty)
         OPTIONAL MATCH (m:Module)-[:TAUGHT_BY]->(st)

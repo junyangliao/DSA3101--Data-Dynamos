@@ -126,7 +126,12 @@
         "OFFERS": {
             "from": "University",
             "to": "Degree"
+        },
+        "IS_UNDER": {
+            "from": "Major",
+            "to": "Degree"
         }
+
     },
     "representative_entities": [
         "Module",
