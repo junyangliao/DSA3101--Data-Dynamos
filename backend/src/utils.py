@@ -50,7 +50,7 @@ def create_entity(tx, row, ontology):
                 SET e += $attributes
                 """
                 tx.run(query, unique_value=unique_value, attributes=attributes)
-              elif entity_type in ['Student','Staff']:
+              elif entity_type in ['Student','Staff','Degree']:
                 unique_key = config["unique"][0]
                 unique_value = row.get(unique_key)
                 if not unique_value:

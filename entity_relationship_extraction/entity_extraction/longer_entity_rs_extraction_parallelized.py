@@ -100,12 +100,12 @@ def process_chunk(args):
     
     if col in ['description']:
         chunk['skill_entities'] = chunk[col].apply(
-            lambda text: [(skill, 'SKILL') for skill in extract_skills(text, unique_skills)])
+            lambda text: [(skill, 'Skill') for skill in extract_skills(text, unique_skills)])
     elif col in ['description', 'message']:
         chunk['skill_entities'] = chunk[col].apply(
-            lambda text: [(skill, 'SKILL') for skill in extract_skills(text, unique_skills)])
+            lambda text: [(skill, 'Skill') for skill in extract_skills(text, unique_skills)])
         chunk['staff_entities'] = chunk[col].apply(
-            lambda text: [(staff, 'STAFF') for staff in extract_staff_names(text)])
+            lambda text: [(staff, 'Staff') for staff in extract_staff_names(text)])
     else:
         chunk[new_entity_col] = chunk[col].apply(lambda x: parse_entity(x, entity_type))
     
@@ -144,7 +144,7 @@ def create_dynamic_relationship(df, from_type, from_id_col, to_type, to_id_col, 
     # Return the updated DataFrame with the new relationships column
     return df
     
-def extract_entities_rs(csv_file_path): 
+def extract_entities_rs(df): 
     config = load_config()
     target_cols = config['target_cols']
     entity_mappings = config['entity_mappings']
@@ -155,8 +155,6 @@ def extract_entities_rs(csv_file_path):
         col: (mapping['new_col'], mapping['type'])
         for col, mapping in entity_mappings.items()
     }
-    # Read data
-    df = pd.read_csv(csv_file_path)
     
     # Extract unique skills
     skills_csv_file_path = '../../backend/data/07 - Jobs and relevant skillset (linkedin).csv'
@@ -202,11 +200,6 @@ def extract_entities_rs(csv_file_path):
             
             # Combine processed chunks
             df = pd.concat(processed_chunks, axis=0)
-
-    # Extract semester entities
-    semester_cols = ['semester_01', 'semester_02', 'semester_03', 'semester_04']
-    if all(col in df.columns for col in semester_cols):
-        df['semester_entities'] = df.apply(lambda row: [(col, 'SEMESTER') for col in semester_cols if row[col] == 1], axis=1)
 
     # Extract relationships based on predefined mappings
     for rel_key, rel_info in relationship_mappings.items():

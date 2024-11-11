@@ -8,7 +8,7 @@ from main_functions.staffs import create_staff, delete_staff
 from main_functions.job_recommendations import get_job_recommendations, get_related_jobs_from_wikidata
 from utils import evaluate_prompt, capitalize_name, batch_create_entities_and_relationships
 from pyvis.network import Network
-from entity_relationship_extraction.extraction_functions import extract_entities_rs
+from extraction_functions import extract_entities_rs
 import pandas as pd
 import os
 from threading import Timer
@@ -21,9 +21,6 @@ neo4j_user = os.getenv("NEO4J_USER")
 neo4j_password = os.getenv("NEO4J_PASSWORD")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 driver = GraphDatabase.driver(neo4j_uri, auth=(neo4j_user, neo4j_password),max_connection_pool_size=10)
-
-skills_csv_file_path = '/app/data/07 - Jobs and relevant skillset (linkedin).csv'
-df_skills = pd.read_csv(skills_csv_file_path)
 
 # Function to create a new student individually
 @app.route('/create-student', methods=['POST'])
@@ -92,8 +89,9 @@ def upload_csv():
 
     try:
         tmp_df = pd.read_csv(file)
-        df = extract_entities_rs(tmp_df,df_skills)
-        batch_create_entities_and_relationships(driver,df)
+        # df = extract_entities_rs(tmp_df)
+        tmp_df.to_csv("test.csv",index = False)
+        batch_create_entities_and_relationships(driver,tmp_df)
         return jsonify({'message': 'CSV data integrated successfully'}), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -382,7 +380,7 @@ def visualize_student():
     matric_number = user_input.upper()
     with driver.session() as session:
         query = """
-        MATCH (s:Student {matricNumber: $matric_number})
+        MATCH (s:Student {Matric_Number: $matric_number})
         OPTIONAL MATCH (s)-[:STUDYING_UNDER]->(f:Faculty)
         OPTIONAL MATCH (d:Department)-[:PART_OF]->(f:Faculty)
         OPTIONAL MATCH (s)-[:MAJOR_IN]->(m:Major)
@@ -436,12 +434,12 @@ def visualize_student():
             second_major = record.get('sm')
             completed_modules = record.get('completedModules', [])
 
-            matric_number = student['matricNumber']
+            matric_number = student['Matric_Number']
             student_data = {
-                'studentName': student.get('studentName',''),
-                'matricNumber': student.get('matricNumber', ''),
-                'grades': student.get('grades', ''),
-                'nric': student.get('nric', ''),
+                'Student_Name': student.get('Student_Name',''),
+                'Matric_Number': student.get('Matric_Number', ''),
+                'Grades': student.get('Grades', ''),
+                'NRIC': student.get('NRIC', ''),
                 'completedModules': [module['moduleCode'] for module in completed_modules]
             }
             net.add_node(matric_number, label=f"Student: {matric_number}", color='lightblue', data=student_data)
@@ -533,10 +531,11 @@ def visualize_student():
                 if (node.label.startsWith("Student:")) {
                     var studentData = node.data || {};
                     var title = studentData.title || "No Title";
-                    var studentName = studentData.studentName || "No Student Found";
-                    var matricNumber = studentData.matricNumber || "N/A";
-                    var grades = studentData.grades || "N/A";
-                    var nric = studentData.nric || "N/A";
+                    var studentName = studentData.Student_Name || "No Student Found";
+                    var matricNumber = studentData.Matric_Number || "N/A";
+                    var grades = studentData.Grades || "N/A";
+                    var nric = studentData.NRIC || "N/A";
+                    var year = studentData.Year || "N/A";
                     var completedModules = studentData.completedModules.join(', ') || "N/A";
 
                     document.getElementById("modalTitle").innerText = node.label;
@@ -545,6 +544,7 @@ def visualize_student():
                         <strong>Matric Number:</strong> ${matricNumber} <br>
                         <strong>Grades:</strong> ${grades} <br>
                         <strong>NRIC:</strong> ${nric} <br>
+                        <strong>Year:</strong> ${year} <br>
                         <strong>Modules Completed:</strong> ${completedModules}
                     `;
                     document.getElementById("nodeModal").style.display = "flex";
@@ -613,13 +613,13 @@ def visualize_staff():
             faculty = record.get('f')
             module = record.get('m')
 
-            employee_name = staff['employeeName']
+            employee_name = staff['Employee_Name']
             employee_data = {
-                'employeeName': staff.get('employeeName',''),
-                'employeeId': staff.get('employeeId', ''),
-                'joinDate': staff.get('joinDate', ''),
-                'nric': staff.get('nric', ''),
-                'birthDate': staff.get('birthDate', '')
+                'Employee_Name': staff.get('Employee_Name',''),
+                'Employee_ID': staff.get('Employee_ID', ''),
+                'DOJ': staff.get('DOJ', ''),
+                'NRIC': staff.get('NRIC', ''),
+                'DOB': staff.get('DOB', '')
             }
             net.add_node(employee_name, label=f"Employee Name: {employee_name}", color='lightblue', data=employee_data)
 
@@ -709,11 +709,11 @@ def visualize_staff():
 
                 if (node.label.startsWith("Employee Name:")) {
                     var staffData = node.data || {};
-                    var employeeName = staffData.employeeName || "No Staff Found";
-                    var employeeId = staffData.employeeId || "N/A";
-                    var joinDate = staffData.joinDate || "N/A";
-                    var nric = staffData.nric || "N/A";
-                    var birthDate = staffData.birthDate || "N/A";
+                    var employeeName = staffData.Employee_Name || "No Staff Found";
+                    var employeeId = staffData.Employee_ID || "N/A";
+                    var joinDate = staffData.DOJ || "N/A";
+                    var nric = staffData.NRIC || "N/A";
+                    var birthDate = staffData.DOB || "N/A";
 
                     document.getElementById("modalTitle").innerText = node.label;
                     document.getElementById("modalData").innerHTML = `

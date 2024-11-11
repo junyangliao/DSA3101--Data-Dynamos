@@ -1,6 +1,6 @@
 # Entity configuration
 target_cols:
-  - Student_Name
+  - Matric_Number
   - Faculties
   - Degree
   - Major
@@ -25,7 +25,7 @@ target_cols:
   - message
 
 entity_mappings:
-  Student_Name:
+  Matric_Number:
     new_col: student_entities
     type: Student
   Degree:
