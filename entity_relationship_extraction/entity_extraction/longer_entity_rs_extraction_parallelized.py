@@ -6,6 +6,7 @@ import os
 import yaml
 from fuzzywuzzy import fuzz, process
 from multiprocessing import Pool, cpu_count
+from functools import partial
 
 # Load your spaCy model
 nlp = spacy.load('en_core_web_sm')
@@ -158,7 +159,7 @@ def extract_entities_rs(csv_file_path):
     df = pd.read_csv(csv_file_path)
     
     # Extract unique skills
-    skills_csv_file_path = '../../backend/data/07 - Jobs and relevant skillset (linkedin).csv'
+    skills_csv_file_path = '../../backend/data/06 - Jobs and relevant skillset (linkedin).csv'
     df_skills = pd.read_csv(skills_csv_file_path)
     unique_skills = []
     
@@ -233,16 +234,15 @@ def extract_entities_rs(csv_file_path):
 if __name__ == '__main__':
     # Extract from existing cleaned datasets 
     # csv_file_path = '../../backend/data/00 - mock_student_data.csv'
-    csv_file_path = '../../backend/data/01 - mock_module_info.csv'
+    # csv_file_path = '../../backend/data/01 - mock_module_info.csv'
     # csv_file_path = '../../backend/data/02 - mock_department_list.csv'
     # csv_file_path = '../../backend/data/03 - mock_staff_info.csv'
     # csv_file_path = '../../backend/data/04 - mock_module_reviews.csv'
-    # csv_file_path = '../../backend/data/05 - mock_venue_info.csv'
-    # csv_file_path = '../../backend/data/06 - nus_undergraduate_programmes.csv'
-    # csv_file_path = '../../backend/data/07 - Jobs and relevant skillset (linkedin).csv'
-    # csv_file_path = '../../backend/data/08 - jobs_and_tech (ONET).csv'
-    # csv_file_path = '../../backend/data/09 - jobs_and_skills (ONET).csv'
-    # csv_file_path = '../../backend/data/10 - Graduate Employment Survey.csv'
+    csv_file_path = '../../backend/data/05 - nus_undergraduate_programmes.csv'
+    # csv_file_path = '../../backend/data/06 - Jobs and relevant skillset (linkedin).csv'
+    # csv_file_path = '../../backend/data/07 - jobs_and_tech (ONET).csv'
+    # csv_file_path = '../../backend/data/08 - jobs_and_skills (ONET).csv'
+    # csv_file_path = '../../backend/data/09 - Graduate Employment Survey.csv'
     
     # Extract Entities and Relationships
     df = extract_entities_rs(csv_file_path)
