@@ -2,3 +2,10 @@
 node_modules
 *.pyc
 __pycache__/
+
+#Ignore unused folders
+/backend/data/coursera-reviews
+/backend/data/ONET grad job data
+/backend/data/Scrapers and files to be scraped
+/backend/data/Student_information
+/backend/data/unused

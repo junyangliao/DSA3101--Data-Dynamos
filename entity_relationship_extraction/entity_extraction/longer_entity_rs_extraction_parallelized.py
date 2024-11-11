@@ -6,7 +6,6 @@ import os
 import yaml
 from fuzzywuzzy import fuzz, process
 from multiprocessing import Pool, cpu_count
-from functools import partial
 
 # Load your spaCy model
 nlp = spacy.load('en_core_web_sm')
@@ -144,7 +143,7 @@ def create_dynamic_relationship(df, from_type, from_id_col, to_type, to_id_col, 
     # Return the updated DataFrame with the new relationships column
     return df
     
-def extract_entities_rs(df): 
+def extract_entities_rs(csv_file_path): 
     config = load_config()
     target_cols = config['target_cols']
     entity_mappings = config['entity_mappings']
@@ -155,6 +154,8 @@ def extract_entities_rs(df):
         col: (mapping['new_col'], mapping['type'])
         for col, mapping in entity_mappings.items()
     }
+    # Read data
+    df = pd.read_csv(csv_file_path)
     
     # Extract unique skills
     skills_csv_file_path = '../../backend/data/07 - Jobs and relevant skillset (linkedin).csv'
