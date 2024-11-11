@@ -27,15 +27,19 @@ const Login = () => {
       setPasswordError('');
     }
 
-    if (username === 'datadynamos' && password === 'DSA3101isdabest') {
-      navigate('/', { replace: true });
+    if (username === 'data dynamos' && password === 'DSA3101isdabest') {
+      navigate('/dashboard', { replace: true });
     } else {
       setUsernameError('Invalid username');
       setPasswordError('Invalid credentials');
     }
-
-    navigate("/dashboard")
   };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleLogin();
+    }
+  }
 
   return (
     <Box
@@ -109,6 +113,7 @@ const Login = () => {
             fullWidth
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            onKeyDown={handleKeyDown}
             error={!!usernameError}
             helperText={usernameError}
             sx={{ mb: 2 }}
@@ -120,6 +125,7 @@ const Login = () => {
             fullWidth
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={handleKeyDown}
             error={!!passwordError}
             helperText={passwordError}
             sx={{ mb: 3 }}

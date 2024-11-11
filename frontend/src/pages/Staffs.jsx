@@ -1,15 +1,29 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle, CircularProgress } from '@mui/material';
 
 const StaffVisualizer = () => {
-  const [employeeId, setEmployeeId] = useState('');
+  const [employeeName, setEmployeeName] = useState('');
   const [error, setError] = useState(null);
   const [iframeUrl, setIframeUrl] = useState('');
   const [open, setOpen] = useState(false);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [progress, setProgress] = useState(0);          
   const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchVisualization = async (employeeName) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post('http://localhost:5001/visualize-staff', { employee_name: employeeName });
+      const { file_url } = response.data;
+      setIframeUrl(`http://localhost:5001${file_url}`);
+    } catch (err) {
+      setError('Failed to load staff visualization');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -34,7 +48,7 @@ const StaffVisualizer = () => {
       setProgress(0);
       setMessage('');
 
-      const response = await axios.post('http://localhost:5001/upload-staffs-csv', formData, {
+      const response = await axios.post('http://localhost:5001/upload-csv', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -81,7 +95,7 @@ const StaffVisualizer = () => {
 
   const handleCreateStaff = async () => {
     try {
-      await axios.post('http://localhost:5001/staff', staffData);
+      await axios.post('http://localhost:5001/create-staff', staffData);
       console.log('Staff created successfully');
       setOpen(false); 
     } catch (error) {
@@ -100,14 +114,9 @@ const StaffVisualizer = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5001/visualize-staff', { employee_id: employeeId });
-  
-      const { file_url } = response.data;
-      setIframeUrl(`http://localhost:5001${file_url}`);
-    } catch (err) {
-      setError('Failed to load staff visualization');
+    if (e) e.preventDefault();
+    if (employeeName) {
+      fetchVisualization(employeeName);
     }
   };
 
@@ -259,11 +268,11 @@ const StaffVisualizer = () => {
 
       <form onSubmit={handleSubmit}>
         <TextField
-          label="Staff Employee ID"
+          label="Staff Employee Name (*Case sensitive)"
           variant="outlined"
-          value={employeeId}
-          onChange={(e) => setEmployeeId(e.target.value)}
-          placeholder="Enter Staff Employee ID"
+          value={employeeName}
+          onChange={(e) => setEmployeeName(e.target.value)}
+          placeholder="Enter Staff Employee Name"
           required
           fullWidth
           style={{ marginBottom: '16px' }} // Add some spacing
@@ -274,15 +283,25 @@ const StaffVisualizer = () => {
         </Button>
       </form>
       
-      {iframeUrl && (
+      {isLoading ? (
+        <Box display="flex" justifyContent="center" alignItems="center" height="500px">
+          <CircularProgress />  
+          <Typography variant="body1" style={{ marginLeft: '10px' }}>Loading visualization...</Typography>
+        </Box>
+      ) : iframeUrl ? (
         <iframe
           src={iframeUrl}
           title="Staff Visualization"
           width="100%"
           height="750px"
           frameBorder="0"
+          loading="lazy"
         />
-      )}
+      ) : error ? (
+        <Typography variant="body2" color="error" style={{ marginTop: '10px' }}>
+          {error}
+        </Typography>
+      ) : null}
     </div>
   );
 };

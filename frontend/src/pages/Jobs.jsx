@@ -1,19 +1,184 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Paper } from '@mui/material';
+import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Paper, Chip, List, ListItem, ListItemText, Alert, Skeleton, FormControlLabel, Switch } from '@mui/material';
+
+const RecommendationResults = ({ data }) => {
+  if (!data || !data.recommendations || !data.recommendations.success) return null;
+
+  const recommendationsData = data.recommendations;
+
+  // Add scroll handler function
+  const scrollToSkill = (skillName) => {
+    const element = document.getElementById(`skill-${skillName.replace(/\s+/g, '-')}`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  return (
+    <Paper elevation={3} sx={{ mt: 3, p: 3 }}>
+      {data.success ? (
+        <>
+          <Typography variant="h5" gutterBottom>
+            Job: {recommendationsData.job.title}
+          </Typography>
+
+          <Box sx={{ my: 2 }}>
+            <Typography variant="h6" gutterBottom>
+              Related Jobs in Career Path:
+            </Typography>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+              {data.related_jobs && data.related_jobs.length > 0 ? (
+                data.related_jobs.map((relatedJob, index) => (
+                  <Chip 
+                    key={index} 
+                    label={relatedJob} 
+                    color="secondary"
+                    sx={{ cursor: 'pointer' }}
+                  />
+                ))
+              ) : (
+                <Typography>No related jobs available.</Typography>
+              )}
+            </Box>
+          </Box>
+
+          <Box sx={{ my: 2 }}>
+            <Typography variant="h6" gutterBottom>
+              Required Skills:
+            </Typography>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+              {recommendationsData.job.skills.map((skill) => (
+                <Chip 
+                  key={skill} 
+                  label={skill} 
+                  color="primary"
+                  onClick={() => scrollToSkill(skill)}
+                  sx={{ cursor: 'pointer' }}
+                />
+              ))}
+            </Box>
+          </Box>
+
+          {recommendationsData.student.matricNumber && (
+            <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+              Recommendations for: {recommendationsData.student.matricNumber}
+            </Typography>
+          )}
+
+          <Divider sx={{ my: 3 }} />
+
+          {Object.entries(recommendationsData.skillBreakdown).map(([skill, breakdown]) => (
+            <Paper 
+              key={skill} 
+              id={`skill-${skill.replace(/\s+/g, '-')}`}
+              sx={{ mb: 2, p: 2, backgroundColor: '#f5f5f5' }}
+            >
+              <Typography variant="h6" color="primary" gutterBottom>
+                {skill}
+              </Typography>
+
+              {breakdown.completed.length > 0 && (
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="subtitle1" color="success.main">
+                    Completed Modules:
+                  </Typography>
+                  <List dense>
+                    {breakdown.completed.map((module) => (
+                      <ListItem key={module.code}>
+                        <ListItemText
+                          primary={`${module.code}: ${module.title}`}
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
+                </Box>
+              )}
+
+              {breakdown.recommended.length > 0 && (
+                <Box>
+                  <Typography variant="subtitle1" color="info.main">
+                    {breakdown.completed.length > 0 
+                      ? 'For further learning:' 
+                      : 'Recommended Modules:'}
+                  </Typography>
+                  <List dense>
+                    {breakdown.recommended.map((module) => (
+                      <ListItem key={module.code}>
+                        <ListItemText
+                          primary={
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                              <Typography>{`${module.code}: ${module.title}`}</Typography>
+                              <Typography 
+                                sx={{ 
+                                  ml: 1,
+                                  color: 'text.secondary',
+                                  fontSize: '0.9em'
+                                }}
+                              >
+                                ({Math.round(module.relevance_score * 100)}%)
+                              </Typography>
+                            </Box>
+                          }
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
+                </Box>
+              )}
+
+              {breakdown.recommended.length === 0 && 
+               breakdown.completed.length === 0 && (
+                <Alert severity="info">
+                  No modules found for this skill
+                </Alert>
+              )}
+            </Paper>
+          ))}
+        </>
+      ) : (
+        <Alert severity="error">{recommendationsData.error}</Alert>
+      )}
+    </Paper>
+  );
+};
+
+const LoadingSkeleton = () => (
+  <Paper elevation={3} sx={{ mt: 3, p: 3 }}>
+    <Skeleton variant="text" width={300} height={40} sx={{ mb: 2 }} />
+    
+    <Typography variant="h6" gutterBottom>
+      Required Skills:
+    </Typography>
+    <Box sx={{ display: 'flex', gap: 1, mb: 3 }}>
+      {[1, 2, 3, 4, 5].map((i) => (
+        <Skeleton key={i} variant="rounded" width={100} height={32} />
+      ))}
+    </Box>
+    
+    {[1, 2, 3].map((section) => (
+      <Paper key={section} sx={{ mb: 2, p: 2, backgroundColor: '#f5f5f5' }}>
+        <Skeleton variant="text" width={150} height={32} sx={{ mb: 2 }} />
+        
+        {[1, 2].map((module) => (
+          <Box key={module} sx={{ mb: 1 }}>
+            <Skeleton variant="text" width="90%" height={24} />
+          </Box>
+        ))}
+      </Paper>
+    ))}
+  </Paper>
+);
 
 const JobVisualizer = () => {
-  const [jobTitle, setJobTitle] = useState('');
   const [error, setError] = useState(null);
-  const [iframeUrl, setIframeUrl] = useState('');
   const [open, setOpen] = useState(false);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
-  const [progress, setProgress] = useState(0);          
-  const [message, setMessage] = useState('');
   const [jobDescription, setJobDescription] = useState('');
   const [matricNumber, setMatricNumber] = useState('');
   const [recommendations, setRecommendations] = useState(null);
   const [loadingRecommendations, setLoadingRecommendations] = useState(false);
+  const [includeAdvanced, setIncludeAdvanced] = useState(false);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -23,7 +188,6 @@ const JobVisualizer = () => {
     }
   };
 
-  // Handle CSV upload
   const handleUpload = async (selectedFile) => {
     if (!selectedFile) {
       setError("Please select a file first.");
@@ -35,17 +199,9 @@ const JobVisualizer = () => {
     
 
     try {
-      setProgress(0);
-      setMessage('');
-
-      const response = await axios.post('http://localhost:5001/upload-jobs-csv', formData, {
+      const response = await axios.post('http://localhost:5001/upload-csv', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-        },
-        onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-          setProgress(percentCompleted)
-          console.log(`File upload progress: ${percentCompleted}%`);
         }
       });
 
@@ -80,7 +236,7 @@ const JobVisualizer = () => {
 
   const handleCreateJob = async () => {
     try {
-      await axios.post('http://localhost:5001/job', jobData);
+      await axios.post('http://localhost:5001/create-job', jobData);
       console.log('Job created successfully');
       setOpen(false); 
     } catch (error) {
@@ -98,18 +254,6 @@ const JobVisualizer = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5001/visualize-job', { job_title: jobTitle });
-  
-      const { file_url } = response.data;
-      setIframeUrl(`http://localhost:5001${file_url}`);
-    } catch (err) {
-      setError('Failed to load Job visualization');
-    }
-  };
-
   const handleRecommendationSubmit = async (e) => {
     e.preventDefault();
     setLoadingRecommendations(true);
@@ -117,9 +261,10 @@ const JobVisualizer = () => {
     try {
       const response = await axios.post('http://localhost:5001/api/job-recommendations', {
         jobDescription,
-        matricNumber: matricNumber || undefined
+        matricNumber: matricNumber || undefined,
+        excludeAdvanced: !includeAdvanced
       });
-      setRecommendations(response.data.recommendations);
+      setRecommendations(response.data);
     } catch (err) {
       setError('Failed to get job recommendations: ' + err.message);
     } finally {
@@ -129,13 +274,14 @@ const JobVisualizer = () => {
 
   return (
     <div style={{ paddingLeft: '20px', paddingRight: '20px' }}>
+      {error && <Alert severity="error" onClose={() => setError(null)}>{error}</Alert>}
       <Box
         display="flex"
         justifyContent="space-between" 
         alignItems="center"
       >
         <Typography variant="h4" gutterBottom style={{ paddingTop: '10px' }}>
-          Job Info 
+          Job Recommendations
         </Typography>
 
         <Box
@@ -178,23 +324,6 @@ const JobVisualizer = () => {
         </Box>
       </Box>
 
-      {progress > 0 && (
-        <Typography variant="body2" style={{ marginTop: '10px' }}>
-          Upload Progress: {progress}%
-        </Typography>
-      )}
-
-      {message && (
-        <Typography variant="body2" style={{ marginTop: '10px', color: 'green' }}>
-          {message}
-        </Typography>
-      )}
-      {error && (
-        <Typography variant="body2" style={{ marginTop: '10px', color: 'red' }}>
-          {error}
-        </Typography>
-      )}
-
       <Dialog open={open} onClose={handleClose}>
       <DialogTitle>{isDeleteMode ? 'Delete Job' : 'Create New Job'}</DialogTitle>
         <DialogContent>
@@ -233,31 +362,6 @@ const JobVisualizer = () => {
         </DialogActions>
       </Dialog>
 
-      <form onSubmit={handleSubmit}>
-        <TextField
-          label="Job Title"
-          variant="outlined"
-          value={jobTitle}
-          onChange={(e) => setJobTitle(e.target.value)}
-          placeholder="Enter Job Title"
-          required
-          fullWidth
-          style={{ marginBottom: '16px' }} // Add some spacing
-        />
-
-        <Button type="submit" variant="contained" color="primary">
-          Submit
-        </Button>
-      </form>
-
-      {/* Add Divider between existing content and recommendations section */}
-      <Divider style={{ margin: '40px 0' }} />
-
-      {/* Job Recommendations section */}
-      <Typography variant="h4" gutterBottom>
-        Job Recommendations
-      </Typography>
-
       <Paper elevation={3} style={{ padding: '20px', marginBottom: '20px' }}>
         <form onSubmit={handleRecommendationSubmit}>
           <TextField
@@ -280,6 +384,18 @@ const JobVisualizer = () => {
             fullWidth
             style={{ marginBottom: '16px' }}
           />
+          
+          <FormControlLabel
+            control={
+                <Switch
+                    checked={includeAdvanced}
+                    onChange={(e) => setIncludeAdvanced(e.target.checked)}
+                    color="primary"
+                />
+            }
+            label="Include 5000/6000 Level Modules"
+            style={{ marginBottom: '16px', display: 'block' }}
+          />
 
           <Button 
             type="submit" 
@@ -291,31 +407,14 @@ const JobVisualizer = () => {
           </Button>
         </form>
 
-        {recommendations && (
-          <Paper 
-            elevation={1} 
-            style={{ 
-              marginTop: '20px', 
-              padding: '20px',
-              whiteSpace: 'pre-wrap',
-              fontFamily: 'monospace',
-              backgroundColor: '#f5f5f5'
-            }}
-          >
-            {recommendations}
-          </Paper>
-        )}
+        {loadingRecommendations ? (
+          <LoadingSkeleton />
+        ) : recommendations ? (
+          <RecommendationResults data={recommendations} />
+        ) : null}
+
       </Paper>
       
-      {iframeUrl && (
-        <iframe
-          src={iframeUrl}
-          title="Job Visualization"
-          width="100%"
-          height="750px"
-          frameBorder="0"
-        />
-      )}
     </div>
   );
 };

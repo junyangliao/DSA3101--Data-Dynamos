@@ -24,18 +24,21 @@ def format_relationship(rel):
     rel_type = rel.__class__.__name__  
     return f"-[:{rel_type}]->"
 
-def create_entity(tx, row):
-    entity_columns = row.filter(regex='entities').index 
+def capitalize_name(full_name):
+    return ' '.join(part.capitalize() for part in full_name.split())
+
+def create_entity(tx, row, ontology):
+    entity_columns = row.filter(regex='entities').index
     representative_entities = ontology['representative_entities']
     for entity_column in entity_columns:
-        for entity in ast.literal_eval(row[entity_column]):
+        for entity in row[entity_column]:
             entity_type = entity[1]
             config = ontology["entities"].get(entity_type)
             if not config:
                 raise ValueError(f"Entity type {entity_type} not found in ontology.")
 
             if entity_type in representative_entities:
-              if entity_type == 'MODULE' and 'moduleCode' in row.index:
+              if entity_type == 'Module' and 'moduleCode' in row.index:
                 unique_key = config["unique"][0]
                 unique_value = row.get(unique_key)
                 if not unique_value:
@@ -47,14 +50,14 @@ def create_entity(tx, row):
                 SET e += $attributes
                 """
                 tx.run(query, unique_value=unique_value, attributes=attributes)
-              elif entity_type in ['STUDENT','STAFF']:
+              elif entity_type in ['Student','Staff','Degree']:
                 unique_key = config["unique"][0]
-                unique_value = row.get(unique_key) 
+                unique_value = row.get(unique_key)
                 if not unique_value:
                     raise ValueError(f"Missing unique identifier {unique_key} for {entity_type}.")
                 attributes = {k: v for k, v in row.items() if k in config["attributes"]}
                 query = f"""
-                MERGE (e:{entity_type} {{{unique_key}: $unique_value}}) 
+                MERGE (e:{entity_type} {{{unique_key}: $unique_value}})
                 SET e += $attributes
                 """
                 tx.run(query, unique_value=unique_value, attributes=attributes)
@@ -62,11 +65,11 @@ def create_entity(tx, row):
             else:
               unique_value = entity[0]
               query = f"""
-              MERGE (e:{entity_type} {{name: $unique_value}}) 
+              MERGE (e:{entity_type} {{name: $unique_value}})
               """
               tx.run(query, unique_value=unique_value)
 
-def create_relationship(tx, from_type, from_id, to_type, to_id, relationship_type):
+def create_relationship(tx, from_type, from_id, to_type, to_id, relationship_type, ontology):
     relationship_config = ontology["relationships"].get(relationship_type)
     if not relationship_config or relationship_config["from"] != from_type or relationship_config["to"] != to_type:
         raise ValueError(f"Invalid relationship {relationship_type} between {from_type} and {to_type}.")
@@ -81,14 +84,71 @@ def create_relationship(tx, from_type, from_id, to_type, to_id, relationship_typ
     """
     tx.run(query, from_id=from_id, to_id=to_id)
 
-def batch_create_entities_and_relationships(driver, df):
-    ontology = json.load(open('/content/ontology_config.json'))
-    with driver.session() as session:
-        for index, row in df.iterrows():  
-            session.execute_write(create_entity, row)
+def module_helper(tx, row):
+    module_code = row['moduleCode']
+    semesters = []
+    if row['semester_01'] > 0: semesters.append(1)
+    if row['semester_02'] > 0: semesters.append(2)
+    if row['semester_03'] > 0: semesters.append(3)
+    if row['semester_04'] > 0: semesters.append(4)
+    prerequisites = ast.literal_eval(row['prerequisite'])
+    preclusions = ast.literal_eval(row['preclusion'])
 
-            if pd.notna(row['Relationships']):
-              relationships = ast.literal_eval(row['Relationships'])
+    for semester in semesters:
+        tx.run("""
+            MERGE (s:Semester {number: $semester})
+            WITH s
+            MATCH (m:Module {moduleCode: $module_code})
+            MERGE (m)-[:OFFERED_IN]->(s)
+        """, semester=semester, module_code=module_code)
+
+    if prerequisites:
+        for prereq_list in prerequisites:
+            if len(prereq_list)>=1:  # Check if it's a valid list
+                # Create a group node for the alternatives
+                group_name = f"{prereq_list}"
+                tx.run("""
+                    MERGE (g:PrerequisiteGroup {name: $group_name})
+                """, group_name=group_name)
+                
+                # Connect group to each prerequisite module
+                for prereq in prereq_list:
+                    tx.run("""
+                        MATCH (p:Module {moduleCode: $prereq}), (g:PrerequisiteGroup {name: $group_name})
+                        MERGE (p)-[:INCLUDED_AS_PREREQUISITE]->(g)
+                    """, prereq=prereq, group_name=group_name)
+                
+                # Connect main module to the group
+                tx.run("""
+                    MATCH (m:Module {moduleCode: $module_code}), (g:PrerequisiteGroup {name: $group_name})
+                    MERGE (m)-[:MUST_HAVE_TAKEN_ONE_OF]->(g)
+                """, module_code=module_code, group_name=group_name)
+
+    if preclusions:
+        group_name = f"{preclusions}"
+        tx.run("""
+                MERGE (g:PreclusionGroup {name: $group_name})
+            """, group_name=group_name)
+        
+        for preclusion in preclusions:
+            tx.run("""
+                MATCH (p:Module {moduleCode: $preclusion}), (g:PreclusionGroup {name: $group_name})
+                MERGE (p)-[:INCLUDED_AS_PRECLUSION]->(g)
+            """, preclusion=preclusion, group_name=group_name)
+
+        tx.run("""
+            MATCH (m:Module {moduleCode: $module_code}), (g:PreclusionGroup {name: $group_name})
+            MERGE (m)-[:MUST_NOT_HAVE_TAKEN_ONE_OF]->(g)
+        """, module_code=module_code, group_name = group_name)
+
+def batch_create_entities_and_relationships(driver, df):
+    ontology = json.load(open('/app/ontology_config_test.json'))
+    with driver.session() as session:
+        for index, row in df.iterrows():
+            session.execute_write(create_entity, row, ontology)
+
+            if row['relationships']:
+              relationships = row['relationships']
               for relationship in relationships:
                   session.execute_write(
                       create_relationship,
@@ -96,14 +156,16 @@ def batch_create_entities_and_relationships(driver, df):
                       relationship["from_id"],
                       relationship["to_type"],
                       relationship["to_id"],
-                      relationship["type"]
+                      relationship["type"],
+                      ontology
               )
+                  
+            if 'prerequisite' in df.columns:
+              session.execute_write(module_helper, row)
 
 def serialize_neo4j_value(value):
     if isinstance(value, Node):
-        return {
-            'properties': dict(value)
-        }
+        return dict(value)
     elif isinstance(value, Relationship):
         return {
             'id': value.id,
@@ -132,6 +194,7 @@ def generate_cypher_query(tx,prompt):
         model=model,
         temperature=0.2,
         response_format={
+            
             "type": "json_object"
         },
         messages=[
@@ -141,18 +204,19 @@ def generate_cypher_query(tx,prompt):
             },
             {
                 "role": "user",
-                "content": f"Answer the following question in JSON format: {prompt}" # Added instruction to format in JSON
+                "content": f"Answer the following question in JSON format: {prompt}" 
             }
         ]
     )
 
-    cypher_query = ast.literal_eval(completion.choices[0].message.content)['query']
+    content = json.loads(completion.choices[0].message.content)
+    cypher_query = content['query']
 
     result = tx.run(cypher_query).value()
     serialized_result = serialize_neo4j_value(result)
-    return cypher_query, serialized_result
+    return serialized_result
 
 def evaluate_prompt(prompt):
     with driver.session() as session:
-      cypher_query, result = session.execute_read(generate_cypher_query,prompt)
-    return cypher_query,result
+      result = session.execute_read(generate_cypher_query,prompt)
+    return result

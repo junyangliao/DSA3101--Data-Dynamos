@@ -1,0 +1,164 @@
+# Entity configuration
+target_cols:
+  - Matric_Number
+  - Faculties
+  - Degree
+  - Major
+  - Module
+  - module_code
+  - moduleCode
+  - Skills
+  - Staff
+  - Modules_Completed
+  - department
+  - faculty
+  - Employee_Name
+  - Department
+  - Modules_Taught
+  - Title
+  - Job_Title
+  - Tech_Skill
+  - university
+  - school
+  - degree
+  - description
+  - message
+
+entity_mappings:
+  Matric_Number:
+    new_col: student_entities
+    type: Student
+  Degree:
+    new_col: degree_entities
+    type: Degree
+  degree:
+    new_col: degree_entities
+    type: Degree
+  Major:
+    new_col: major_entities
+    type: Major
+  Module:
+    new_col: module_entities
+    type: Module
+  Modules_Completed:
+    new_col: module_entities
+    type: Module
+  module_code:
+    new_col: module_entities
+    type: Module
+  moduleCode:
+    new_col: module_entities
+    type: Module
+  Modules_Taught:
+    new_col: module_entities
+    type: Module
+  Skills:
+    new_col: skill_entities
+    type: Skill
+  Tech_Skill:
+    new_col: skill_entities
+    type: Skill
+  Staff:
+    new_col: staff_entities
+    type: Staff
+  Employee_Name:
+    new_col: staff_entities
+    type: Staff
+  department:
+    new_col: department_entities
+    type: Department
+  Department:
+    new_col: department_entities
+    type: Department
+  Faculties:
+    new_col: faculty_entities
+    type: Faculty
+  faculty:
+    new_col: faculty_entities
+    type: Faculty
+  school:
+    new_col: faculty_entities
+    type: Faculty
+  Title:
+    new_col: job_entities
+    type: Job
+  Job_Title:
+    new_col: job_entities
+    type: Job
+  university:
+    new_col: university_entities
+    type: University
+
+relationship_mappings:
+  student_faculty:
+    from_col: student_entities
+    to_col: faculty_entities
+    from_type: Student
+    to_type: Faculty
+    relationship_type: STUDYING_UNDER
+  student_major:
+    from_col: student_entities
+    to_col: major_entities
+    from_type: Student
+    to_type: Major
+    relationship_type: MAJOR_IN
+  student_module:
+    from_col: student_entities
+    to_col: module_entities
+    from_type: Student
+    to_type: Module
+    relationship_type: COMPLETED
+  module_department:
+    from_col: module_entities
+    to_col: department_entities
+    from_type: Module
+    to_type: Department
+    relationship_type: BELONGS_TO
+  module_staff:
+    from_col: module_entities
+    to_col: staff_entities
+    from_type: Module
+    to_type: Staff
+    relationship_type: TAUGHT_BY
+  staff_department:
+    from_col: staff_entities
+    to_col: department_entities
+    from_type: Staff
+    to_type: Department
+    relationship_type: EMPLOYED_UNDER
+  department_faculty:
+    from_col: department_entities
+    to_col: faculty_entities
+    from_type: Department
+    to_type: Faculty
+    relationship_type: PART_OF
+  job_faculty:
+    from_col: job_entities
+    to_col: faculty_entities
+    from_type: Department
+    to_type: Faculty
+    relationship_type: PART_OF
+  major_degree:
+    from_col: major_entities
+    to_col: degree_entities
+    from_type: Major
+    to_type: Degree
+    relationship_type: IS_UNDER
+  job_skill:
+    from_col: job_entities
+    to_col: skill_entities
+    from_type: Job
+    to_type: Skill
+    relationship_type: REQUIRES
+  module_skill:
+    from_col: module_entities
+    to_col: skill_entities
+    from_type: Module
+    to_type: Skill
+    relationship_type: SKILL_TAUGHT
+  university_degree:
+    from_col: university_entities
+    to_col: degree_entities
+    from_type: University
+    to_type: Degree
+    relationship_type: OFFERS

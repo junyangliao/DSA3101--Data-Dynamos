@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle,LinearProgress } from '@mui/material';
+import { TextField, Button, Typography, Box, Dialog, DialogActions, DialogContent, DialogTitle, CircularProgress } from '@mui/material';
 
 const StudentVisualizer = () => {
   const [matricNumber, setMatricNumber] = useState('');
@@ -10,6 +10,20 @@ const StudentVisualizer = () => {
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [progress, setProgress] = useState(0);          
   const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchVisualization = async (matricNumber) => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post('http://localhost:5001/visualize-student', { matric_number: matricNumber });
+      const { file_url } = response.data;
+      setIframeUrl(`http://localhost:5001${file_url}`);
+    } catch (err) {
+      setError('Failed to load student visualization');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -19,7 +33,6 @@ const StudentVisualizer = () => {
     }
   };
 
-  // Handle CSV upload
   const handleUpload = async (selectedFile) => {
     if (!selectedFile) {
       setError("Please select a file first.");
@@ -34,7 +47,7 @@ const StudentVisualizer = () => {
       setProgress(0);
       setMessage('');
 
-      const response = await axios.post('http://localhost:5001/upload-student-csv', formData, {
+      const response = await axios.post('http://localhost:5001/upload-csv', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -83,7 +96,7 @@ const StudentVisualizer = () => {
 
   const handleCreateStudent = async () => {
     try {
-      await axios.post('http://localhost:5001/student', studentData);
+      await axios.post('http://localhost:5001/create-student', studentData);
       console.log('Student created successfully');
       setOpen(false); 
     } catch (error) {
@@ -102,14 +115,9 @@ const StudentVisualizer = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5001/visualize-student', { matric_number: matricNumber });
-  
-      const { file_url } = response.data;
-      setIframeUrl(`http://localhost:5001${file_url}`);
-    } catch (err) {
-      setError('Failed to load student visualization');
+    if (e) e.preventDefault();
+    if (matricNumber) {
+      fetchVisualization(matricNumber);
     }
   };
 
@@ -166,7 +174,6 @@ const StudentVisualizer = () => {
       {progress > 0 && (
         <Box sx={{ width: '100%', marginTop: '10px' }}>
           <Typography variant="body2">Upload Progress: {progress}%</Typography>
-          <LinearProgress variant="determinate" value={progress} />
         </Box>
       )}
       {message && (
@@ -280,10 +287,10 @@ const StudentVisualizer = () => {
           variant="outlined"
           value={matricNumber}
           onChange={(e) => setMatricNumber(e.target.value)}
-          placeholder="Enter Student Matric Number"
+          placeholder="e.g., A0255150H"
           required
           fullWidth
-          style={{ marginBottom: '16px' }} // Add some spacing
+          style={{ marginBottom: '16px' }} 
         />
 
         <Button type="submit" variant="contained" color="primary">
@@ -291,15 +298,25 @@ const StudentVisualizer = () => {
         </Button>
       </form>
       
-      {iframeUrl && (
+      {isLoading ? (
+        <Box display="flex" justifyContent="center" alignItems="center" height="500px">
+          <CircularProgress />  
+          <Typography variant="body1" style={{ marginLeft: '10px' }}>Loading visualization...</Typography>
+        </Box>
+      ) : iframeUrl ? (
         <iframe
           src={iframeUrl}
           title="Student Visualization"
           width="100%"
           height="750px"
           frameBorder="0"
+          loading="lazy"
         />
-      )}
+      ) : error ? (
+        <Typography variant="body2" color="error" style={{ marginTop: '10px' }}>
+          {error}
+        </Typography>
+      ) : null}
     </div>
   );
 };
