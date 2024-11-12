@@ -26,7 +26,7 @@ To find out more about how to operate the application, you can check out our use
 ├── README.md
 ├── /backend
 │    ├── /data
-│    │    ├── 00 - mock_student_data
+│    │    ├── 00 - mock_student_data                                            
 │    │    ├── 01 - mock_module_info
 │    │    ├── 02 - mock_department_list
 │    │    ├── 03 - mock_staff_info
@@ -84,6 +84,5 @@ To find out more about how to operate the application, you can check out our use
 ├── .dockerignore
 ├── docker-compose.yml
 ├── package.json
-├── package-lock.json
-└── README.md
+└── package-lock.json
 ```

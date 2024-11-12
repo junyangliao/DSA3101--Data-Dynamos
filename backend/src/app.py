@@ -90,7 +90,6 @@ def upload_csv():
     try:
         tmp_df = pd.read_csv(file)
         df = extract_entities_rs(tmp_df)
-        df.to_csv("test.csv")
         batch_create_entities_and_relationships(driver,df)
         return jsonify({'message': 'CSV data integrated successfully'}), 201
     except Exception as e:
