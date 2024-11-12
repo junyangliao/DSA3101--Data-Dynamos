@@ -9,8 +9,16 @@ from main_functions.students import create_student, delete_student
 from main_functions.modules import create_module, delete_module
 from main_functions.job_skills import create_jobs_and_skills, delete_job
 from main_functions.staffs import create_staff, delete_staff
-from main_functions.job_recommendations import get_job_recommendations, get_related_jobs_from_wikidata, extract_job_title
-from utils import evaluate_prompt, capitalize_name, batch_create_entities_and_relationships
+from main_functions.job_recommendations import (
+    get_job_recommendations,
+    get_related_jobs_from_wikidata,
+    extract_job_title,
+)
+from utils import (
+    evaluate_prompt,
+    capitalize_name,
+    batch_create_entities_and_relationships,
+)
 from extraction_functions import extract_entities_rs
 
 app = Flask(__name__)
@@ -20,162 +28,209 @@ neo4j_uri = os.getenv("NEO4J_URI")
 neo4j_user = os.getenv("NEO4J_USER")
 neo4j_password = os.getenv("NEO4J_PASSWORD")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-driver = GraphDatabase.driver(neo4j_uri, auth=(neo4j_user, neo4j_password),max_connection_pool_size=10)
+driver = GraphDatabase.driver(
+    neo4j_uri, auth=(neo4j_user, neo4j_password), max_connection_pool_size=10
+)
+
 
 # Function to create a new student individually
-@app.route('/create-student', methods=['POST'])
+@app.route("/create-student", methods=["POST"])
 def create_new_student():
     student_data = request.json
 
     if not student_data:
-        return jsonify({'message': f"No Student Data Found"}),400
-    
-    matric_number = student_data.get('matric_number')
+        return jsonify({"message": "No Student Data Found"}), 400
+
+    matric_number = student_data.get("matric_number")
 
     create_student(student_data)
 
-    return jsonify({'message': f"Student with Matric Number {matric_number} created successfully"}), 201
+    return (
+        jsonify(
+            {
+                "message": f"Student with Matric Number {matric_number} created successfully"
+            }
+        ),
+        201,
+    )
+
 
 # Function to create a new module individually
-@app.route('/create-module', methods=['POST'])
+@app.route("/create-module", methods=["POST"])
 def create_new_module():
     module_data = request.json
 
     if not module_data:
-        return jsonify({'message': f"No Module Data Found"}),400
-    
-    module_code = module_data.get('module_code')
-    
+        return jsonify({"message": "No Module Data Found"}), 400
+
+    module_code = module_data.get("module_code")
+
     create_module(module_data)
 
-    return jsonify({'message': f"Module with module code {module_code} created successfully"}), 201
+    return (
+        jsonify(
+            {"message": f"Module with module code {module_code} created successfully"}
+        ),
+        201,
+    )
+
 
 # Function to create a new staff individually
-@app.route('/create-staff', methods=['POST'])
+@app.route("/create-staff", methods=["POST"])
 def create_new_staff():
     staff_data = request.json
 
     if not staff_data:
-        return jsonify({'message': f"No Staff Data Found"}),400
-    
-    staff_name = staff_data.get('employee_name')
-    
+        return jsonify({"message": "No Staff Data Found"}), 400
+
+    staff_name = staff_data.get("employee_name")
+
     create_staff(staff_data)
 
-    return jsonify({'message': f"Staff with name {staff_name} created successfully"}), 201
+    return (
+        jsonify({"message": f"Staff with name {staff_name} created successfully"}),
+        201,
+    )
+
 
 # Function to create a new job individually
-@app.route('/create-job', methods=['POST'])
+@app.route("/create-job", methods=["POST"])
 def create_new_job():
     job_data = request.json
 
     if not job_data:
-        return jsonify({'message': f"No Job Data Found"}),400
-    
+        return jsonify({"message": "No Job Data Found"}), 400
+
     create_jobs_and_skills(job_data)
 
-    return jsonify({'message': 'Job created successfully'}), 201
+    return jsonify({"message": "Job created successfully"}), 201
+
 
 # Function to upload modules data as a csv
-@app.route('/upload-csv', methods=['POST'])
+@app.route("/upload-csv", methods=["POST"])
 def upload_csv():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file provided'}), 400
-    
-    file = request.files['file']
-    
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
+    if "file" not in request.files:
+        return jsonify({"error": "No file provided"}), 400
+
+    file = request.files["file"]
+
+    if file.filename == "":
+        return jsonify({"error": "No selected file"}), 400
 
     try:
         tmp_df = pd.read_csv(file)
         df = extract_entities_rs(tmp_df)
-        batch_create_entities_and_relationships(driver,df)
-        return jsonify({'message': 'CSV data integrated successfully'}), 201
+        batch_create_entities_and_relationships(driver, df)
+        return jsonify({"message": "CSV data integrated successfully"}), 201
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({"error": str(e)}), 500
 
-# Function to delete individual module 
-@app.route('/delete-module', methods=['POST'])
+
+# Function to delete individual module
+@app.route("/delete-module", methods=["POST"])
 def delete_module_node():
     data = request.json
-    module_code = data.get('module_code')
+    module_code = data.get("module_code")
 
     if not module_code:
-        return jsonify({'error': 'Module Code is required'}), 400
-    
+        return jsonify({"error": "Module Code is required"}), 400
+
     delete_module(module_code)
 
-    return jsonify({'message': f"Module with Module Code {module_code} deleted successfully"}), 201
+    return (
+        jsonify(
+            {"message": f"Module with Module Code {module_code} deleted successfully"}
+        ),
+        201,
+    )
+
 
 # Function to delete individual student
-@app.route('/delete-student', methods=['POST'])
+@app.route("/delete-student", methods=["POST"])
 def delete_student_node():
     data = request.json
-    matric_number = data.get('matric_number')
+    matric_number = data.get("matric_number")
 
     if not matric_number:
-        return jsonify({'error': 'Student Matric Number is required'}), 400
-    
+        return jsonify({"error": "Student Matric Number is required"}), 400
+
     delete_student(matric_number)
 
-    return jsonify({'message': f"Student with Matric Number {matric_number} deleted successfully"}), 201
+    return (
+        jsonify(
+            {
+                "message": f"Student with Matric Number {matric_number} deleted successfully"
+            }
+        ),
+        201,
+    )
 
-# Function to delete individual staff 
-@app.route('/delete-staff', methods=['POST'])
+
+# Function to delete individual staff
+@app.route("/delete-staff", methods=["POST"])
 def delete_staff_node():
     data = request.json
-    employee_id = data.get('employee_id')
+    employee_id = data.get("employee_id")
 
     if not employee_id:
-        return jsonify({'error': 'Employee ID is required'}), 400
-    
+        return jsonify({"error": "Employee ID is required"}), 400
+
     delete_staff(employee_id)
 
-    return jsonify({'message': f"Employee with ID {employee_id} deleted successfully"}), 201
+    return (
+        jsonify({"message": f"Employee with ID {employee_id} deleted successfully"}),
+        201,
+    )
+
 
 # Function to delete individual job
-@app.route('/delete-job', methods=['POST'])
+@app.route("/delete-job", methods=["POST"])
 def delete_job_node():
     data = request.json
-    job_title = data.get('job_title')
+    job_title = data.get("job_title")
 
     if not job_title:
-        return jsonify({'error': 'Job Title is required'}), 400
-    
+        return jsonify({"error": "Job Title is required"}), 400
+
     delete_job(job_title)
 
-    return jsonify({'message': f"Job with Job Title {job_title} deleted successfully"}), 201
+    return (
+        jsonify({"message": f"Job with Job Title {job_title} deleted successfully"}),
+        201,
+    )
+
 
 # Function to create dashboard component for student distribution among faculties
-@app.route('/student-distribution-faculty', methods=['GET'])
+@app.route("/student-distribution-faculty", methods=["GET"])
 def student_faculty_distribution():
     with driver.session() as session:
         query = """
         MATCH (f:Faculty)<-[:STUDYING_UNDER]-(s:Student)
         RETURN f.name AS faculty, COUNT(s) AS student_count
         """
-        results = session.run(query,timeout = 120).data() 
+        results = session.run(query, timeout=120).data()
 
     return jsonify(results)
 
+
 # Function to create dashboard component for student distribution among majors
-@app.route('/student-distribution-major', methods=['GET'])
+@app.route("/student-distribution-major", methods=["GET"])
 def student_major_distribution():
     with driver.session() as session:
         query = """
         MATCH (m:Major)<-[:MAJOR_IN]-(s:Student)
         RETURN m.name AS major, COUNT(s) AS student_count
         """
-        results = session.run(query,timeout = 120).data()
+        results = session.run(query, timeout=120).data()
     print(f"Results: {results}")
 
     return jsonify(results)
 
+
 # Function to create module visualization on modules page
-@app.route('/visualize-module', methods=['POST'])
+@app.route("/visualize-module", methods=["POST"])
 def visualize_module():
-    user_input = request.get_json().get('module_code')
+    user_input = request.get_json().get("module_code")
     module_code = user_input.upper()
     with driver.session() as session:
         query = """
@@ -193,12 +248,13 @@ def visualize_module():
         print(f"Data fetched for module_code '{module_code}':", data)
 
         # Initialize the network graph visualization
-        net = Network(cdn_resources='in_line')
+        net = Network(cdn_resources="in_line")
 
         # Update physics settings to improve readability
         net.toggle_physics(True)  # Enable physics
 
-        net.set_options("""
+        net.set_options(
+            """
         {
             "nodes": {
                 "shape": "dot",
@@ -225,67 +281,124 @@ def visualize_module():
                 "timestep": 0.35
             }
         }
-        """)
+        """
+        )
 
         # Add nodes and edges to the visualization
         for record in data:
-            module = record['m']
-            department = record.get('d')
-            faculty = record.get('f')
-            preclusion_group = record.get('preclu')
-            prereq_group = record.get('prereq')
-            semester = record.get('s')
-            prof = record.get('st')
+            module = record["m"]
+            department = record.get("d")
+            faculty = record.get("f")
+            preclusion_group = record.get("preclu")
+            prereq_group = record.get("prereq")
+            semester = record.get("s")
+            prof = record.get("st")
 
             # Add module node
-            module_code = module['moduleCode']
+            module_code = module["moduleCode"]
             module_data = {
-                'moduleCode': module.get('moduleCode',''),
-                'title': module.get('title', ''),
-                'moduleCredit': module.get('moduleCredit', ''),
-                'description': module.get('description', '')
+                "moduleCode": module.get("moduleCode", ""),
+                "title": module.get("title", ""),
+                "moduleCredit": module.get("moduleCredit", ""),
+                "description": module.get("description", ""),
             }
-            net.add_node(module_code, label=f"Module: {module_code}", color='lightblue', data=module_data )
+            net.add_node(
+                module_code,
+                label=f"Module: {module_code}",
+                color="lightblue",
+                data=module_data,
+            )
 
             # Add department and faculty
             if department:
-                dept_name = department['name']
-                net.add_node(dept_name, label=f"Department: {dept_name}", color='lightgreen')
-                net.add_edge(module_code, dept_name, label='BELONGS_TO', length=300, font={'size': 14})
+                dept_name = department["name"]
+                net.add_node(
+                    dept_name, label=f"Department: {dept_name}", color="lightgreen"
+                )
+                net.add_edge(
+                    module_code,
+                    dept_name,
+                    label="BELONGS_TO",
+                    length=300,
+                    font={"size": 14},
+                )
 
                 if faculty:
-                    fac_name = faculty['name']
-                    net.add_node(fac_name, label=f"Faculty: {fac_name}", color='lightcoral')
-                    net.add_edge(dept_name, fac_name, label='PART_OF', length=300, font={'size': 14})
+                    fac_name = faculty["name"]
+                    net.add_node(
+                        fac_name, label=f"Faculty: {fac_name}", color="lightcoral"
+                    )
+                    net.add_edge(
+                        dept_name,
+                        fac_name,
+                        label="PART_OF",
+                        length=300,
+                        font={"size": 14},
+                    )
 
             if prereq_group:
-                prereq_grouped = prereq_group['name']
-                net.add_node(prereq_grouped, label= f"Prerequisite Group: {prereq_grouped}", color = 'grey')
-                net.add_edge(module_code, prereq_grouped, label='MUST_HAVE_TAKEN_ONE_OF', length=300, font={'size':14})
+                prereq_grouped = prereq_group["name"]
+                net.add_node(
+                    prereq_grouped,
+                    label=f"Prerequisite Group: {prereq_grouped}",
+                    color="grey",
+                )
+                net.add_edge(
+                    module_code,
+                    prereq_grouped,
+                    label="MUST_HAVE_TAKEN_ONE_OF",
+                    length=300,
+                    font={"size": 14},
+                )
 
             # Add preclusions
             if preclusion_group:
-                preclusion_group_codes = preclusion_group['name']
-                net.add_node(preclusion_group_codes, label=f"Preclusion Group: {preclusion_group_codes}", color='orange')
-                net.add_edge(module_code, preclusion_group_codes, label='MUST_NOT_HAVE_TAKEN_ONE_OF', length=300, font={'size': 14})
+                preclusion_group_codes = preclusion_group["name"]
+                net.add_node(
+                    preclusion_group_codes,
+                    label=f"Preclusion Group: {preclusion_group_codes}",
+                    color="orange",
+                )
+                net.add_edge(
+                    module_code,
+                    preclusion_group_codes,
+                    label="MUST_NOT_HAVE_TAKEN_ONE_OF",
+                    length=300,
+                    font={"size": 14},
+                )
 
             # Add semesters
             if semester:
-                sem_number = semester['number']
+                sem_number = semester["number"]
                 sem_label = f"Semester {sem_number}"
-                net.add_node(sem_label, label=sem_label, color='purple')
-                net.add_edge(module_code, sem_label, label='OFFERED_IN', length=300, font={'size': 14})
-            
+                net.add_node(sem_label, label=sem_label, color="purple")
+                net.add_edge(
+                    module_code,
+                    sem_label,
+                    label="OFFERED_IN",
+                    length=300,
+                    font={"size": 14},
+                )
+
             if prof:
-                prof_name = prof['employeeName']
-                net.add_node(prof_name, label=f"Professor: {prof_name}", color='darkgreen')
-                net.add_edge(module_code, prof_name, label='TAUGHT_BY', length=300, font={'size': 14})
+                prof_name = prof["employeeName"]
+                net.add_node(
+                    prof_name, label=f"Professor: {prof_name}", color="darkgreen"
+                )
+                net.add_edge(
+                    module_code,
+                    prof_name,
+                    label="TAUGHT_BY",
+                    length=300,
+                    font={"size": 14},
+                )
 
     # Display the graph
     html_filename = f"{module_code}_graph.html"
     net.write_html(html_filename)
     with open(html_filename, "a") as f:
-        f.write("""
+        f.write(
+            """
         <style>
         #nodeModal {
             display: none;
@@ -301,7 +414,7 @@ def visualize_module():
             overflow-y: auto;
             margin-top: 10px;
             margin-bottom: 10px;
-            border-radius: 5px 0 0 5px; 
+            border-radius: 5px 0 0 5px;
         }
         #modalContent {
             max-width: 100%;
@@ -325,7 +438,7 @@ def visualize_module():
             background-color: rgba(0, 0, 0, 0.5);
         }
         #modalTitle {
-        margin-left: 10px; 
+        margin-left: 10px;
         padding-left: 10px;
         }
         </style>
@@ -368,14 +481,16 @@ def visualize_module():
             }
         });
         </script>
-        """)
+        """
+        )
 
     return {"file_url": f"/visualizations/{html_filename}"}
 
+
 # Function to create student visualization on students page
-@app.route('/visualize-student', methods=['POST'])
+@app.route("/visualize-student", methods=["POST"])
 def visualize_student():
-    user_input = request.get_json().get('matric_number')
+    user_input = request.get_json().get("matric_number")
     matric_number = user_input.upper()
     with driver.session() as session:
         query = """
@@ -390,13 +505,13 @@ def visualize_student():
         data = session.run(query, matric_number=matric_number).data()
 
         # Initialize the network graph visualization
-        net = Network(notebook=True, cdn_resources='in_line')
+        net = Network(notebook=True, cdn_resources="in_line")
 
-
-        net.toggle_physics(True)  
+        net.toggle_physics(True)
 
         # Modify the physics options to make the graph more readable
-        net.set_options("""
+        net.set_options(
+            """
         {
             "nodes": {
                 "shape": "dot",
@@ -423,46 +538,75 @@ def visualize_student():
                 "timestep": 0.35
             }
         }
-        """)
+        """
+        )
 
         # Add nodes and edges to the visualization
         for record in data:
-            student = record['s']
-            faculty = record.get('f')
-            major = record.get('m')
-            second_major = record.get('sm')
-            completed_modules = record.get('completedModules', [])
+            student = record["s"]
+            faculty = record.get("f")
+            major = record.get("m")
+            second_major = record.get("sm")
+            completed_modules = record.get("completedModules", [])
 
-            matric_number = student['Matric_Number']
+            matric_number = student["Matric_Number"]
             student_data = {
-                'Student_Name': student.get('Student_Name',''),
-                'Matric_Number': student.get('Matric_Number', ''),
-                'Grades': student.get('Grades', ''),
-                'NRIC': student.get('NRIC', ''),
-                'completedModules': [module['moduleCode'] for module in completed_modules]
+                "Student_Name": student.get("Student_Name", ""),
+                "Matric_Number": student.get("Matric_Number", ""),
+                "Grades": student.get("Grades", ""),
+                "NRIC": student.get("NRIC", ""),
+                "completedModules": [
+                    module["moduleCode"] for module in completed_modules
+                ],
             }
-            net.add_node(matric_number, label=f"Student: {matric_number}", color='lightblue', data=student_data)
+            net.add_node(
+                matric_number,
+                label=f"Student: {matric_number}",
+                color="lightblue",
+                data=student_data,
+            )
 
             if faculty:
-                fac_name = faculty['name']
-                net.add_node(fac_name, label=f"Faculty: {fac_name}", color='lightcoral')
-                net.add_edge(matric_number, fac_name, label='STUDYING_UNDER', length=300, font={'size': 14})
+                fac_name = faculty["name"]
+                net.add_node(fac_name, label=f"Faculty: {fac_name}", color="lightcoral")
+                net.add_edge(
+                    matric_number,
+                    fac_name,
+                    label="STUDYING_UNDER",
+                    length=300,
+                    font={"size": 14},
+                )
 
             if major:
-                major_name = major['name']
-                net.add_node(major_name, label=f"Major: {major_name}", color='yellow')
-                net.add_edge(matric_number, major_name, label='MAJOR_IN', length=300, font={'size': 14})
+                major_name = major["name"]
+                net.add_node(major_name, label=f"Major: {major_name}", color="yellow")
+                net.add_edge(
+                    matric_number,
+                    major_name,
+                    label="MAJOR_IN",
+                    length=300,
+                    font={"size": 14},
+                )
 
             if second_major:
-                second_major = second_major['name']
-                net.add_node(second_major, label=f"Second Major: {second_major}", color='yellow')
-                net.add_edge(matric_number, second_major, label='SECOND_MAJOR_IN', length=300, font={'size': 14})
+                second_major = second_major["name"]
+                net.add_node(
+                    second_major, label=f"Second Major: {second_major}", color="yellow"
+                )
+                net.add_edge(
+                    matric_number,
+                    second_major,
+                    label="SECOND_MAJOR_IN",
+                    length=300,
+                    font={"size": 14},
+                )
 
     # Display the graph
     html_filename = f"{matric_number}_graph.html"
     net.write_html(html_filename)
     with open(html_filename, "a") as f:
-        f.write("""
+        f.write(
+            """
         <style>
         #nodeModal {
             display: none;
@@ -478,7 +622,7 @@ def visualize_student():
             overflow-y: auto;
             margin-top: 10px;
             margin-bottom: 10px;
-            border-radius: 5px 0 0 5px; 
+            border-radius: 5px 0 0 5px;
         }
         #modalContent {
             max-width: 100%;
@@ -502,7 +646,7 @@ def visualize_student():
             background-color: rgba(0, 0, 0, 0.5);
         }
         #modalTitle {
-        margin-left: 10px; 
+        margin-left: 10px;
         padding-left: 10px;
         }
         </style>
@@ -551,13 +695,15 @@ def visualize_student():
             }
         });
         </script>
-        """)
+        """
+        )
     return {"file_url": f"/visualizations/{html_filename}"}
 
+
 # Function to create staff visualization on staff page
-@app.route('/visualize-staff', methods=['POST'])
+@app.route("/visualize-staff", methods=["POST"])
 def visualize_staff():
-    user_input = request.get_json().get('employee_name')
+    user_input = request.get_json().get("employee_name")
     employee_name = capitalize_name(user_input)
     with driver.session() as session:
         query = """
@@ -570,13 +716,14 @@ def visualize_staff():
         data = session.run(query, employee_name=employee_name).data()
 
         # Initialize the network graph visualization
-        net = Network(notebook=True, cdn_resources='in_line')
+        net = Network(notebook=True, cdn_resources="in_line")
 
-                # Update physics settings to improve readability
+        # Update physics settings to improve readability
         net.toggle_physics(True)  # Enable physics
 
         # Modify the physics options to make the graph more readable
-        net.set_options("""
+        net.set_options(
+            """
         {
             "nodes": {
                 "shape": "dot",
@@ -603,45 +750,74 @@ def visualize_staff():
                 "timestep": 0.35
             }
         }
-        """)
+        """
+        )
 
         # Add nodes and edges to the visualization
         for record in data:
-            staff = record['st']
-            department = record.get('d')
-            faculty = record.get('f')
-            module = record.get('m')
+            staff = record["st"]
+            department = record.get("d")
+            faculty = record.get("f")
+            module = record.get("m")
 
-            employee_name = staff['Employee_Name']
+            employee_name = staff["Employee_Name"]
             employee_data = {
-                'Employee_Name': staff.get('Employee_Name',''),
-                'Employee_ID': staff.get('Employee_ID', ''),
-                'DOJ': staff.get('DOJ', ''),
-                'NRIC': staff.get('NRIC', ''),
-                'DOB': staff.get('DOB', '')
+                "Employee_Name": staff.get("Employee_Name", ""),
+                "Employee_ID": staff.get("Employee_ID", ""),
+                "DOJ": staff.get("DOJ", ""),
+                "NRIC": staff.get("NRIC", ""),
+                "DOB": staff.get("DOB", ""),
             }
-            net.add_node(employee_name, label=f"Employee Name: {employee_name}", color='lightblue', data=employee_data)
+            net.add_node(
+                employee_name,
+                label=f"Employee Name: {employee_name}",
+                color="lightblue",
+                data=employee_data,
+            )
 
             if department:
-                dept_name = department['name']
-                net.add_node(dept_name, label=f"Department: {dept_name}", color='lightgreen')
-                net.add_edge(dept_name, employee_name, label='EMPLOYED_UNDER', length=300, font={'size': 14})
+                dept_name = department["name"]
+                net.add_node(
+                    dept_name, label=f"Department: {dept_name}", color="lightgreen"
+                )
+                net.add_edge(
+                    dept_name,
+                    employee_name,
+                    label="EMPLOYED_UNDER",
+                    length=300,
+                    font={"size": 14},
+                )
 
             if faculty:
-                fac_name = faculty['name']
-                net.add_node(fac_name, label=f"Faculty: {fac_name}", color='lightcoral')
-                net.add_edge(dept_name, fac_name, label='STUDYING_UNDER', length=300, font={'size': 14})
-            
+                fac_name = faculty["name"]
+                net.add_node(fac_name, label=f"Faculty: {fac_name}", color="lightcoral")
+                net.add_edge(
+                    dept_name,
+                    fac_name,
+                    label="STUDYING_UNDER",
+                    length=300,
+                    font={"size": 14},
+                )
+
             if module:
-                module_code = module['moduleCode']
-                net.add_node(module_code, label=f"Module: {module_code}", color='lightblue')
-                net.add_edge(employee_name, module_code, label='TAUGHT_BY', length=300, font={'size': 14})
+                module_code = module["moduleCode"]
+                net.add_node(
+                    module_code, label=f"Module: {module_code}", color="lightblue"
+                )
+                net.add_edge(
+                    employee_name,
+                    module_code,
+                    label="TAUGHT_BY",
+                    length=300,
+                    font={"size": 14},
+                )
 
     # Display the graph
     html_filename = f"{employee_name}_graph.html"
     net.write_html(html_filename)
     with open(html_filename, "a") as f:
-        f.write("""
+        f.write(
+            """
         <style>
         #nodeModal {
             display: none;
@@ -657,7 +833,7 @@ def visualize_staff():
             overflow-y: auto;
             margin-top: 10px;
             margin-bottom: 10px;
-            border-radius: 5px 0 0 5px; 
+            border-radius: 5px 0 0 5px;
         }
         #modalContent {
             max-width: 100%;
@@ -681,7 +857,7 @@ def visualize_staff():
             background-color: rgba(0, 0, 0, 0.5);
         }
         #modalTitle {
-        margin-left: 10px; 
+        margin-left: 10px;
         padding-left: 10px;
         }
         </style>
@@ -727,55 +903,68 @@ def visualize_staff():
             }
         });
         </script>
-        """)
+        """
+        )
     return {"file_url": f"/visualizations/{html_filename}"}
 
+
 # Function to serve visualization on webpage
-@app.route('/visualizations/<path:filename>')
+@app.route("/visualizations/<path:filename>")
 def serve_visualization(filename):
     file_path = os.path.join(os.getcwd(), filename)
     response = send_from_directory(os.getcwd(), filename)
     os.remove(file_path)
     return response
 
-# Function for prompt answer generation for query bot 
-@app.route('/process_query', methods=['POST'])
+
+# Function for prompt answer generation for query bot
+@app.route("/process_query", methods=["POST"])
 def process_query():
-    query = request.get_json().get('query')
+    query = request.get_json().get("query")
 
     if not query:
-        return jsonify({'error': 'Query is required'}), 400
-    
+        return jsonify({"error": "Query is required"}), 400
+
     try:
         result = evaluate_prompt(query)
-        
+
         return jsonify(result), 201
-    
+
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({"error": str(e)}), 500
+
 
 # Function for recommending jobs in jobs page
-@app.route('/api/job-recommendations', methods=['POST'])
+@app.route("/api/job-recommendations", methods=["POST"])
 def job_recommendations():
     data = request.get_json()
-    job_description = data.get('jobDescription')
-    matric_number = data.get('matricNumber')
-    exclude_advanced = data.get('excludeAdvanced', False)
-    
+    job_description = data.get("jobDescription")
+    matric_number = data.get("matricNumber")
+    exclude_advanced = data.get("excludeAdvanced", False)
+
     if not job_description:
-        return jsonify({'error': 'Job description is required'}), 400
-    
+        return jsonify({"error": "Job description is required"}), 400
+
     try:
-        recommendations = get_job_recommendations(job_description, matric_number, exclude_advanced)
+        recommendations = get_job_recommendations(
+            job_description, matric_number, exclude_advanced
+        )
         job_title = extract_job_title(job_description)
         related_jobs = get_related_jobs_from_wikidata(job_title.lower())
 
-        return jsonify({'recommendations': recommendations,
-                        'related_jobs': related_jobs,
-                        'success' : True
-                        }), 200
+        return (
+            jsonify(
+                {
+                    "recommendations": recommendations,
+                    "related_jobs": related_jobs,
+                    "success": True,
+                }
+            ),
+            200,
+        )
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        return jsonify({"error": str(e)}), 500
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0',port = 5000)
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
