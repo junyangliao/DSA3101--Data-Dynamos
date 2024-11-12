@@ -12,7 +12,7 @@ nlp = spacy.load('en_core_web_sm')
 
 def load_config():
     # Load configuration from YAML file.
-    with open('/app/entity_extraction/config.yaml', 'r') as file:
+    with open('/app/entity_relationship_extraction/config.yaml', 'r') as file:
         return yaml.safe_load(file)
     
 # Helper functions moved outside
