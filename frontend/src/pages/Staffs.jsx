@@ -105,7 +105,7 @@ const StaffVisualizer = () => {
 
   const handleDeleteStaff = async () => {
     try {
-      await axios.post('http://localhost:5001/delete-staff', { employee_id: staffData.employee_id });
+      await axios.post('http://localhost:5001/delete-staff', { employee_name: staffData.employee_name });
       console.log('Staff deleted successfully');
       setOpen(false); 
     } catch (error) {
@@ -192,22 +192,22 @@ const StaffVisualizer = () => {
         <DialogTitle>{isDeleteMode ? 'Delete Staff' : 'Create New Staff'}</DialogTitle>
         <DialogContent>
           <TextField
-            label="Employee ID"
-            name="employee_id"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={staffData.employee_id}
-          />
-          {!isDeleteMode && (
-            <>
-              <TextField
                 label="Employee Name"
                 name="employee_name"
                 fullWidth
                 margin="dense"
                 onChange={handleChange}
                 value={staffData.employee_name}
+          />
+          {!isDeleteMode && (
+            <>
+              <TextField
+                label="Employee ID"
+                name="employee_id"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={staffData.employee_id}
               />
               <TextField
                 label="NRIC"

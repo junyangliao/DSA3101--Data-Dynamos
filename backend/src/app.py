@@ -172,15 +172,15 @@ def delete_student_node():
 @app.route("/delete-staff", methods=["POST"])
 def delete_staff_node():
     data = request.json
-    employee_id = data.get("employee_id")
+    employee_name = data.get("employee_name")
 
-    if not employee_id:
-        return jsonify({"error": "Employee ID is required"}), 400
+    if not employee_name:
+        return jsonify({"error": "Employee Name is required"}), 400
 
-    delete_staff(employee_id)
+    delete_staff(employee_name)
 
     return (
-        jsonify({"message": f"Employee with ID {employee_id} deleted successfully"}),
+        jsonify({"message": f"Employee with ID {employee_name} deleted successfully"}),
         201,
     )
 
@@ -383,7 +383,7 @@ def visualize_module():
                 )
 
             if prof:
-                prof_name = prof["employeeName"]
+                prof_name = prof["Employee_Name"]
                 net.add_node(
                     prof_name, label=f"Professor: {prof_name}", color="darkgreen"
                 )

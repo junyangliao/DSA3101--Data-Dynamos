@@ -74,6 +74,16 @@ const ModuleVisualizer = () => {
   };
 
   const [moduleData, setModuleData] = useState({
+    module_code: '',
+    title: '',
+    description: '',
+    module_credit: '',
+    department: '',
+    faculty: '',
+    prerequisites: '',
+    preclusions: '',
+    semesters: '',
+    skills: ''
   });
 
   const handleChange = (e) => {
@@ -92,8 +102,16 @@ const ModuleVisualizer = () => {
   };
 
   const handleCreateModule = async () => {
+    const parsedModuleData = {
+      ...moduleData,
+      prerequisites: JSON.parse(moduleData.prerequisites || "[]"),
+      preclusions: JSON.parse(moduleData.preclusions || "[]"),
+      semesters: JSON.parse(moduleData.semesters || "[]"),
+      skills: JSON.parse(moduleData.skills || "[]")
+    };
+
     try {
-      await axios.post('http://localhost:5001/create-module', moduleData);
+      await axios.post('http://localhost:5001/create-module', parsedModuleData);
       console.log('Module created successfully');
       setOpen(false); 
     } catch (error) {
@@ -258,6 +276,14 @@ const ModuleVisualizer = () => {
                 margin="dense"
                 onChange={handleChange}
                 value={moduleData.semesters}
+              />
+              <TextField
+                label="Skills (Input in list format)"
+                name="skills"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={moduleData.skills}
               />
             </>
           )}

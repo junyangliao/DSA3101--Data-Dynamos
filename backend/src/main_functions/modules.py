@@ -8,8 +8,6 @@ neo4j_password = os.getenv("NEO4J_PASSWORD")
 driver = GraphDatabase.driver(neo4j_uri, auth=(neo4j_user, neo4j_password))
 session = driver.session()
 
-
-# Depreciated from use!! Do refer to batch_create_entities_and_relationships in utils.py
 def create_module_node_and_relationships(
     tx,
     module_code,
@@ -138,15 +136,17 @@ def create_module_node_and_relationships(
 
 def create_module(data):
     with driver.session() as session:
-        module_code = data.get("module code")
+        module_code = data.get("module_code")
         title = data.get("title")
         description = data.get("description")
-        module_credit = data.get("module credit")
+        module_credit = data.get("module_credit")
         department = data.get("department")
         faculty = data.get("faculty")
-        prerequisites = list(data.get("prerequisites"))
-        preclusions = list(data.get("preclusions"))
-        semesters = list(data.get("semesters"))
+        prerequisites = data.get("prerequisites",[])
+        preclusions = data.get("preclusions",[])
+        semesters = data.get("semesters",[])
+        skills = data.get("skills", [])
+
 
         session.execute_write(
             create_module_node_and_relationships,
@@ -159,29 +159,8 @@ def create_module(data):
             prerequisites,
             preclusions,
             semesters,
+            skills
         )
-
-
-# def create_modules(data):
-#     with driver.session() as session:
-#         for _, row in data.iterrows():
-#             module_code = row['moduleCode']
-#             title = row['title']
-#             description = row['description']
-#             module_credit = row['moduleCredit']
-#             department = row['department']
-#             faculty = row['faculty']
-#             prerequisites = ast.literal_eval(row['prerequisite'])
-#             preclusions = ast.literal_eval(row['preclusion'])
-#             skills = ast.literal_eval(row['Description_entities']).get('Skill')
-#             semesters = []
-#             if row['semester_01'] > 0: semesters.append(1)
-#             if row['semester_02'] > 0: semesters.append(2)
-#             if row['semester_03'] > 0: semesters.append(3)
-#             if row['semester_04'] > 0: semesters.append(4)
-
-#             session.execute_write(create_module_node_and_relationships, module_code, title, description, module_credit, department, faculty, prerequisites, preclusions, semesters,skills)
-
 
 def delete_module_node_and_relationships(tx, module_code):
     tx.run(

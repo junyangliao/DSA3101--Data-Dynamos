@@ -26,9 +26,9 @@ def create_student_node_and_relationships(
 ):
     tx.run(
         """
-        MERGE (s:Student {matricNumber: $matric_number})
-        ON CREATE SET s.studentName = $student_name, s.nric = $nric, s.year = $year, s.grades = $grades
-        ON MATCH SET s.studentName = $student_name, s.nric = $nric, s.year = $year, s.grades = $grades
+        MERGE (s:Student {Matric_Number: $matric_number})
+        ON CREATE SET s.Student_Name = $student_name, s.NRIC = $nric, s.Year = $year, s.Grades = $grades
+        ON MATCH SET s.Student_Name = $student_name, s.NRIC = $nric, s.Year = $year, s.Grades = $grades
     """,
         matric_number=matric_number,
         student_name=student_name,
@@ -41,7 +41,7 @@ def create_student_node_and_relationships(
         """
         MERGE (f:Faculty {name: $faculty})
         WITH f
-        MATCH (s:Student {matricNumber: $matric_number})
+        MATCH (s:Student {Matric_Number: $matric_number})
         MERGE (s)-[:STUDYING_UNDER]->(f)
     """,
         faculty=faculty,
@@ -52,7 +52,7 @@ def create_student_node_and_relationships(
         """
         MERGE (m:Major {name: $major})
         WITH m
-        MATCH (s:Student {matricNumber: $matric_number})
+        MATCH (s:Student {Matric_Number: $matric_number})
         MERGE (s)-[:MAJOR_IN]->(m)
     """,
         major=major,
@@ -64,7 +64,7 @@ def create_student_node_and_relationships(
             """
           MERGE (m:Major {name: $major})
           WITH m
-          MATCH (s:Student {matricNumber: $matric_number})
+          MATCH (s:Student {Matric_Number: $matric_number})
           MERGE (s)-[:SECOND_MAJOR_IN]->(m)
       """,
             major=second_major,
@@ -77,7 +77,7 @@ def create_student_node_and_relationships(
                 """
               MERGE (m:Module {moduleCode: $module_code})
               WITH m
-              MATCH (s:Student {matricNumber: $matric_number})
+              MATCH (s:Student {Matric_Number: $matric_number})
               MERGE (s)-[:COMPLETED]->(m)
           """,
                 matric_number=matric_number,
@@ -88,13 +88,13 @@ def create_student_node_and_relationships(
 def create_student(data):
     with driver.session() as session:
         student_name = data.get("name")
-        matric_number = data.get("matric number")
+        matric_number = data.get("matric_number")
         nric = data.get("nric")
         year = data.get("year")
         faculty = data.get("faculty")
         major = data.get("major")
-        second_major = data.get("second major")
-        modules_completed = data.get("modules completed")
+        second_major = data.get("second_major")
+        modules_completed = data.get("modules_completed")
         grades = data.get("grades")
 
         session.execute_write(
@@ -110,38 +110,10 @@ def create_student(data):
             grades,
         )
 
-
-def create_students(student_data_list):
-    with driver.session() as session:
-        for _, row in student_data_list.iterrows():
-            student_name = row["Student_Name"]
-            matric_number = row["Matric_Number"]
-            nric = row["NRIC"]
-            year = row["Year"]
-            faculty = row["Faculties"]
-            major = row["Major"]
-            second_major = row["Second Major"]
-            modules_completed = ast.literal_eval(row["Modules_Completed"])
-            grades = row["Grades"]
-
-            session.execute_write(
-                create_student_node_and_relationships,
-                student_name,
-                matric_number,
-                nric,
-                year,
-                faculty,
-                major,
-                second_major,
-                modules_completed,
-                grades,
-            )
-
-
 def delete_student_node_and_relationships(tx, matric_number):
     tx.run(
         """
-        MATCH (s:Student {matricNumber: $matric_number})
+        MATCH (s:Student {Matric_Number: $matric_number})
         DETACH DELETE s;
     """,
         matric_number=matric_number,
@@ -153,31 +125,3 @@ def delete_student(data):
         matric_number = data
         session.execute_write(delete_student_node_and_relationships, matric_number)
 
-
-def get_students_all_connections():
-    output = []
-    query = """
-        MATCH (s:Student)
-        WITH s
-        LIMIT 5
-        MATCH (s)-[r]-(connectedNode)
-        RETURN s, r, connectedNode;
-        """
-    query_data = session.run(query).data()
-
-    for result in query_data:
-        student_node = result["s"]
-        relationship = result["r"]
-        connected_node = result["connectedNode"]
-
-        formatted_student = format_node(student_node)
-        formatted_connected_node = format_node(connected_node)
-        formatted_relationship = format_relationship(relationship)
-
-        connection = (
-            f"{formatted_student}{formatted_relationship}{formatted_connected_node}"
-        )
-        output.append(connection)
-
-    output_df = pd.DataFrame({"results": output})
-    return output_df

@@ -15,7 +15,7 @@ def create_jobs_and_skills_nodes_and_relationships(tx, job_title, skills):
 
     tx.run(
         """
-        MERGE (j:Job {jobTitle: $job_title})
+        MERGE (j:Job {name: $job_title})
         WITH j
         UNWIND $skills AS skill_name
         MERGE (s:Skill {name: skill_name})
@@ -28,31 +28,17 @@ def create_jobs_and_skills_nodes_and_relationships(tx, job_title, skills):
 
 def create_job_and_skills(data):
     with driver.session() as session:
-        job_title = data.get("Job Title")
+        job_title = data.get("job_title")
         skills = data.get("Skills")
 
         session.execute_write(
             create_jobs_and_skills_nodes_and_relationships, job_title, skills
         )
 
-
-def create_jobs_and_skills(data):
-    data["Skills"] = data["Skills"].str.split(",")
-
-    with driver.session() as session:
-        for _, row in data.iterrows():
-            job_title = row["Job Title"]
-            skills = row["Skills"]
-
-            session.execute_write(
-                create_jobs_and_skills_nodes_and_relationships, job_title, skills
-            )
-
-
 def delete_job_node_and_relationships(tx, job_title):
     tx.run(
         """
-        MATCH (j:Job {jobTitle: $job_title})
+        MATCH (j:Job {name: $job_title})
         DETACH DELETE j;
     """,
         job_title=job_title,
@@ -63,32 +49,3 @@ def delete_job(data):
     with driver.session() as session:
         job_title = data
         session.execute_write(delete_job_node_and_relationships, job_title)
-
-
-def get_jobs_all_connections():
-    output = []
-    query = """
-        MATCH (j:Job)
-        WITH j
-        LIMIT 5
-        MATCH (j)-[r]-(connectedNode)
-        RETURN j, r, connectedNode;
-        """
-    query_data = session.run(query).data()
-
-    for result in query_data:
-        student_node = result["j"]
-        relationship = result["r"]
-        connected_node = result["connectedNode"]
-
-        formatted_student = format_node(student_node)
-        formatted_connected_node = format_node(connected_node)
-        formatted_relationship = format_relationship(relationship)
-
-        connection = (
-            f"{formatted_student}{formatted_relationship}{formatted_connected_node}"
-        )
-        output.append(connection)
-
-    output_df = pd.DataFrame({"results": output})
-    return output_df

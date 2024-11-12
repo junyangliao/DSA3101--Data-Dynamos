@@ -2,11 +2,46 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import StudentDistributionFaculty from '../components/StudentDistributionFaculty';
 import StudentDistributionMajor from '../components/StudentDistributionMajor';
+import {Button, Typography, Box } from '@mui/material';
 
 const Dashboard = () => {
     const [consistencyResults, setConsistencyResults] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState(null);   
+
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        
+        if (selectedFile) {
+          handleUpload(selectedFile);
+        }
+      };
+    
+    const handleUpload = async (selectedFile) => {
+        if (!selectedFile) {
+        setError("Please select a file first.");
+        return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+
+        try {
+
+        const response = await axios.post('http://localhost:5001/upload-csv', formData, {
+            headers: {
+            'Content-Type': 'multipart/form-data',
+            },
+        });
+
+        if (response.status === 201) {
+            setError(null); 
+            alert('File uploaded successfully and data integrated.');
+        }
+        } catch (err) {
+        setError('Failed to upload file or process data.');
+        }
+    };
 
     const runConsistencyCheck = async () => {
         setLoading(true);
@@ -30,7 +65,33 @@ const Dashboard = () => {
 
     return (
         <div style={{ paddingLeft: '20px' }}>
-            <h1>Dashboard</h1>
+            <Box
+                display="flex"
+                justifyContent="space-between"  
+                alignItems="center"
+            >
+                <Typography variant="h4" gutterBottom style={{ paddingTop: '10px' }}>
+                Dashboard
+                </Typography>
+
+                <Box>
+                <Button
+                    variant="contained"
+                    sx={{
+                    marginRight: '20px',
+                    backgroundColor: 'green', 
+                    color: 'white',            
+                    '&:hover': {
+                        backgroundColor: 'darkgreen',
+                    },
+                    }}
+                    component="label"  
+                >
+                    Upload CSV
+                    <input type="file" hidden onChange={handleFileChange} />
+                </Button>
+                </Box>
+            </Box>
 
             <div className="charts" style={{ 
                 display: 'flex',
