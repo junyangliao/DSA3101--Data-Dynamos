@@ -13,10 +13,10 @@ const Dashboard = () => {
         setError(null);
         try {
             const response = await axios.get('http://localhost:5001/api/check-consistency');
-            console.log('Consistency check response:', response.data); // Debug log
+            console.log('Consistency check response:', response.data); 
             setConsistencyResults(response.data);
         } catch (err) {
-            console.error('API Error:', err); // Debug log
+            console.error('API Error:', err); 
             setError(
                 err.response?.status === 404 
                     ? "Consistency check endpoint not found. Please check the API configuration."
@@ -45,6 +45,11 @@ const Dashboard = () => {
                     <StudentDistributionMajor />
                 </div>
             </div>
+
+            <div style={{
+                borderBottom: '1px solid #ddd',
+                margin: '20px 0'
+            }}></div>
             
             <div className="consistency-checker" style={{
                 backgroundColor: 'white',
@@ -62,31 +67,54 @@ const Dashboard = () => {
                     onClick={runConsistencyCheck}
                     disabled={loading}
                     style={{
-                        backgroundColor: '#2196F3', // Blue color matching the "GET RECOMMENDATIONS" button
+                        backgroundColor: '#2196F3',
                         color: 'white',
-                        padding: '8px 16px',
+                        padding: '12px 20px', 
                         border: 'none',
-                        borderRadius: '4px',
+                        borderRadius: '6px', 
                         cursor: 'pointer',
-                        fontSize: '14px',
-                        fontWeight: '500',
-                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                        boxShadow: '0 4px 6px rgba(0,0,0,0.1)', 
+                        display: 'flex', 
+                        alignItems: 'center',
+                        gap: '8px',
                         transition: 'background-color 0.3s'
                     }}
-                    onMouseOver={e => e.target.style.backgroundColor = '#1976D2'} // Darker blue on hover
+                    onMouseOver={e => e.target.style.backgroundColor = '#1976D2'}
                     onMouseOut={e => e.target.style.backgroundColor = '#2196F3'}
                 >
-                    {loading ? 'Running Check...' : 'Run Consistency Check'}
+                    {loading ? (
+                        <>
+                            <span className="spinner" style={{
+                                width: '16px',
+                                height: '16px',
+                                border: '2px solid #ffffff',
+                                borderTop: '2px solid transparent',
+                                borderRadius: '50%',
+                                animation: 'spin 1s linear infinite'
+                            }}></span>
+                            Running Check...
+                        </>
+                    ) : (
+                        <>
+                            Run Consistency Check
+                        </>
+                    )}
                 </button>
 
                 {error && (
                     <div style={{
                         color: '#d32f2f',
                         backgroundColor: '#ffebee',
-                        padding: '10px',
-                        borderRadius: '4px',
-                        marginTop: '10px'
+                        padding: '12px',
+                        borderRadius: '6px',
+                        marginTop: '15px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px'
                     }}>
+                        <span style={{ fontSize: '18px' }}>⚠️</span>
                         {error}
                     </div>
                 )}
@@ -97,25 +125,30 @@ const Dashboard = () => {
                             Object.entries(consistencyResults.issues).map(([entity, issues]) => (
                                 <div key={entity} className="entity-section" style={{
                                     backgroundColor: '#f8f9fa',
-                                    padding: '15px',
-                                    borderRadius: '4px',
-                                    marginBottom: '15px'
+                                    padding: '20px',
+                                    borderRadius: '6px',
+                                    marginBottom: '20px',
+                                    boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
                                 }}>
                                     <h3 style={{ 
                                         color: '#333',
-                                        marginBottom: '10px' 
+                                        marginBottom: '10px',
+                                        fontSize: '18px',
+                                        fontWeight: 'bold'
                                     }}>{entity} Issues:</h3>
                                     {issues.map((issue, index) => (
                                         <div key={index} className="issue-group" style={{
                                             backgroundColor: 'white',
                                             padding: '10px',
                                             borderRadius: '4px',
-                                            marginBottom: '10px',
+                                            marginBottom: '15px',
                                             boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
                                         }}>
                                             <h4 style={{ 
                                                 color: '#666',
-                                                marginBottom: '8px' 
+                                                marginBottom: '8px',
+                                                fontSize: '16px',
+                                                fontWeight: '600' 
                                             }}>{issue.type}</h4>
                                             <ul style={{ 
                                                 listStyleType: 'disc',
