@@ -9,7 +9,7 @@ from main_functions.students import create_student, delete_student
 from main_functions.modules import create_module, delete_module
 from main_functions.job_skills import create_jobs_and_skills, delete_job
 from main_functions.staffs import create_staff, delete_staff
-from main_functions.job_recommendations import get_job_recommendations, get_related_jobs_from_wikidata
+from main_functions.job_recommendations import get_job_recommendations, get_related_jobs_from_wikidata, extract_job_title
 from utils import evaluate_prompt, capitalize_name, batch_create_entities_and_relationships
 from extraction_functions import extract_entities_rs
 
@@ -768,8 +768,8 @@ def job_recommendations():
     
     try:
         recommendations = get_job_recommendations(job_description, matric_number, exclude_advanced)
-
-        related_jobs = get_related_jobs_from_wikidata(job_description)
+        job_title = extract_job_title(job_description)
+        related_jobs = get_related_jobs_from_wikidata(job_title.lower())
 
         return jsonify({'recommendations': recommendations,
                         'related_jobs': related_jobs,
