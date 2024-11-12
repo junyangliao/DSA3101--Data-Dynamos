@@ -4,8 +4,8 @@ node_modules
 __pycache__/
 
 #Ignore unused folders
-/backend/data/coursera-reviews
+/backend/data/coursera_reviews
 /backend/data/ONET grad job data
 /backend/data/Scrapers and files to be scraped
-/backend/data/Student_information
+/backend/data/Students_information
 /backend/data/unused
