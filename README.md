@@ -86,3 +86,6 @@ To find out more about how to operate the application, you can check out our use
 ├── package.json
 └── package-lock.json
 ```
+
+## Contributors
+![Data Dynamos Team](images/dsa3101_contributors.jpg)
