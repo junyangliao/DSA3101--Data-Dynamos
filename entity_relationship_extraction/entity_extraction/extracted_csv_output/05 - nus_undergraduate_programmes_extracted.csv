@@ -1,4 +1,4 @@
-Degree,Major,degree_entities,major_entities,relationships
+degree,Major,degree_entities,major_entities,relationships
 Bachelor of Business Administration,Applied Business Analytics,"[('Bachelor of Business Administration', 'Degree')]","[('Applied Business Analytics', 'Major')]","[{'from_type': 'Major', 'from_id': 'Applied Business Analytics', 'to_type': 'Degree', 'to_id': 'Bachelor of Business Administration', 'type': 'IS_UNDER'}]"
 Bachelor of Business Administration,Business Economics,"[('Bachelor of Business Administration', 'Degree')]","[('Business Economics', 'Major')]","[{'from_type': 'Major', 'from_id': 'Business Economics', 'to_type': 'Degree', 'to_id': 'Bachelor of Business Administration', 'type': 'IS_UNDER'}]"
 Bachelor of Business Administration,Finance,"[('Bachelor of Business Administration', 'Degree')]","[('Finance', 'Major')]","[{'from_type': 'Major', 'from_id': 'Finance', 'to_type': 'Degree', 'to_id': 'Bachelor of Business Administration', 'type': 'IS_UNDER'}]"

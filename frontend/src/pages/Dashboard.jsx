@@ -1,6 +1,6 @@
 import React from 'react';
-import StudentDistributionFaculty from '../dashboard-components/StudentDistributionFaculty';
-import StudentDistributionMajor from '../dashboard-components/StudentDistributionMajor';
+import StudentDistributionFaculty from '../components/StudentDistributionFaculty';
+import StudentDistributionMajor from '../components/StudentDistributionMajor';
 
 
 const Dashboard = () => {

@@ -50,7 +50,19 @@ def create_entity(tx, row, ontology):
                 SET e += $attributes
                 """
                 tx.run(query, unique_value=unique_value, attributes=attributes)
-              elif entity_type in ['Student','Staff','Degree']:
+              elif entity_type == 'Degree' and 'school' in row.index:
+                unique_key = config["unique"][0]
+                unique_value = row.get(unique_key)
+                if not unique_value:
+                    raise ValueError(f"Missing unique identifier {unique_key} for {entity_type}.")
+
+                attributes = {k: v for k, v in row.items() if k in config["attributes"]}
+                query = f"""
+                MERGE (e:{entity_type} {{{unique_key}: $unique_value}})
+                SET e += $attributes
+                """
+                tx.run(query, unique_value=unique_value, attributes=attributes)
+              elif entity_type in ['Student','Staff']:
                 unique_key = config["unique"][0]
                 unique_value = row.get(unique_key)
                 if not unique_value:
@@ -143,6 +155,7 @@ def module_helper(tx, row):
 
 def batch_create_entities_and_relationships(driver, df):
     ontology = json.load(open('/app/ontology_config_test.json'))
+    total = len(df)
     with driver.session() as session:
         for index, row in df.iterrows():
             session.execute_write(create_entity, row, ontology)

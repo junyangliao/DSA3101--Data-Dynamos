@@ -1,17 +1,17 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from neo4j import GraphDatabase
+from pyvis.network import Network
+import pandas as pd
+import os
+
 from main_functions.students import create_student, delete_student
 from main_functions.modules import create_module, delete_module
 from main_functions.job_skills import create_jobs_and_skills, delete_job
 from main_functions.staffs import create_staff, delete_staff
 from main_functions.job_recommendations import get_job_recommendations, get_related_jobs_from_wikidata
 from utils import evaluate_prompt, capitalize_name, batch_create_entities_and_relationships
-from pyvis.network import Network
 from extraction_functions import extract_entities_rs
-import pandas as pd
-import os
-from threading import Timer
 
 app = Flask(__name__)
 CORS(app)
@@ -90,7 +90,7 @@ def upload_csv():
     try:
         tmp_df = pd.read_csv(file)
         df = extract_entities_rs(tmp_df)
-        # tmp_df.to_csv("test.csv",index = False)
+        df.to_csv("test.csv")
         batch_create_entities_and_relationships(driver,df)
         return jsonify({'message': 'CSV data integrated successfully'}), 201
     except Exception as e:
