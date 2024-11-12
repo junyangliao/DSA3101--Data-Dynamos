@@ -3,6 +3,7 @@ from flask_cors import CORS
 from neo4j import GraphDatabase
 from pyvis.network import Network
 import pandas as pd
+import json
 import os
 
 from main_functions.students import create_student, delete_student
@@ -20,6 +21,7 @@ from utils import (
     batch_create_entities_and_relationships,
 )
 from extraction_functions import extract_entities_rs
+from checking_functions import run_consistency_check
 
 app = Flask(__name__)
 CORS(app)
@@ -965,6 +967,21 @@ def job_recommendations():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# Function for checking consistency
+@app.route('/api/check-consistency', methods=['GET'])
+def check_consistency():
+    try:
+        # Load ontology
+        with open('ontology_config_test.json', 'r') as f:
+            ontology = json.load(f)
+        
+        results = run_consistency_check(driver, ontology)
+        return jsonify(results)
+    except FileNotFoundError:
+        return jsonify({"error": "Ontology configuration file not found"}), 404
+    except Exception as e:
+        print(f"Error in consistency check: {str(e)}")
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
