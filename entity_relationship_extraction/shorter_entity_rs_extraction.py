@@ -2,8 +2,9 @@ import pandas as pd
 import ast
 import re
 import spacy
+import os
 import yaml
-from fuzzywuzzy import fuzz, process
+from spacy.matcher import PhraseMatcher
 from multiprocessing import Pool, cpu_count
 
 # Load your spaCy model
@@ -12,11 +13,10 @@ nlp = spacy.load("en_core_web_sm")
 
 def load_config():
     # Load configuration from YAML file.
-    with open("/app/entity_relationship_extraction/config.yaml", "r") as file:
+    with open("config.yaml", "r") as file:
         return yaml.safe_load(file)
 
 
-# Helper functions moved outside
 def parse_entity(x, entity_type):
     # Handle dictionary strings e.g.
     if isinstance(x, str) and x.startswith("{") and x.endswith("}"):
@@ -35,16 +35,15 @@ def parse_entity(x, entity_type):
             ]
         except (ValueError, SyntaxError):
             return [(x.strip(), entity_type)]
-
     # Handle comma-separated strings
     # NEED TO REVISE THIS AS SOME VALUES HAVE COMMA IN ITSELF E.G. COLLEGE OF HUMANITIES, ARTS & SOCIAL SCIENCES
     elif pd.notna(x):
         return [(str(item).strip(), entity_type) for item in str(x).split(",")]
-
     # Return an empty list for NaN or other invalid entries
     return []
 
 
+# Helper function to flatten nested lists
 def flatten_list(nested_list):
     flat_list = []
     for i in nested_list:
@@ -55,28 +54,21 @@ def flatten_list(nested_list):
     return flat_list
 
 
-# Function to extract skills
-def extract_skills(text, unique_skills, threshold=80):
+# Initialize the matcher with the nlp vocabulary
+def initialize_matcher(unique_skills):
+    matcher = PhraseMatcher(nlp.vocab)
+    patterns = [nlp(skill) for skill in unique_skills]
+    matcher.add("SKILLS", patterns)
+    return matcher
+
+
+# Function to extract skills using PhraseMatcher
+def extract_skills_using_phrasematcher(text, matcher):
     if not isinstance(text, str):
-        return []
-
-    skills = []
-    # extract skill entities
-    for skill in unique_skills:
-        # create a regex pattern with word boundaries around the skills
-        pattern = r"\b" + re.escape(skill) + r"\b"
-
-        # search for the skills in the text (case-insensitive)
-        if re.search(pattern, text, re.IGNORECASE):
-            skills.append(skill)
-
-    # Fuzzy match for entity resolution if no exact matches found
-    if not skills:
-        potential_matches = process.extract(
-            text, unique_skills, limit=5, scorer=fuzz.ratio
-        )
-        skills = [match[0] for match in potential_matches if match[1] >= threshold]
-
+        return []  # Return empty list if not a valid string
+    doc = nlp(text)
+    matches = matcher(doc)
+    skills = [doc[start:end].text for match_id, start, end in matches]
     return list(set(skills))  # Remove duplicates
 
 
@@ -85,18 +77,15 @@ def extract_staff_names(text):
     if isinstance(text, str):
         doc = nlp(text)
         staff = []
-
         # Regex pattern to capture staff names with titles like 'Prof', 'Dr', 'Lecturer', 'Tutor'
         staff_pattern = re.compile(
             r"\b(Prof|Professor|Dr|Lecturer|Tutor|Instructor)\s*[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?",
             re.IGNORECASE,
         )
-
         for ent in doc.ents:
             match = staff_pattern.search(ent.text)
             if match:
                 staff_name = match.group(0)
-
                 # Exclude unwanted phrases that are falsely detected as staff names
                 if not any(
                     word in staff_name.lower()
@@ -111,35 +100,32 @@ def extract_staff_names(text):
                     ]
                 ):
                     staff.append(staff_name.strip())
-
         # Remove duplicates in staff
         return list(set(staff))
-
     return []
 
 
-# Process chunk function moved outside
 def process_chunk(args):
-    chunk, unique_skills, col, new_entity_col, entity_type = args
-
+    chunk, matcher, col, new_entity_col, entity_type = args
     if col in ["description"]:
         chunk["skill_entities"] = chunk[col].apply(
             lambda text: [
-                (skill, "Skill") for skill in extract_skills(text, unique_skills)
+                (skill, "SKILL")
+                for skill in extract_skills_using_phrasematcher(text, matcher)
             ]
         )
     elif col in ["description", "message"]:
         chunk["skill_entities"] = chunk[col].apply(
             lambda text: [
-                (skill, "Skill") for skill in extract_skills(text, unique_skills)
+                (skill, "SKILL")
+                for skill in extract_skills_using_phrasematcher(text, matcher)
             ]
         )
         chunk["staff_entities"] = chunk[col].apply(
-            lambda text: [(staff, "Staff") for staff in extract_staff_names(text)]
+            lambda text: [(staff, "STAFF") for staff in extract_staff_names(text)]
         )
     else:
         chunk[new_entity_col] = chunk[col].apply(lambda x: parse_entity(x, entity_type))
-
     return chunk
 
 
@@ -189,20 +175,23 @@ def create_dynamic_relationship(
     return df
 
 
-def extract_entities_rs(df):
+def extract_entities_rs(csv_file_path):
+    # Load configuration
     config = load_config()
     target_cols = config["target_cols"]
     entity_mappings = config["entity_mappings"]
     relationship_mappings = config["relationship_mappings"]
-
     # Convert entity_mappings to the format expected by the rest of the code
     new_entity_cols = {
         col: (mapping["new_col"], mapping["type"])
         for col, mapping in entity_mappings.items()
     }
-
-    # Extract unique skills
-    skills_csv_file_path = "/app/data/06 - Jobs and relevant skillset (linkedin).csv"
+    # Read data
+    df = pd.read_csv(csv_file_path)
+    # Extract unique skills from the 'Skills' column in a separate CSV
+    skills_csv_file_path = (
+        "../../backend/data/06 - Jobs and relevant skillset (linkedin).csv"
+    )
     df_skills = pd.read_csv(skills_csv_file_path)
     unique_skills = []
 
@@ -228,6 +217,8 @@ def extract_entities_rs(df):
 
         # remove 'Microsoft ' substring before skills
         unique_skills = [re.sub(r"Microsoft\s", "", skill) for skill in unique_skills]
+    # Initialize matcher
+    matcher = initialize_matcher(unique_skills)
 
     # Parallel processing for entity extraction
     num_cores = cpu_count()
@@ -235,13 +226,12 @@ def extract_entities_rs(df):
 
     for col in target_cols:
         if col in df.columns:
-            new_entity_col, entity_type = new_entity_cols.get(col, (col, "Unknown"))
+            new_entity_col, entity_type = new_entity_cols.get(col, (col, "UNKNOWN"))
             chunks = [df[i : i + chunk_size] for i in range(0, len(df), chunk_size)]
 
-            # Prepare data for parallel processing with unique_skills
+            # Prepare data for parallel processing
             chunk_data = [
-                (chunk, unique_skills, col, new_entity_col, entity_type)
-                for chunk in chunks
+                (chunk, matcher, col, new_entity_col, entity_type) for chunk in chunks
             ]
 
             # Process chunks in parallel
@@ -250,8 +240,7 @@ def extract_entities_rs(df):
 
             # Combine processed chunks
             df = pd.concat(processed_chunks, axis=0)
-
-    # Extract relationships based on predefined mappings
+    # Extract relationships
     for rel_key, rel_info in relationship_mappings.items():
         from_col = rel_info["from_col"]
         to_col = rel_info["to_col"]
@@ -268,7 +257,7 @@ def extract_entities_rs(df):
                 output_col,
             )
 
-    # Combine all relationship columns into one
+    # Combine all relationship columns
     relationship_columns = [col for col in df.columns if "_relationship" in col]
     if relationship_columns:
         df["relationships"] = df[relationship_columns].apply(
@@ -282,3 +271,35 @@ def extract_entities_rs(df):
         df["relationships"] = [[] for _ in range(len(df))]
 
     return df
+
+
+if __name__ == "__main__":
+    # Extract from existing cleaned datasets
+    # csv_file_path = '../../backend/data/00 - mock_student_data.csv'
+    # csv_file_path = '../../backend/data/01 - mock_module_info.csv'
+    # csv_file_path = '../../backend/data/02 - mock_department_list.csv'
+    # csv_file_path = '../../backend/data/03 - mock_staff_info.csv'
+    # csv_file_path = '../../backend/data/04 - mock_module_reviews.csv'
+    # csv_file_path = '../../backend/data/05 - nus_undergraduate_programmes.csv'
+    # csv_file_path = '../../backend/data/06 - Jobs and relevant skillset (linkedin).csv'
+    # csv_file_path = '../../backend/data/07 - jobs_and_tech (ONET).csv'
+    # csv_file_path = '../../backend/data/08 - jobs_and_skills (ONET).csv'
+    csv_file_path = "../../backend/data/09 - Graduate Employment Survey.csv"
+
+    # Extract Entities and Relationships
+    df = extract_entities_rs(csv_file_path)
+
+    # Define output directory
+    output_dir = os.path.join(
+        os.path.dirname(os.path.realpath(__file__)),
+        "../entity_extraction/extracted_csv_output",
+    )
+
+    # Save results
+    base_name, ext = os.path.splitext(os.path.basename(csv_file_path))
+    new_file_name = f"short test{base_name}_extracted{ext}"
+    new_file_path = os.path.join(output_dir, new_file_name)
+    df.to_csv(new_file_path, index=False)
+
+    print(f"Data saved to: {new_file_name}")
+    print(df.head())

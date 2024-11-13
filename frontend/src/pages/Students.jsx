@@ -8,6 +8,7 @@ const StudentVisualizer = () => {
   const [iframeUrl, setIframeUrl] = useState('');
   const [open, setOpen] = useState(false);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
+  const [isModifyMode, setIsModifyMode] = useState(false); 
   const [progress, setProgress] = useState(0);          
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -86,12 +87,26 @@ const StudentVisualizer = () => {
     });
   };
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (mode) => {
+    setIsDeleteMode(mode === 'delete');
+    setIsModifyMode(mode === 'modify');
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setIsModifyMode(false);
+    setStudentData({
+      name: '',
+      matric_number: '',
+      nric: '',
+      year: '',
+      faculty: '',
+      major: '',
+      second_major: '',
+      modules_completed: '',
+      grades: ''
+    });
   };
 
   const handleCreateStudent = async () => {
@@ -99,6 +114,7 @@ const StudentVisualizer = () => {
       await axios.post('http://localhost:5001/create-student', studentData);
       console.log('Student created successfully');
       setOpen(false); 
+      handleClose();
     } catch (error) {
       console.error('Error creating student:', error);
     }
@@ -108,9 +124,21 @@ const StudentVisualizer = () => {
     try {
       await axios.post('http://localhost:5001/delete-student', { matric_number: studentData.matric_number });
       console.log('Student deleted successfully');
-      setOpen(false); 
+      setOpen(false);
+      handleClose();
     } catch (error) {
       console.error('Error deleting Student:', error);
+    }
+  };
+
+  const handleModifyStudent = async () => {
+    try {
+      await axios.put('http://localhost:5001/modify-student', studentData);
+      console.log('Student modified successfully');
+      setOpen(false);
+      handleClose();
+    } catch (error) {
+      console.error('Error modifying student:', error);
     }
   };
 
@@ -141,7 +169,7 @@ const StudentVisualizer = () => {
             variant="contained"
             color="secondary"
             style={{ marginRight: '10px' }}
-            onClick={() => { setIsDeleteMode(true); handleClickOpen(); }}
+            onClick={() => { handleClickOpen('delete'); }}
             >
             Delete Student
           </Button>
@@ -150,9 +178,18 @@ const StudentVisualizer = () => {
             variant="contained"
             color="primary"
             style={{ marginRight: '10px' }}
-            onClick={() => { setIsDeleteMode(false); handleClickOpen(); }}
+            onClick={() => { handleClickOpen('create'); }}
           >
             Create Student
+          </Button>
+
+          <Button
+            variant="contained"
+            color="warning"
+            style={{ marginRight: '10px' }}
+            onClick={() => handleClickOpen('modify')}
+          >
+            Modify Student
           </Button>
 
           <Button
@@ -188,7 +225,9 @@ const StudentVisualizer = () => {
       )}
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{isDeleteMode ? 'Delete Student' : 'Create New Student'}</DialogTitle>
+        <DialogTitle>
+          {isDeleteMode ? 'Delete Student' : isModifyMode ? 'Modify Student' : 'Create New Student'}
+        </DialogTitle>
         <DialogContent>
           <TextField
             label="Matric Number"
@@ -272,11 +311,11 @@ const StudentVisualizer = () => {
             Cancel
           </Button>
           <Button
-            onClick={isDeleteMode ? handleDeleteStudent : handleCreateStudent}
+            onClick={isDeleteMode ? handleDeleteStudent : isModifyMode ? handleModifyStudent : handleCreateStudent}
             color={isDeleteMode ? 'error' : 'primary'}
             variant="contained"
           >
-            {isDeleteMode ? 'Delete' : 'Create'}
+            {isDeleteMode ? 'Delete' : isModifyMode ? 'Modify' : 'Create'}
           </Button>
         </DialogActions>
       </Dialog>

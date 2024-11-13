@@ -1,8 +1,6 @@
 # DSA3101- Data Dynamos
 👋 Hello! This is the repo for our group's application stack. 
 
-### Make sure to check that you are working on the dev branch
-
 ## Prerequisites
 The entire application stack runs on docker, so make sure you have Docker installed.
 
@@ -20,13 +18,16 @@ To find out more about how to operate the application, you can check out our use
 - Username: data dynamos
 - Password: DSA3101isdabest
 
+## Project Wiki 
+Click [here](https://docs.google.com/document/d/1Ycp31-AqMMDviPTfsXyERASnIZs86TAdnKsJgl_O95M/edit?tab=t.0) to access our project wiki! 
+
 ## Project Folder Structure
 ```plaintext
 .
 ├── README.md
 ├── /backend
 │    ├── /data
-│    │    ├── 00 - mock_student_data
+│    │    ├── 00 - mock_student_data                                            
 │    │    ├── 01 - mock_module_info
 │    │    ├── 02 - mock_department_list
 │    │    ├── 03 - mock_staff_info
@@ -84,6 +85,8 @@ To find out more about how to operate the application, you can check out our use
 ├── .dockerignore
 ├── docker-compose.yml
 ├── package.json
-├── package-lock.json
-└── README.md
+└── package-lock.json
 ```
+
+## Contributors & TA 
+![Data Dynamos Team](images/dsa3101_contributors.jpg)

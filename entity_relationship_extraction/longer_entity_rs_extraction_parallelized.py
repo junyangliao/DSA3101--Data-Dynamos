@@ -2,6 +2,7 @@ import pandas as pd
 import ast
 import re
 import spacy
+import os
 import yaml
 from fuzzywuzzy import fuzz, process
 from multiprocessing import Pool, cpu_count
@@ -12,7 +13,7 @@ nlp = spacy.load("en_core_web_sm")
 
 def load_config():
     # Load configuration from YAML file.
-    with open("/app/entity_relationship_extraction/config.yaml", "r") as file:
+    with open("config.yaml", "r") as file:
         return yaml.safe_load(file)
 
 
@@ -189,7 +190,7 @@ def create_dynamic_relationship(
     return df
 
 
-def extract_entities_rs(df):
+def extract_entities_rs(csv_file_path):
     config = load_config()
     target_cols = config["target_cols"]
     entity_mappings = config["entity_mappings"]
@@ -200,9 +201,13 @@ def extract_entities_rs(df):
         col: (mapping["new_col"], mapping["type"])
         for col, mapping in entity_mappings.items()
     }
+    # Read data
+    df = pd.read_csv(csv_file_path)
 
     # Extract unique skills
-    skills_csv_file_path = "/app/data/06 - Jobs and relevant skillset (linkedin).csv"
+    skills_csv_file_path = (
+        "../backend/data/06 - Jobs and relevant skillset (linkedin).csv"
+    )
     df_skills = pd.read_csv(skills_csv_file_path)
     unique_skills = []
 
@@ -235,7 +240,7 @@ def extract_entities_rs(df):
 
     for col in target_cols:
         if col in df.columns:
-            new_entity_col, entity_type = new_entity_cols.get(col, (col, "Unknown"))
+            new_entity_col, entity_type = new_entity_cols.get(col, (col, "UNKNOWN"))
             chunks = [df[i : i + chunk_size] for i in range(0, len(df), chunk_size)]
 
             # Prepare data for parallel processing with unique_skills
@@ -282,3 +287,35 @@ def extract_entities_rs(df):
         df["relationships"] = [[] for _ in range(len(df))]
 
     return df
+
+
+# Main execution
+if __name__ == "__main__":
+    # Extract from existing cleaned datasets
+    # csv_file_path = '../backend/data/00 - mock_student_data.csv'
+    # csv_file_path = '../backend/data/01 - mock_module_info.csv'
+    # csv_file_path = '../backend/data/02 - mock_department_list.csv'
+    # csv_file_path = '../backend/data/03 - mock_staff_info.csv'
+    # csv_file_path = '../backend/data/04 - mock_module_reviews.csv'
+    csv_file_path = "../backend/data/05 - nus_undergraduate_programmes.csv"
+    # csv_file_path = '../backend/data/06 - Jobs and relevant skillset (linkedin).csv'
+    # csv_file_path = '../backend/data/07 - jobs_and_tech (ONET).csv'
+    # csv_file_path = '../backend/data/08 - jobs_and_skills (ONET).csv'
+    # csv_file_path = '../backend/data/09 - Graduate Employment Survey.csv'
+
+    # Extract Entities and Relationships
+    df = extract_entities_rs(csv_file_path)
+    # Define the path for the 'extracted_csv_output' folder, which is beside the .py file's folder
+    output_dir = os.path.join(
+        os.path.dirname(os.path.realpath(__file__)),
+        "extracted_csv_output",
+    )
+    # Save results
+    base_name, ext = os.path.splitext(os.path.basename(csv_file_path))
+    new_file_name = f"{base_name}_extracted{ext}"
+    new_file_path = os.path.join(output_dir, new_file_name)
+    df.to_csv(new_file_path, index=False)
+
+    # Print a success message with the new file name
+    print(f"Data saved to: {new_file_name}")
+    print(df.head())

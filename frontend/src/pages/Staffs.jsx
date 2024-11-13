@@ -8,6 +8,7 @@ const StaffVisualizer = () => {
   const [iframeUrl, setIframeUrl] = useState('');
   const [open, setOpen] = useState(false);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
+  const [isModifyMode, setIsModifyMode] = useState(false); 
   const [progress, setProgress] = useState(0);          
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -85,19 +86,32 @@ const StaffVisualizer = () => {
     });
   };
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (mode) => {
+    setIsDeleteMode(mode === 'delete');
+    setIsModifyMode(mode === 'modify');
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setIsModifyMode(false);
+    setStaffData({
+      employee_id: '',
+      employee_name: '',
+      nric: '',
+      dob: '',
+      doj: '',
+      department: '',
+      modules_taught: ''
+    });
   };
 
   const handleCreateStaff = async () => {
     try {
       await axios.post('http://localhost:5001/create-staff', staffData);
       console.log('Staff created successfully');
-      setOpen(false); 
+      setOpen(false);
+      handleClose();
     } catch (error) {
       console.error('Error creating staff:', error);
     }
@@ -105,11 +119,23 @@ const StaffVisualizer = () => {
 
   const handleDeleteStaff = async () => {
     try {
-      await axios.post('http://localhost:5001/delete-staff', { employee_id: staffData.employee_id });
+      await axios.post('http://localhost:5001/delete-staff', { employee_name: staffData.employee_name });
       console.log('Staff deleted successfully');
-      setOpen(false); 
+      setOpen(false);
+      handleClose();
     } catch (error) {
       console.error('Error deleting staff:', error);
+    }
+  };
+
+  const handleModifyStaff = async () => {
+    try {
+      await axios.put('http://localhost:5001/modify-staff', staffData);
+      console.log('Staff modified successfully');
+      setOpen(false);
+      handleClose();
+    } catch (error) {
+      console.error('Error modifying staff:', error);
     }
   };
 
@@ -140,7 +166,7 @@ const StaffVisualizer = () => {
             variant="contained"
             color="secondary"
             style={{ marginRight: '10px' }}
-            onClick={() => { setIsDeleteMode(true); handleClickOpen(); }}
+            onClick={() => { handleClickOpen('delete'); }}
             >
             Delete Staff
           </Button>
@@ -149,9 +175,18 @@ const StaffVisualizer = () => {
             variant="contained"
             color="primary"
             style={{ marginRight: '10px' }}
-            onClick={() => { setIsDeleteMode(false); handleClickOpen(); }}
+            onClick={() => { handleClickOpen('create'); }}
           >
             Create Staff
+          </Button>
+
+          <Button
+            variant="contained"
+            color="warning"
+            style={{ marginRight: '10px' }}
+            onClick={() => handleClickOpen('modify')}
+          >
+            Modify Staff
           </Button>
 
           <Button
@@ -189,25 +224,27 @@ const StaffVisualizer = () => {
       )}
 
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>{isDeleteMode ? 'Delete Staff' : 'Create New Staff'}</DialogTitle>
+        <DialogTitle>
+          {isDeleteMode ? 'Delete Staff' : isModifyMode ? 'Modify Staff' : 'Create New Staff'}
+        </DialogTitle>
         <DialogContent>
           <TextField
-            label="Employee ID"
-            name="employee_id"
-            fullWidth
-            margin="dense"
-            onChange={handleChange}
-            value={staffData.employee_id}
-          />
-          {!isDeleteMode && (
-            <>
-              <TextField
                 label="Employee Name"
                 name="employee_name"
                 fullWidth
                 margin="dense"
                 onChange={handleChange}
                 value={staffData.employee_name}
+          />
+          {!isDeleteMode && (
+            <>
+              <TextField
+                label="Employee ID"
+                name="employee_id"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={staffData.employee_id}
               />
               <TextField
                 label="NRIC"
@@ -257,11 +294,11 @@ const StaffVisualizer = () => {
             Cancel
           </Button>
           <Button
-            onClick={isDeleteMode ? handleDeleteStaff : handleCreateStaff}
+            onClick={isDeleteMode ? handleDeleteStaff : isModifyMode ? handleModifyStaff : handleCreateStaff}
             color={isDeleteMode ? 'error' : 'primary'}
             variant="contained"
           >
-            {isDeleteMode ? 'Delete' : 'Create'}
+            {isDeleteMode ? 'Delete' : isModifyMode ? 'Modify' : 'Create'}
           </Button>
         </DialogActions>
       </Dialog>

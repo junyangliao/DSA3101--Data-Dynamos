@@ -8,6 +8,7 @@ const ModuleVisualizer = () => {
   const [iframeUrl, setIframeUrl] = useState('');
   const [open, setOpen] = useState(false);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
+  const [isModifyMode, setIsModifyMode] = useState(false); 
   const [progress, setProgress] = useState(0);          
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -74,6 +75,16 @@ const ModuleVisualizer = () => {
   };
 
   const [moduleData, setModuleData] = useState({
+    module_code: '',
+    title: '',
+    description: '',
+    module_credit: '',
+    department: '',
+    faculty: '',
+    prerequisites: '',
+    preclusions: '',
+    semesters: '',
+    skills: ''
   });
 
   const handleChange = (e) => {
@@ -83,19 +94,43 @@ const ModuleVisualizer = () => {
     });
   };
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (mode) => {
+    setIsDeleteMode(mode === 'delete');
+    setIsModifyMode(mode === 'modify');
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+    setIsModifyMode(false);
+    setModuleData({
+      module_code: '',
+      title: '',
+      description: '',
+      module_credit: '',
+      department: '',
+      faculty: '',
+      prerequisites: '',
+      preclusions: '',
+      semesters: '',
+      skills: ''
+    });
   };
 
   const handleCreateModule = async () => {
+    const parsedModuleData = {
+      ...moduleData,
+      prerequisites: JSON.parse(moduleData.prerequisites || "[]"),
+      preclusions: JSON.parse(moduleData.preclusions || "[]"),
+      semesters: JSON.parse(moduleData.semesters || "[]"),
+      skills: JSON.parse(moduleData.skills || "[]")
+    };
+
     try {
-      await axios.post('http://localhost:5001/create-module', moduleData);
+      await axios.post('http://localhost:5001/create-module', parsedModuleData);
       console.log('Module created successfully');
-      setOpen(false); 
+      setOpen(false);
+      handleClose();
     } catch (error) {
       console.error('Error creating module:', error);
     }
@@ -105,9 +140,21 @@ const ModuleVisualizer = () => {
     try {
       await axios.post('http://localhost:5001/delete-module', { module_code: moduleData.module_code });
       console.log('Module deleted successfully');
-      setOpen(false); 
+      setOpen(false);
+      handleClose();
     } catch (error) {
       console.error('Error deleting module:', error);
+    }
+  };
+
+  const handleModifyModule = async () => {
+    try {
+      await axios.put('http://localhost:5001/modify-module', moduleData);
+      console.log('Module modified successfully');
+      setOpen(false);
+      handleClose();
+    } catch (error) {
+      console.error('Error modifying module:', error);
     }
   };
 
@@ -134,7 +181,7 @@ const ModuleVisualizer = () => {
             variant="contained"
             color="secondary"
             style={{ marginRight: '10px' }}
-            onClick={() => { setIsDeleteMode(true); handleClickOpen(); }}
+            onClick={() => { handleClickOpen('delete'); }}
             >
             Delete Module
           </Button>
@@ -143,9 +190,18 @@ const ModuleVisualizer = () => {
             variant="contained"
             color="primary"
             style={{ marginRight: '10px' }}
-            onClick={() => { setIsDeleteMode(false); handleClickOpen(); }}
+            onClick={() => { handleClickOpen('create'); }}
           >
             Create Module
+          </Button>
+
+          <Button
+            variant="contained"
+            color="warning"
+            style={{ marginRight: '10px' }}
+            onClick={() => handleClickOpen('modify')}
+          >
+            Modify Module
           </Button>
 
           <Button
@@ -183,7 +239,9 @@ const ModuleVisualizer = () => {
       )}
 
       <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>{isDeleteMode ? 'Delete Module' : 'Create New Module'}</DialogTitle>
+      <DialogTitle>
+        {isDeleteMode ? 'Delete Module' : isModifyMode ? 'Modify Module' : 'Create New Module'}
+      </DialogTitle>
         <DialogContent>
           <TextField
             label="Module Code"
@@ -259,6 +317,14 @@ const ModuleVisualizer = () => {
                 onChange={handleChange}
                 value={moduleData.semesters}
               />
+              <TextField
+                label="Skills (Input in list format)"
+                name="skills"
+                fullWidth
+                margin="dense"
+                onChange={handleChange}
+                value={moduleData.skills}
+              />
             </>
           )}
         </DialogContent>
@@ -267,11 +333,11 @@ const ModuleVisualizer = () => {
             Cancel
           </Button>
           <Button
-            onClick={isDeleteMode ? handleDeleteModule : handleCreateModule}
+            onClick={isDeleteMode ? handleDeleteModule : isModifyMode ? handleModifyModule : handleCreateModule}
             color={isDeleteMode ? 'error' : 'primary'}
             variant="contained"
           >
-            {isDeleteMode ? 'Delete' : 'Create'}
+            {isDeleteMode ? 'Delete' : isModifyMode ? 'Modify' : 'Create'}
           </Button>
         </DialogActions>
       </Dialog>
