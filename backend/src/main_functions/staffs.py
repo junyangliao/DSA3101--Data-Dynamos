@@ -76,6 +76,83 @@ def create_staff(data):
             modules_taught,
         )
 
+def modify_staff_node_and_relationships(
+    tx,
+    employee_name = None,
+    employee_id = None,
+    nric = None,
+    birth_date = None,
+    join_date = None,
+    department = None,
+    modules_taught = None,
+):
+    # Update basic student info
+    tx.run(
+        """
+        MATCH (s:Staff {Employee_Name: $employee_name})
+        SET s.Employee_ID = coalesce($employee_id, s.Employee_ID),
+            s.NRIC = coalesce($nric, s.NRIC),
+            s.DOB = coalesce($birth_date, s.DOB),
+            s.DOJ = coalesce($join_date, s.DOJ)
+        """,
+        employee_id=employee_id,
+        employee_name=employee_name,
+        nric=nric,
+        birth_date=birth_date,
+        join_date=join_date,
+    )
+
+    # Update faculty relationship
+    if department:
+        tx.run(
+            """
+            MATCH (s:Staff {Employee_Name: $employee_name})
+            OPTIONAL MATCH (s)-[r:EMPLOYED_UNDER]->(:Department)
+            DELETE r
+            WITH s
+            MERGE (d:Department {name: $department})
+            MERGE (s)-[:EMPLOYED_UNDER]->(d)
+            """,
+            employee_name=employee_name,
+            department=department,
+        )
+
+    # Update major relationship
+    if modules_taught:
+        tx.run(
+            """
+            MATCH (s:Staff {Employee_Name: $employee_name})
+            OPTIONAL MATCH (:Module)-[r:TAUGHT_BY]->(s)
+            DELETE r
+            WITH s
+            MERGE (m:Module {moduleCode: $module_code})
+            MERGE (m)-[:TAUGHT_BY]->(s)
+            """,
+            employee_name=employee_name,
+            module_code=modules_taught,
+        )
+
+def modify_staff(data):
+    with driver.session() as session:
+        employee_name = data.get("employee_name")
+        employee_id = data.get("employee_id")
+        nric = data.get("nric")
+        birth_date = data.get("dob")
+        join_date = data.get("doj")
+        department = data.get("department")
+        modules_taught = data.get("modules_taught")
+
+        session.execute_write(
+            modify_staff_node_and_relationships,
+            employee_name,
+            employee_id,
+            nric,
+            birth_date,
+            join_date,
+            department,
+            modules_taught,
+        )
+
 def delete_staff_node_and_relationships(tx, employee_name):
     tx.run(
         """

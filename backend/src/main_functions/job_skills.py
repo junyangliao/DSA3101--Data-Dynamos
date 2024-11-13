@@ -1,7 +1,5 @@
 import os
-import pandas as pd
 from neo4j import GraphDatabase
-from utils import format_node, format_relationship
 
 neo4j_uri = os.getenv("NEO4J_URI")
 neo4j_user = os.getenv("NEO4J_USER")

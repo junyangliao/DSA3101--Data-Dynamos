@@ -6,10 +6,10 @@ import pandas as pd
 import json
 import os
 
-from main_functions.students import create_student, delete_student
-from main_functions.modules import create_module, delete_module
-from main_functions.job_skills import create_jobs_and_skills, delete_job
-from main_functions.staffs import create_staff, delete_staff
+from main_functions.students import create_student, delete_student, modify_student
+from main_functions.modules import create_module, delete_module, modify_module
+from main_functions.job_skills import create_job_and_skills, delete_job
+from main_functions.staffs import create_staff, delete_staff, modify_staff
 from main_functions.job_recommendations import (
     get_job_recommendations,
     get_related_jobs_from_wikidata,
@@ -126,6 +126,69 @@ def upload_csv():
         return jsonify({"message": "CSV data integrated successfully"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+# Function to create a new student individually
+@app.route("/modify-student", methods=["PUT"])
+def modify_student_node():
+    student_data = request.json
+
+    if not student_data:
+        return jsonify({"message": "No Student Data Found"}), 400
+
+    matric_number = student_data.get("matric_number")
+
+    modify_student(student_data)
+
+    return (
+        jsonify(
+            {
+                "message": f"Student with Matric Number {matric_number} created successfully"
+            }
+        ),
+        201,
+    )
+
+# Function to create a new student individually
+@app.route("/modify-module", methods=["PUT"])
+def modify_module_node():
+    module_data = request.json
+
+    if not module_data:
+        return jsonify({"message": "No Module Data Found"}), 400
+
+    module_code = module_data.get("module_code")
+
+    modify_module(module_data)
+
+    return (
+        jsonify(
+            {
+                "message": f"Module with module code {module_code} created successfully"
+            }
+        ),
+        201,
+    )
+
+# Function to create a new student individually
+@app.route("/modify-staff", methods=["PUT"])
+def modify_staff_node():
+    staff_data = request.json
+
+    if not staff_data:
+        return jsonify({"message": "No Student Data Found"}), 400
+
+    staff_name = staff_data.get("employee_name")
+
+    modify_staff(staff_data)
+
+    return (
+        jsonify(
+            {
+                "message": f"Student with Matric Number {staff_name} created successfully"
+            }
+        ),
+        201,
+    )
 
 
 # Function to delete individual module

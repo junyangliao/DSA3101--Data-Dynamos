@@ -162,6 +162,202 @@ def create_module(data):
             skills
         )
 
+def modify_module_node_and_relationships(
+    tx,
+    module_code,
+    title=None,
+    description=None,
+    module_credit=None,
+    department=None,
+    faculty=None,
+    prerequisites=None,
+    preclusions=None,
+    semesters=None,
+    skills=None,
+):
+    # Update module attributes if provided
+    tx.run(
+        """
+        MATCH (m:Module {moduleCode: $module_code})
+        SET m.title = coalesce($title, m.title),
+            m.description = coalesce($description, m.description),
+            m.moduleCredit = coalesce($module_credit, m.moduleCredit)
+        """,
+        module_code=module_code,
+        title=title,
+        description=description,
+        module_credit=module_credit,
+    )
+
+    # Update department and faculty if provided
+    if department and faculty:
+        tx.run(
+            """
+            MATCH (m:Module {moduleCode: $module_code})
+            OPTIONAL MATCH (m)-[r:BELONGS_TO]->()
+            DELETE r
+            MERGE (d:Department {name: $department})
+            MERGE (f:Faculty {name: $faculty})
+            MERGE (d)-[:PART_OF]->(f)
+            MERGE (m)-[:BELONGS_TO]->(d)
+            """,
+            module_code=module_code,
+            department=department,
+            faculty=faculty,
+        )
+
+    # Update prerequisites if provided
+    if prerequisites is not None:
+        tx.run(
+            """
+            MATCH (m:Module {moduleCode: $module_code})
+            OPTIONAL MATCH (m)-[r:MUST_HAVE_TAKEN_ONE_OF]->()
+            DELETE r
+            """,
+            module_code=module_code,
+        )
+
+        for prereq_list in prerequisites:
+            if prereq_list:
+                group_name = f"{prereq_list}"
+                tx.run(
+                    """
+                    MERGE (g:PrerequisiteGroup {name: $group_name})
+                    """,
+                    group_name=group_name,
+                )
+
+                for prereq in prereq_list:
+                    tx.run(
+                        """
+                        MATCH (p:Module {moduleCode: $prereq}), (g:PrerequisiteGroup {name: $group_name})
+                        MERGE (p)-[:INCLUDED_AS_PREREQUISITE]->(g)
+                        """,
+                        prereq=prereq,
+                        group_name=group_name,
+                    )
+
+                tx.run(
+                    """
+                    MATCH (m:Module {moduleCode: $module_code}), (g:PrerequisiteGroup {name: $group_name})
+                    MERGE (m)-[:MUST_HAVE_TAKEN_ONE_OF]->(g)
+                    """,
+                    module_code=module_code,
+                    group_name=group_name,
+                )
+
+    # Update preclusions if provided
+    if preclusions is not None:
+        tx.run(
+            """
+            MATCH (m:Module {moduleCode: $module_code})
+            OPTIONAL MATCH (m)-[r:MUST_NOT_HAVE_TAKEN_ONE_OF]->()
+            DELETE r
+            """,
+            module_code=module_code,
+        )
+
+        group_name = f"{preclusions}"
+        tx.run(
+            """
+            MERGE (g:PreclusionGroup {name: $group_name})
+            """,
+            group_name=group_name,
+        )
+
+        for preclusion in preclusions:
+            tx.run(
+                """
+                MATCH (p:Module {moduleCode: $preclusion}), (g:PreclusionGroup {name: $group_name})
+                MERGE (p)-[:INCLUDED_AS_PRECLUSION]->(g)
+                """,
+                preclusion=preclusion,
+                group_name=group_name,
+            )
+
+        tx.run(
+            """
+            MATCH (m:Module {moduleCode: $module_code}), (g:PreclusionGroup {name: $group_name})
+            MERGE (m)-[:MUST_NOT_HAVE_TAKEN_ONE_OF]->(g)
+            """,
+            module_code=module_code,
+            group_name=group_name,
+        )
+
+    # Update semesters if provided
+    if semesters is not None:
+        tx.run(
+            """
+            MATCH (m:Module {moduleCode: $module_code})
+            OPTIONAL MATCH (m)-[r:OFFERED_IN]->()
+            DELETE r
+            """,
+            module_code=module_code,
+        )
+
+        for semester in semesters:
+            tx.run(
+                """
+                MERGE (s:Semester {number: $semester})
+                WITH s
+                MATCH (m:Module {moduleCode: $module_code})
+                MERGE (m)-[:OFFERED_IN]->(s)
+                """,
+                semester=semester,
+                module_code=module_code,
+            )
+
+    # Update skills if provided
+    if skills is not None:
+        tx.run(
+            """
+            MATCH (m:Module {moduleCode: $module_code})
+            OPTIONAL MATCH (m)-[r:SKILL_TAUGHT]->()
+            DELETE r
+            """,
+            module_code=module_code,
+        )
+
+        for skill in skills:
+            tx.run(
+                """
+                MERGE (s:Skill {name: $skill})
+                WITH s
+                MATCH (m:Module {moduleCode: $module_code})
+                MERGE (m)-[:SKILL_TAUGHT]->(s)
+                """,
+                module_code=module_code,
+                skill=skill,
+            )
+
+def modify_module(data):
+    with driver.session() as session:
+        module_code = data.get("module_code")
+        title = data.get("title")
+        description = data.get("description")
+        module_credit = data.get("module_credit")
+        department = data.get("department")
+        faculty = data.get("faculty")
+        prerequisites = data.get("prerequisites",[])
+        preclusions = data.get("preclusions",[])
+        semesters = data.get("semesters",[])
+        skills = data.get("skills", [])
+
+
+        session.execute_write(
+            modify_module_node_and_relationships,
+            module_code,
+            title,
+            description,
+            module_credit,
+            department,
+            faculty,
+            prerequisites,
+            preclusions,
+            semesters,
+            skills
+        )
+
 def delete_module_node_and_relationships(tx, module_code):
     tx.run(
         """

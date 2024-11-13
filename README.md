@@ -87,5 +87,5 @@ To find out more about how to operate the application, you can check out our use
 └── package-lock.json
 ```
 
-## Contributors
+## Contributors & TA 
 ![Data Dynamos Team](images/dsa3101_contributors.jpg)
