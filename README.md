@@ -1,8 +1,6 @@
 # DSA3101- Data Dynamos
 👋 Hello! This is the repo for our group's application stack. 
 
-### Make sure to check that you are working on the dev branch
-
 ## Prerequisites
 The entire application stack runs on docker, so make sure you have Docker installed.
 
@@ -19,6 +17,9 @@ To find out more about how to operate the application, you can check out our use
 ## Log-in Credentials
 - Username: data dynamos
 - Password: DSA3101isdabest
+
+## Project Wiki 
+Click [here] (https://docs.google.com/document/d/1Ycp31-AqMMDviPTfsXyERASnIZs86TAdnKsJgl_O95M/edit?tab=t.0) to access our project wiki! 
 
 ## Project Folder Structure
 ```plaintext
