@@ -8,6 +8,7 @@ neo4j_password = os.getenv("NEO4J_PASSWORD")
 driver = GraphDatabase.driver(neo4j_uri, auth=(neo4j_user, neo4j_password))
 session = driver.session()
 
+
 def create_module_node_and_relationships(
     tx,
     module_code,
@@ -142,11 +143,10 @@ def create_module(data):
         module_credit = data.get("module_credit")
         department = data.get("department")
         faculty = data.get("faculty")
-        prerequisites = data.get("prerequisites",[])
-        preclusions = data.get("preclusions",[])
-        semesters = data.get("semesters",[])
+        prerequisites = data.get("prerequisites", [])
+        preclusions = data.get("preclusions", [])
+        semesters = data.get("semesters", [])
         skills = data.get("skills", [])
-
 
         session.execute_write(
             create_module_node_and_relationships,
@@ -159,8 +159,9 @@ def create_module(data):
             prerequisites,
             preclusions,
             semesters,
-            skills
+            skills,
         )
+
 
 def modify_module_node_and_relationships(
     tx,
@@ -330,6 +331,7 @@ def modify_module_node_and_relationships(
                 skill=skill,
             )
 
+
 def modify_module(data):
     with driver.session() as session:
         module_code = data.get("module_code")
@@ -338,11 +340,10 @@ def modify_module(data):
         module_credit = data.get("module_credit")
         department = data.get("department")
         faculty = data.get("faculty")
-        prerequisites = data.get("prerequisites",[])
-        preclusions = data.get("preclusions",[])
-        semesters = data.get("semesters",[])
+        prerequisites = data.get("prerequisites", [])
+        preclusions = data.get("preclusions", [])
+        semesters = data.get("semesters", [])
         skills = data.get("skills", [])
-
 
         session.execute_write(
             modify_module_node_and_relationships,
@@ -355,8 +356,9 @@ def modify_module(data):
             prerequisites,
             preclusions,
             semesters,
-            skills
+            skills,
         )
+
 
 def delete_module_node_and_relationships(tx, module_code):
     tx.run(

@@ -33,6 +33,7 @@ def create_job_and_skills(data):
             create_jobs_and_skills_nodes_and_relationships, job_title, skills
         )
 
+
 def delete_job_node_and_relationships(tx, job_title):
     tx.run(
         """
