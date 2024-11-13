@@ -16,7 +16,7 @@ services:
       - NEO4J_URI=neo4j+s://6b5f0965.databases.neo4j.io
       - NEO4J_USER=neo4j
       - NEO4J_PASSWORD=SqxvGpasJ9eEAt6-kBaKYskFQnhxmsk0QOY8i1nsnik
-      - OPENAI_API_KEY=<INSERT API KEY HERE>
+      - OPENAI_API_KEY=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
       - GOOGLE_API_KEY=AIzaSyACdvWDLdk00vEvtLn_T2H5mX8NAMz-w3M
     networks:
       - mynetwork
