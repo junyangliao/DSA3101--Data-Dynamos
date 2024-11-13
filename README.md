@@ -19,7 +19,7 @@ To find out more about how to operate the application, you can check out our use
 - Password: DSA3101isdabest
 
 ## Project Wiki 
-Click [here] (https://docs.google.com/document/d/1Ycp31-AqMMDviPTfsXyERASnIZs86TAdnKsJgl_O95M/edit?tab=t.0) to access our project wiki! 
+Click [here](https://docs.google.com/document/d/1Ycp31-AqMMDviPTfsXyERASnIZs86TAdnKsJgl_O95M/edit?tab=t.0) to access our project wiki! 
 
 ## Project Folder Structure
 ```plaintext
