@@ -103,7 +103,7 @@ def create_new_job():
     if not job_data:
         return jsonify({"message": "No Job Data Found"}), 400
 
-    create_jobs_and_skills(job_data)
+    create_job_and_skills(job_data)
 
     return jsonify({"message": "Job created successfully"}), 201
 
@@ -126,7 +126,8 @@ def upload_csv():
         return jsonify({"message": "CSV data integrated successfully"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+
+
 # Function to create a new student individually
 @app.route("/modify-student", methods=["PUT"])
 def modify_student_node():
@@ -148,6 +149,7 @@ def modify_student_node():
         201,
     )
 
+
 # Function to create a new student individually
 @app.route("/modify-module", methods=["PUT"])
 def modify_module_node():
@@ -162,12 +164,11 @@ def modify_module_node():
 
     return (
         jsonify(
-            {
-                "message": f"Module with module code {module_code} created successfully"
-            }
+            {"message": f"Module with module code {module_code} created successfully"}
         ),
         201,
     )
+
 
 # Function to create a new student individually
 @app.route("/modify-staff", methods=["PUT"])
@@ -183,9 +184,7 @@ def modify_staff_node():
 
     return (
         jsonify(
-            {
-                "message": f"Student with Matric Number {staff_name} created successfully"
-            }
+            {"message": f"Student with Matric Number {staff_name} created successfully"}
         ),
         201,
     )
@@ -1030,14 +1029,15 @@ def job_recommendations():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
 # Function for checking consistency
-@app.route('/api/check-consistency', methods=['GET'])
+@app.route("/api/check-consistency", methods=["GET"])
 def check_consistency():
     try:
         # Load ontology
-        with open('ontology_config_test.json', 'r') as f:
+        with open("ontology_config_test.json", "r") as f:
             ontology = json.load(f)
-        
+
         results = run_consistency_check(driver, ontology)
         return jsonify(results)
     except FileNotFoundError:
@@ -1045,6 +1045,7 @@ def check_consistency():
     except Exception as e:
         print(f"Error in consistency check: {str(e)}")
         return jsonify({"error": str(e)}), 500
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

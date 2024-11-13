@@ -76,15 +76,16 @@ def create_staff(data):
             modules_taught,
         )
 
+
 def modify_staff_node_and_relationships(
     tx,
-    employee_name = None,
-    employee_id = None,
-    nric = None,
-    birth_date = None,
-    join_date = None,
-    department = None,
-    modules_taught = None,
+    employee_name=None,
+    employee_id=None,
+    nric=None,
+    birth_date=None,
+    join_date=None,
+    department=None,
+    modules_taught=None,
 ):
     # Update basic student info
     tx.run(
@@ -132,6 +133,7 @@ def modify_staff_node_and_relationships(
             module_code=modules_taught,
         )
 
+
 def modify_staff(data):
     with driver.session() as session:
         employee_name = data.get("employee_name")
@@ -152,6 +154,7 @@ def modify_staff(data):
             department,
             modules_taught,
         )
+
 
 def delete_staff_node_and_relationships(tx, employee_name):
     tx.run(
