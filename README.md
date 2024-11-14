@@ -1,5 +1,5 @@
 # DSA3101- Data Dynamos
-👋 Hello! This is the repo for our group's application stack. 
+👋 Hello! This is the repo for our group's application stack. It is a RESTful API that provides endpoints for the React frontend to interact with the backend. The backend is built using Flask, a Python web framework. The database used is the neo4j database.
 
 ## Prerequisites
 The entire application stack runs on docker, so make sure you have Docker installed.
@@ -8,7 +8,8 @@ The entire application stack runs on docker, so make sure you have Docker instal
 1. git clone the repository
 2. Open Docker Desktop
 3. Navigate to project directory
-4. ```docker-compose up --build ```
+4. ```docker-compose build --no-cache ```
+5. ```docker-compose up -d```
 
 Once all containers are running the frontend app should now be accessible on ```http://localhost:3000/ ```.
 
@@ -20,7 +21,6 @@ To find out more about how to operate the application, you can check out our use
 
 ## Project Wiki 
 Click [here](https://docs.google.com/document/d/1Ycp31-AqMMDviPTfsXyERASnIZs86TAdnKsJgl_O95M/edit?tab=t.0) to access our project wiki!
-* Do note that you will have to obtain the OpenAI API key from within the project wiki
 
 ## Demo for recommendation system
 Here you can download [our demo video](images_demo_video/demo_for_recommendation_system.mp4) for our recommendation system!
