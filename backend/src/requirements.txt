@@ -13,3 +13,4 @@ numpy
 SPARQLWrapper
 fuzzywuzzy
 python-Levenshtein
+pytest
