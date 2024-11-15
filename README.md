@@ -4,28 +4,29 @@
 ## Prerequisites
 The entire application stack runs on docker, so make sure you have Docker installed.
 
+Do contact me @ github id junyangliao for the openAI API key to use the query engine. After obtaining the API key, do remember to input it in the docker-compose.yaml.
+
 ## Getting Started
 1. git clone the repository
 2. Open Docker Desktop
 3. Navigate to project directory
-4. ```docker-compose build --no-cache ```
-5. ```docker-compose up -d```
+4. ```docker-compose up build ```
 
 Once all containers are running the frontend app should now be accessible on ```http://localhost:3000/ ```.
 
-To find out more about how to operate the application, you can check out our user guide. *insert url here*
+To find out more about how to operate the application, you can check out our [user guide](https://drive.google.com/file/d/1wflCExiqzxvVfN-OPVxjWdNyyEKSj0r9/view?usp=drive_link).
 
 ## Log-in Credentials
 - Username: data dynamos
 - Password: DSA3101isdabest
 
 ## Project Wiki 
-Click [here](https://docs.google.com/document/d/1Ycp31-AqMMDviPTfsXyERASnIZs86TAdnKsJgl_O95M/edit?tab=t.0) to access our project wiki!
+Click [here](https://drive.google.com/file/d/1i9icO7WtkKtAwBBOrQWKoHbcZhzwDKg8/view?usp=drive_link) to access our project wiki!
 
 ## Demo for recommendation system
-Here you can download [our demo video](images_demo_video/demo_for_recommendation_system.mp4) for our recommendation system!
+Here you can download [our demo video](https://drive.google.com/file/d/1GkyO6qzgMZhVEFcik-nptN40kCrrEMzi/view?usp=drive_link) for our recommendation system!
 
-## Sample inputs for query page
+## Sample inputs for query page 
 - Tell me about Staff Marin Sergio Hernandez
 - Give me a list of modules under the faculty of Dentistry
 - Tell me about the Module DSA3101
@@ -33,6 +34,8 @@ Here you can download [our demo video](images_demo_video/demo_for_recommendation
 - What skills are required for a data analyst?
 - How many students are there in the Faculty of Science?
 - How many students are there in the Computer Science Major?
+
+* If is an error or the query is not returning as expected, do reformat the query and try again. 
 
 ## Project Folder Structure
 ```plaintext
@@ -66,7 +69,7 @@ Here you can download [our demo video](images_demo_video/demo_for_recommendation
 │         ├── requirements.txt                       # dependencies for backend
 │         └── utils.py                               # utility functions
 │    
-├── /entity_extraction
+├── /entity_extraction                               # entity relationship extraction work
 ├── /frontend
 │    ├── /src
 │    │    ├── /dashboard-componenets                 # components required for dashboard page
