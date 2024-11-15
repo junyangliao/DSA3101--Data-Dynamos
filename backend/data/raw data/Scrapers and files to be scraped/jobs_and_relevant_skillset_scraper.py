@@ -6,6 +6,7 @@ from selenium.common.exceptions import TimeoutException, NoSuchElementException
 import time
 import csv
 
+
 def get_jobs_and_skills(driver):
     jobs_and_skills = []
     # find all job titles under the dropdown "Select a job title"
@@ -19,7 +20,7 @@ def get_jobs_and_skills(driver):
     """
     # retrieve job titles
     job_titles = driver.execute_script(job_titles_script)
-    
+
     for job in job_titles:
         # javascript to select specific job
         select_job_script = f"""
@@ -35,24 +36,25 @@ def get_jobs_and_skills(driver):
         return false;
         """
         job_selected = driver.execute_script(select_job_script)
-        
+
         if not job_selected:
             print(f"Could not select job: {job}")
             continue
         # wait for page to load
         time.sleep(2)
-        
-        # javascript to retrieve skills for the selected job 
+
+        # javascript to retrieve skills for the selected job
         skills_script = """
         return Array.from(document.querySelectorAll('.list.list--right .skill-name'))
             .map(e => e.textContent.trim())
             .filter(text => text !== '');
         """
         skills = driver.execute_script(skills_script)
-        
+
         jobs_and_skills.append((job, skills))
-    
+
     return jobs_and_skills
+
 
 options = webdriver.ChromeOptions()
 options.add_argument("start-maximized")
@@ -68,11 +70,11 @@ try:
     # retrieve job and skill data
     data = get_jobs_and_skills(driver)
 
-    with open('all_jobs_and_skills.csv', 'w', newline='', encoding='utf-8') as file:
+    with open("all_jobs_and_skills.csv", "w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerow(["Job Title", "Skills"])
         for job, skills in data:
-            writer.writerow([job, ', '.join(skills)])
+            writer.writerow([job, ", ".join(skills)])
 
     print("Data has been written to all_jobs_and_skills.csv")
 
