@@ -13,3 +13,5 @@ numpy
 SPARQLWrapper
 fuzzywuzzy
 python-Levenshtein
+black
+flake8

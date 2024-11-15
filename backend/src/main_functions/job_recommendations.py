@@ -310,15 +310,7 @@ def get_job_recommendations(
 
 
 def get_related_jobs_from_wikidata(job_title):
-    """
-    Queries Wikidata to get related jobs for a given job title's career path, ranked by relevance.
-
-    Parameters:
-    job_title (str): The job title to query
-
-    Returns:
-    list: A list of related job titles in the same career path, ranked by relevance
-    """
+    """Queries Wikidata to get related jobs for a given job title's career path, ranked by relevance."""
     sparql = SPARQLWrapper("https://query.wikidata.org/sparql")
 
     # Query templates for different relationship types, including filter for professions/occupations

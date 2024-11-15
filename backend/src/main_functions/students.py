@@ -1,8 +1,5 @@
 import os
-import pandas as pd
-import ast
 from neo4j import GraphDatabase
-from utils import format_node, format_relationship
 
 neo4j_uri = os.getenv("NEO4J_URI")
 neo4j_user = os.getenv("NEO4J_USER")
@@ -110,6 +107,7 @@ def create_student(data):
             grades,
         )
 
+
 def modify_student_node_and_relationships(
     tx,
     matric_number,
@@ -205,6 +203,7 @@ def modify_student_node_and_relationships(
                 module_code=module,
             )
 
+
 def modify_student(data):
     with driver.session() as session:
         matric_number = data.get("matric_number")
@@ -230,6 +229,7 @@ def modify_student(data):
             grades,
         )
 
+
 def delete_student_node_and_relationships(tx, matric_number):
     tx.run(
         """
@@ -244,4 +244,3 @@ def delete_student(data):
     with driver.session() as session:
         matric_number = data
         session.execute_write(delete_student_node_and_relationships, matric_number)
-
